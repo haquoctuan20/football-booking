@@ -4,11 +4,15 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { WrapperAuth } from "./AuthStyled";
+import { Link } from "react-router-dom";
 
 const schema = yup
   .object({
-    email: yup.string().required("Error bat buoc nhap"),
-    password: yup.string().required("Error bat buoc nhap"),
+    email: yup
+      .string()
+      .required("Trường này bắt buộc nhập")
+      .matches(/^S+@S+.S+$/, "Email bạn nhập không hợp lệ"),
+    password: yup.string().required("Trường này bắt buộc nhập"),
   })
   .required();
 
@@ -29,25 +33,31 @@ const LoginPage = () => {
   return (
     <WrapperAuth>
       <Container className="container-auth">
-        <div className="left-side">left side</div>
+        <div className="left-side"></div>
 
         <div className="right-side">
-          <h4>Login</h4>
+          <h4 className="title-auth">Đăng nhập</h4>
 
           <Form onSubmit={handleSubmit(handleLogin)}>
-            <div>Email</div>
-            <Form.Control {...register("email")} type="password" />
+            <div className="label-auth">Email</div>
+            <Form.Control {...register("email")} type="text" />
             <p className="auth-error">{errors.email?.message}</p>
 
-            <br />
-
-            <div>Password</div>
+            <div className="label-auth">Mật khẩu</div>
             <Form.Control {...register("password")} type="password" />
             <p className="auth-error">{errors.password?.message}</p>
 
             <br />
 
-            <Button type="submit">Login</Button>
+            <div className="d-flex justify-content-center">
+              <Button variant="light" type="submit">
+                Đăng nhập
+              </Button>
+            </div>
+
+            <hr />
+
+            <Link to="/register">Tôi chưa có tài khoản</Link>
           </Form>
         </div>
       </Container>
