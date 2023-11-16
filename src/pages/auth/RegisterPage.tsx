@@ -11,7 +11,7 @@ const schema = yup
     email: yup
       .string()
       .required("Trường này bắt buộc nhập")
-      .matches(/^S+@S+.S+$/, "Email bạn nhập không hợp lệ"),
+      .matches(/^\S+@\S+\.\S+$/, "Email bạn nhập không hợp lệ"),
     password: yup.string().required("Trường này bắt buộc nhập"),
     rePassword: yup.string().required("Trường này bắt buộc nhập"),
   })
