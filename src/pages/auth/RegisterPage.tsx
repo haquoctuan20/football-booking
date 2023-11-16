@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Container, Form } from "react-bootstrap";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Button, Form } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { WrapperAuth } from "./AuthStyled";
-import { Link } from "react-router-dom";
 
 const schema = yup
   .object({
@@ -26,46 +26,42 @@ const RegisterPage = () => {
     resolver: yupResolver(schema),
   });
 
+  const navigate = useNavigate();
+
   const handleLogin = (params: any) => {
     console.log("🚀 -> handleLogin -> params:", params);
-    alert(JSON.stringify(params));
+    navigate(`/confirm-register`);
   };
 
   return (
     <WrapperAuth>
-      <Container className="container-auth">
-        <div className="left-side"></div>
+      <h4 className="title-auth">Đăng ký</h4>
 
-        <div className="right-side">
-          <h4 className="title-auth">Đăng ký</h4>
+      <Form onSubmit={handleSubmit(handleLogin)}>
+        <div className="label-auth">Email</div>
+        <Form.Control {...register("email")} type="text" />
+        <p className="auth-error">{errors.email?.message}</p>
 
-          <Form onSubmit={handleSubmit(handleLogin)}>
-            <div className="label-auth">Email</div>
-            <Form.Control {...register("email")} type="text" />
-            <p className="auth-error">{errors.email?.message}</p>
+        <div className="label-auth">Mật khẩu</div>
+        <Form.Control {...register("password")} type="password" />
+        <p className="auth-error">{errors.password?.message}</p>
 
-            <div className="label-auth">Mật khẩu</div>
-            <Form.Control {...register("password")} type="password" />
-            <p className="auth-error">{errors.password?.message}</p>
+        <div className="label-auth">Nhập lại mật khẩu</div>
+        <Form.Control {...register("rePassword")} type="password" />
+        <p className="auth-error">{errors.rePassword?.message}</p>
 
-            <div className="label-auth">Nhập lại mật khẩu</div>
-            <Form.Control {...register("rePassword")} type="password" />
-            <p className="auth-error">{errors.rePassword?.message}</p>
+        <br />
 
-            <br />
-
-            <div className="d-flex justify-content-center">
-              <Button variant="light" type="submit">
-                Đăng ký
-              </Button>
-            </div>
-
-            <hr />
-
-            <Link to="/login">Tôi đã có tài khoản</Link>
-          </Form>
+        <div className="d-flex justify-content-center">
+          <Button variant="light" type="submit">
+            Đăng ký
+          </Button>
         </div>
-      </Container>
+
+        <hr />
+
+        <Link to="/login">Tôi đã có tài khoản</Link>
+      </Form>
     </WrapperAuth>
   );
 };
