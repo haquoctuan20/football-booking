@@ -2,7 +2,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { WrapperAuth } from "./AuthStyled";
 
@@ -26,9 +26,11 @@ const RegisterPage = () => {
     resolver: yupResolver(schema),
   });
 
+  const navigate = useNavigate();
+
   const handleLogin = (params: any) => {
     console.log("🚀 -> handleLogin -> params:", params);
-    alert(JSON.stringify(params));
+    navigate(`/confirm-register`);
   };
 
   return (

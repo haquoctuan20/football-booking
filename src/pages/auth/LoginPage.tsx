@@ -30,7 +30,7 @@ const LoginPage = () => {
 
   const handleLogin = (params: any) => {
     console.log("🚀 -> handleLogin -> params:", params);
-    // navigate("/");
+    navigate("/");
   };
 
   return (

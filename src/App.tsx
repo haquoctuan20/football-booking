@@ -7,6 +7,7 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import HomePage from "./pages/home/Home";
 import "react-toastify/dist/ReactToastify.css";
 import AuthLayout from "./components/Layouts/AuthLayout";
+import ConfirmRegister from "./pages/auth/ConfirmRegister";
 
 function App() {
   return (
@@ -40,6 +41,15 @@ function App() {
             element={
               <AuthLayout>
                 <RegisterPage />
+              </AuthLayout>
+            }
+          />
+
+          <Route
+            path="confirm-register/:mail"
+            element={
+              <AuthLayout>
+                <ConfirmRegister />
               </AuthLayout>
             }
           />
