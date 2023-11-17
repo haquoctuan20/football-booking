@@ -46,7 +46,7 @@ function App() {
           />
 
           <Route
-            path="confirm-register/:mail"
+            path="confirm-register"
             element={
               <AuthLayout>
                 <ConfirmRegister />
