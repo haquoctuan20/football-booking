@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { WrapperAuth } from "./AuthStyled";
+import { AccountServices } from "../../datasource/Account";
+import { useAccountStore } from "../../store/useAccountStore";
 
 const schema = yup
   .object({
@@ -28,8 +30,16 @@ const LoginPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigate = useNavigate();
 
+  const setAccount = useAccountStore((state) => state.setAccount);
+
   const handleLogin = (params: any) => {
     console.log("🚀 -> handleLogin -> params:", params);
+    const rs = AccountServices.login();
+    console.log("🚀 - handleLogin - rs: ", rs);
+
+    AccountServices.setAccessToken(rs.accessToken);
+    setAccount({ email: rs.email });
+
     navigate("/");
   };
 
