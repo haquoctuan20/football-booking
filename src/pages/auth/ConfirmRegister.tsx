@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useForm } from "react-hook-form";
-import { WrapperAuth } from "./AuthStyled";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Form } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { useRegisterStore } from "../../store/useRegisterStore";
+import { WrapperAuth } from "./AuthStyled";
 
 const schema = yup
   .object({
@@ -20,6 +21,8 @@ const ConfirmRegister = () => {
     resolver: yupResolver(schema),
   });
 
+  const mailVerify = useRegisterStore((state) => state.mailVerify);
+
   const handleValidateCode = (params: any) => {
     console.log("🚀 -> handleValidateCode -> params:", params);
   };
@@ -27,6 +30,8 @@ const ConfirmRegister = () => {
   return (
     <WrapperAuth>
       <h4 className="title-auth">Xác nhận đăng ký</h4>
+
+      <div>Email: {mailVerify}</div>
 
       <Form onSubmit={handleSubmit(handleValidateCode)}>
         <div className="label-auth">Code</div>

@@ -8,6 +8,7 @@ import HomePage from "./pages/home/Home";
 import "react-toastify/dist/ReactToastify.css";
 import AuthLayout from "./components/Layouts/AuthLayout";
 import ConfirmRegister from "./pages/auth/ConfirmRegister";
+import Profile from "./pages/profile/Profile";
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
 
+          <Route path="profile/:id" element={<Profile />} />
+
           <Route
             path="login"
             element={
@@ -46,7 +49,7 @@ function App() {
           />
 
           <Route
-            path="confirm-register/:mail"
+            path="confirm-register"
             element={
               <AuthLayout>
                 <ConfirmRegister />

@@ -4,6 +4,7 @@ import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { useRegisterStore } from "../../store/useRegisterStore";
 import { WrapperAuth } from "./AuthStyled";
 
 const schema = yup
@@ -27,9 +28,11 @@ const RegisterPage = () => {
   });
 
   const navigate = useNavigate();
+  const setMailVerify = useRegisterStore((state) => state.setMailVerify);
 
   const handleLogin = (params: any) => {
-    console.log("🚀 -> handleLogin -> params:", params);
+    console.log("🚀 - handleLogin - params: ", params);
+    setMailVerify(params.email);
     navigate(`/confirm-register`);
   };
 

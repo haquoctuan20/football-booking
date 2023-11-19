@@ -1,8 +1,20 @@
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Dropdown } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 import styled from "styled-components";
+import Footer from "../Footer";
+import { useAccountStore } from "../../store/useAccountStore";
+import { AccountServices } from "../../datasource/Account";
+import { FaCalendar } from "react-icons/fa";
 
 const MainLayout = () => {
+  const account = useAccountStore((state) => state.account);
+  const resetAccount = useAccountStore((state) => state.resetAccount);
+
+  const handleLogout = () => {
+    resetAccount();
+    AccountServices.logout();
+  };
+
   return (
     <WrapperMainLayout>
       <WrapperNav className="">
@@ -22,11 +34,45 @@ const MainLayout = () => {
               </Link>
             </div>
 
-            <Link to="/login">
-              <Button className="button-login" variant="danger">
-                Login
-              </Button>
-            </Link>
+            <div className="button-setting">
+              {account.email ? (
+                <>
+                  <Dropdown className="h-100 dropdown-setting">
+                    <Dropdown.Toggle
+                      className="h-100"
+                      variant="success"
+                      id="dropdown-basic"
+                    >
+                      {account.email}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Link
+                        className="px-3 py-1 dropdown-item"
+                        to={`/profile/${"123id123"}`}
+                      >
+                        <FaCalendar className="me-2" /> Trang cá nhân
+                      </Link>
+
+                      <Dropdown.Divider />
+
+                      <Dropdown.Item onClick={handleLogout}>
+                        Đăng xuất
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </>
+              ) : (
+                // <Button className="h-100" variant="danger">
+                //   {account.email}
+                // </Button>
+                <Link to="/login">
+                  <Button className="h-100" variant="danger">
+                    Đăng nhập
+                  </Button>
+                </Link>
+              )}
+            </div>
           </div>
         </Container>
       </WrapperNav>
@@ -34,6 +80,8 @@ const MainLayout = () => {
       <div className="main-content">
         <Outlet />
       </div>
+
+      <Footer></Footer>
     </WrapperMainLayout>
   );
 };
@@ -52,22 +100,35 @@ const WrapperNav = styled.div`
   top: 0;
   width: 100%;
 
-  a {
-    color: #fff;
-    font-weight: 600;
-  }
-
   .nav-item {
     display: block;
     height: 40px;
     padding: 10px 20px;
+
+    a {
+      color: #fff;
+      font-weight: 600;
+    }
   }
 
-  .button-login {
-    border: none;
-    border-radius: 0px;
+  .button-setting {
     height: 60px;
     padding: 0px 30px;
+
+    button {
+      border: none;
+      border-radius: 0px;
+    }
+  }
+
+  .dropdown-setting {
+    color: #000;
+  }
+
+  .dropdown-item {
+    color: #000;
+    display: flex;
+    align-items: center;
   }
 `;
 
