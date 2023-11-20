@@ -12,6 +12,7 @@ import Profile from "./pages/profile/Profile";
 import PageLayout from "./components/Layouts/PageLayout";
 import FacilityList from "./pages/FacilityList/FacilityList";
 import "./styles/index.scss";
+import FacilityDetail from "./pages/FacilityDetail/FacilityDetail";
 
 function App() {
   return (
@@ -46,6 +47,15 @@ function App() {
             element={
               <PageLayout title="Tìm sân">
                 <FacilityList />
+              </PageLayout>
+            }
+          />
+
+          <Route
+            path="facility-detail/:id"
+            element={
+              <PageLayout title="Thông tin sân bóng">
+                <FacilityDetail />
               </PageLayout>
             }
           />
