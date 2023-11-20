@@ -10,6 +10,8 @@ import AuthLayout from "./components/Layouts/AuthLayout";
 import ConfirmRegister from "./pages/auth/ConfirmRegister";
 import Profile from "./pages/profile/Profile";
 import PageLayout from "./components/Layouts/PageLayout";
+import FacilityList from "./pages/FacilityList/FacilityList";
+import "./styles/index.scss";
 
 function App() {
   return (
@@ -35,6 +37,15 @@ function App() {
             element={
               <PageLayout title="Trang cá nhân">
                 <Profile />
+              </PageLayout>
+            }
+          />
+
+          <Route
+            path="facilities-list"
+            element={
+              <PageLayout title="Tìm sân">
+                <FacilityList />
               </PageLayout>
             }
           />
