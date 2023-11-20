@@ -25,8 +25,8 @@ const MainLayout = () => {
                 FB LOGO
               </Link>
 
-              <Link to="/" className="nav-item">
-                Title
+              <Link to="/facilities-list" className="nav-item">
+                Tìm sân
               </Link>
 
               <Link to="/" className="nav-item">
@@ -104,10 +104,12 @@ const WrapperNav = styled.div`
     display: block;
     height: 40px;
     padding: 10px 20px;
+    color: #fff;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
 
-    a {
-      color: #fff;
-      font-weight: 600;
+    &:hover {
+      color: #23ce7e;
     }
   }
 

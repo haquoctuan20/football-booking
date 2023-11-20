@@ -9,6 +9,10 @@ import "react-toastify/dist/ReactToastify.css";
 import AuthLayout from "./components/Layouts/AuthLayout";
 import ConfirmRegister from "./pages/auth/ConfirmRegister";
 import Profile from "./pages/profile/Profile";
+import PageLayout from "./components/Layouts/PageLayout";
+import FacilityList from "./pages/FacilityList/FacilityList";
+import "./styles/index.scss";
+import FacilityDetail from "./pages/FacilityDetail/FacilityDetail";
 
 function App() {
   return (
@@ -29,7 +33,32 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
 
-          <Route path="profile/:id" element={<Profile />} />
+          <Route
+            path="profile/:id"
+            element={
+              <PageLayout title="Trang cá nhân">
+                <Profile />
+              </PageLayout>
+            }
+          />
+
+          <Route
+            path="facilities-list"
+            element={
+              <PageLayout title="Tìm sân">
+                <FacilityList />
+              </PageLayout>
+            }
+          />
+
+          <Route
+            path="facility-detail/:id"
+            element={
+              <PageLayout title="Thông tin sân bóng">
+                <FacilityDetail />
+              </PageLayout>
+            }
+          />
 
           <Route
             path="login"
