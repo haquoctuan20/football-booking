@@ -2,8 +2,37 @@ import { useState } from "react";
 import { Button, Col, Row, Tab, Tabs } from "react-bootstrap";
 import styled from "styled-components";
 
+interface TabsProfile {
+  eventKey: string;
+  component: JSX.Element;
+  title: string;
+}
+
+const TabsProfile: TabsProfile[] = [
+  {
+    eventKey: "team",
+    title: "Thông tin đội bóng",
+    component: <>Thông tin đội bóng</>,
+  },
+  {
+    eventKey: "Home",
+    title: "Home",
+    component: <>Tab content for Home</>,
+  },
+  {
+    eventKey: "Contact",
+    title: "Contact",
+    component: <>Tab content for Contact</>,
+  },
+  {
+    eventKey: "About",
+    title: "About",
+    component: <>Tab content for About</>,
+  },
+];
+
 const Profile = () => {
-  const [key, setKey] = useState("home");
+  const [key, setKey] = useState(TabsProfile[0].eventKey);
 
   return (
     <WrapperProfile>
@@ -17,12 +46,15 @@ const Profile = () => {
           </Col>
 
           <Col md={3}>
-            <div>ten ten ten</div>
-            <div>info...</div>
+            <p>Username</p>
+            <p>Email</p>
+            <p>SDT</p>
           </Col>
 
           <Col md={4}>
-            <div>info...</div>
+            <p>Tuổi tác</p>
+            <p>Giới tính</p>
+            <p>Đội bóng</p>
           </Col>
 
           <Col>
@@ -37,15 +69,11 @@ const Profile = () => {
         onSelect={(k) => setKey(k as string)}
         className="mb-3 tabs-list"
       >
-        <Tab eventKey="home" title="Home">
-          Tab content for Home
-        </Tab>
-        <Tab eventKey="profile" title="Profile">
-          Tab content for Profile
-        </Tab>
-        <Tab eventKey="contact" title="Contact">
-          Tab content for Contact
-        </Tab>
+        {TabsProfile.map((tab: TabsProfile, index: number) => (
+          <Tab key={index} eventKey={tab.eventKey} title={tab.title}>
+            {tab.component}
+          </Tab>
+        ))}
       </Tabs>
     </WrapperProfile>
   );
