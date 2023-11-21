@@ -1,18 +1,20 @@
+import "react-datepicker/dist/react-datepicker.css";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import AuthLayout from "./components/Layouts/AuthLayout";
 import MainLayout from "./components/Layouts/MainLayout";
+import PageLayout from "./components/Layouts/PageLayout";
+import Booking from "./pages/Booking/Booking";
+import FacilityDetail from "./pages/FacilityDetail/FacilityDetail";
+import FacilityList from "./pages/FacilityList/FacilityList";
+import ConfirmRegister from "./pages/auth/ConfirmRegister";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import HomePage from "./pages/home/Home";
-import "react-toastify/dist/ReactToastify.css";
-import AuthLayout from "./components/Layouts/AuthLayout";
-import ConfirmRegister from "./pages/auth/ConfirmRegister";
 import Profile from "./pages/profile/Profile";
-import PageLayout from "./components/Layouts/PageLayout";
-import FacilityList from "./pages/FacilityList/FacilityList";
 import "./styles/index.scss";
-import FacilityDetail from "./pages/FacilityDetail/FacilityDetail";
 
 function App() {
   return (
@@ -47,6 +49,15 @@ function App() {
             element={
               <PageLayout title="Tìm sân">
                 <FacilityList />
+              </PageLayout>
+            }
+          />
+
+          <Route
+            path="booking/:id"
+            element={
+              <PageLayout title="Đặt sân">
+                <Booking />
               </PageLayout>
             }
           />

@@ -1,4 +1,5 @@
-import { Carousel } from "react-bootstrap";
+import { Button, Carousel } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const FacilityDetail = () => {
@@ -45,6 +46,10 @@ const FacilityDetail = () => {
       </Carousel>
 
       <div className="mt-5">Thong tin san bong</div>
+
+      <Link to={"/booking/123id123"}>
+        <Button variant="success">Đặt sân</Button>
+      </Link>
     </WrapperFacilityDetail>
   );
 };

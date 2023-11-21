@@ -4,3 +4,17 @@ input {
     box-shadow: 0 0 0 1px #198754;
   }
 }
+
+.react-datepicker-wrapper {
+  input {
+    border: 1px solid #b4b4b4;
+    outline: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+  }
+
+  input:focus {
+    border: 1px solid #198754;
+    box-shadow: 0 0 0 1px #198754;
+  }
+}

@@ -1,4 +1,5 @@
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Facility = () => {
@@ -12,11 +13,23 @@ const Facility = () => {
             className="img-facility"
           />
         </Col>
-        <Col md={8} className="ps-0">
-          <p className="facility-name">ten san bong</p>
-          <p>dia chi</p>
-          <p>gia thue</p>
-          <p>danh gia</p>
+        <Col
+          md={8}
+          className="ps-0 h-100 d-flex justify-content-between align-items-end"
+        >
+          <div className="h-100 d-flex flex-column justify-content-between">
+            <p className="facility-name">ten san bong</p>
+
+            <div>
+              <div>dia chi</div>
+              <div>gia thue</div>
+              <div>danh gia</div>
+            </div>
+          </div>
+
+          <Link to={"/booking/123id123"}>
+            <Button variant="success">Đặt sân</Button>
+          </Link>
         </Col>
       </Row>
     </WrapperFacility>
