@@ -21,12 +21,12 @@ const AuthLayout = (props: AuthLayoutProps) => {
 export default AuthLayout;
 
 const WrapperAuthLayout = styled.div`
-  height: 100%;
+  min-height: calc(100vh - 60px);
   background: linear-gradient(to bottom, #0f1921, #030303);
   color: #fff;
 
   .container-auth {
-    height: 100%;
+    min-height: calc(100vh - 60px);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -37,7 +37,7 @@ const WrapperAuthLayout = styled.div`
     background-image: url("/football-stadium-night-generative-ai.jpg");
     background-size: cover;
     background-position: center;
-    height: 100%;
+    min-height: calc(100vh - 60px);
   }
 
   .right-side {

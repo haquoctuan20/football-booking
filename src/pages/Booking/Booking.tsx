@@ -48,7 +48,7 @@ const Booking = () => {
       >
         {FACILITIES.map((facility: any, index: number) => (
           <SwiperSlide
-            className={`${facility.id === facilitySelect.id ? "active" : ""}`}
+            className={`${facility.id === facilitySelect?.id ? "active" : ""}`}
             key={index}
             onClick={() => handleClickSwiper(facility)}
           >
@@ -61,6 +61,59 @@ const Booking = () => {
 
       <div className="mt-3">Chọn giờ: </div>
       <div>Sân: {facilitySelect ? facilitySelect?.name : ""}</div>
+
+      <div className="container-time">
+        <>
+          <div className="time-block">
+            <div>7:00 - 9:00</div>
+            <div>1000000</div>
+          </div>
+          <div className="time-block">
+            <div>7:00 - 9:00</div>
+            <div>1000000</div>
+          </div>
+          <div className="time-block">
+            <div>7:00 - 9:00</div>
+            <div>1000000</div>
+          </div>
+          <div className="time-block">
+            <div>7:00 - 9:00</div>
+            <div>1000000</div>
+          </div>
+          <div className="time-block">
+            <div>7:00 - 9:00</div>
+            <div>1000000</div>
+          </div>
+          <div className="time-block">
+            <div>7:00 - 9:00</div>
+            <div>1000000</div>
+          </div>
+          <div className="time-block">
+            <div>7:00 - 9:00</div>
+            <div>1000000</div>
+          </div>
+          <div className="time-block">
+            <div>7:00 - 9:00</div>
+            <div>1000000</div>
+          </div>
+          <div className="time-block">
+            <div>7:00 - 9:00</div>
+            <div>1000000</div>
+          </div>
+          <div className="time-block">
+            <div>7:00 - 9:00</div>
+            <div>1000000</div>
+          </div>
+          <div className="time-block">
+            <div>7:00 - 9:00</div>
+            <div>1000000</div>
+          </div>
+          <div className="time-block">
+            <div>7:00 - 9:00</div>
+            <div>1000000</div>
+          </div>
+        </>
+      </div>
     </WrapperBooking>
   );
 };
@@ -98,6 +151,36 @@ const WrapperBooking = styled.div`
 
     &.active {
       border: 1px solid #198754;
+    }
+  }
+
+  .container-time {
+    width: 100%;
+    height: 300px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    padding: 8px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+
+    .time-block {
+      background-color: #fff;
+      width: 120px;
+      height: 60px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+
+      border: 1px solid #f8f8f8;
+      margin: 2px;
+
+      &:hover {
+        border: 1px solid #198754;
+      }
     }
   }
 `;

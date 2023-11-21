@@ -96,6 +96,8 @@ const WrapperNav = styled.div`
   top: 0;
   width: 100%;
 
+  z-index: 1;
+
   .nav-item {
     display: block;
     height: 40px;
@@ -131,10 +133,13 @@ const WrapperNav = styled.div`
 `;
 
 const WrapperMainLayout = styled.div`
+  min-height: 100vh;
+
   .main-content {
     margin-top: 60px;
     width: 100%;
+    /* height: calc(100vh - 60px); */
     min-height: calc(100vh - 60px);
-    height: calc(100vh - 60px);
+    /* height: fit-content; */
   }
 `;
