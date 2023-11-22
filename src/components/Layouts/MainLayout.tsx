@@ -1,10 +1,13 @@
 import { Button, Container, Dropdown } from "react-bootstrap";
+import { BsMenuButtonWideFill } from "react-icons/bs";
+import { ImProfile } from "react-icons/im";
 import { Link, Outlet } from "react-router-dom";
 import styled from "styled-components";
-import Footer from "../Footer";
-import { useAccountStore } from "../../store/useAccountStore";
 import { AccountServices } from "../../datasource/Account";
-import { FaCalendar } from "react-icons/fa";
+import { useAccountStore } from "../../store/useAccountStore";
+import Footer from "../Footer";
+import { IoLogIn } from "react-icons/io5";
+import { IoLogOut } from "react-icons/io5";
 
 const MainLayout = () => {
   const account = useAccountStore((state) => state.account);
@@ -39,6 +42,7 @@ const MainLayout = () => {
                       variant="success"
                       id="dropdown-basic"
                     >
+                      <BsMenuButtonWideFill className="fs-5 me-2" />{" "}
                       {account.email}
                     </Dropdown.Toggle>
 
@@ -47,13 +51,13 @@ const MainLayout = () => {
                         className="px-3 py-1 dropdown-item"
                         to={`/profile/${"123id123"}`}
                       >
-                        <FaCalendar className="me-2" /> Trang cá nhân
+                        <ImProfile className="me-2" /> Trang cá nhân
                       </Link>
 
                       <Dropdown.Divider />
 
                       <Dropdown.Item onClick={handleLogout}>
-                        Đăng xuất
+                        <IoLogOut className="fs-5 me-2" /> Đăng xuất
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
@@ -64,7 +68,7 @@ const MainLayout = () => {
                 // </Button>
                 <Link to="/login">
                   <Button className="h-100" variant="danger">
-                    Đăng nhập
+                    <IoLogIn className="fs-5 me-2" /> Đăng nhập
                   </Button>
                 </Link>
               )}

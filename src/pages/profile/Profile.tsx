@@ -4,21 +4,32 @@ import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import BookingManagement from "./BookingManagement";
 
+import { FaPeopleGroup } from "react-icons/fa6";
+import { AiTwotoneSchedule } from "react-icons/ai";
+
 interface TabsProfile {
   eventKey: string;
   component: JSX.Element;
-  title: string;
+  title: JSX.Element | string;
 }
 
 const TabsProfile: TabsProfile[] = [
   {
     eventKey: "team",
-    title: "Thông tin đội bóng",
+    title: (
+      <>
+        <FaPeopleGroup className="fs-5" /> Thông tin đội bóng
+      </>
+    ),
     component: <>Thông tin đội bóng</>,
   },
   {
     eventKey: "my-booking",
-    title: "Lịch của tôi",
+    title: (
+      <>
+        <AiTwotoneSchedule className="fs-5" /> Lịch của tôi
+      </>
+    ),
     component: <BookingManagement />,
   },
   {

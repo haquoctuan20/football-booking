@@ -1,7 +1,13 @@
-import { Button, Table } from "react-bootstrap";
 import moment from "moment";
-import { WrapperTable } from "../../styles/table";
+import { Button, Table } from "react-bootstrap";
 import styled from "styled-components";
+import { MY_BOOKING } from "../../mock/data";
+import { WrapperTable } from "../../styles/table";
+
+import { BsListStars } from "react-icons/bs";
+import { FaSearchengin } from "react-icons/fa";
+import { ImCancelCircle } from "react-icons/im";
+import { TbSearchOff } from "react-icons/tb";
 
 const BookingManagement = () => {
   return (
@@ -14,33 +20,57 @@ const BookingManagement = () => {
               <th className="min-width-150">Thời gian</th>
               <th className="min-width-250">Địa chỉ</th>
               <th className="min-width-120">Giá</th>
-              <th className="min-width-100">Trạng thái</th>
-              <th className="min-width-100">Đối</th>
-              <th className="min-width-100"></th>
+              <th className="min-width-150">Trạng thái</th>
             </tr>
           </thead>
           <tbody>
-            <tr className="height-120">
-              <td className="min-width-250">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Officiis cupiditate molestiae vero.
-              </td>
-              <td className="min-width-150">
-                {moment(new Date()).format("HH:mm DD/MM/yyyy")}
-              </td>
-              <td className="min-width-250">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Officiis cupiditate molestiae vero.
-              </td>
-              <td className="min-width-120">10.000.000 d</td>
-              <td className="min-width-100">ok</td>
-              <td className="min-width-100">ok</td>
-              <td className="min-width-100 d-flex flex-column align-items-center">
-                <Button size="sm">Huy san</Button>
-                <Button size="sm">Huy san</Button>
-                <Button size="sm">Huy san</Button>
-              </td>
-            </tr>
+            {MY_BOOKING.map((booking: any, index: number) => (
+              <tr key={index} className="height-120 max-height-120">
+                <td className="min-width-250">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Rerum, quasi odio quae nihil nam atque.
+                </td>
+                <td className="min-width-150">
+                  {moment(new Date()).format("HH:mm DD/MM/yyyy")}
+                </td>
+                <td className="min-width-250">Lorem ipsum dolor</td>
+                <td className="min-width-120">10.000.000 d</td>
+                <td className="min-width-150 ">
+                  <div className="d-flex flex-column">
+                    {booking.status === "done" && (
+                      <>
+                        <div className="text-center mb-1">Sẵn sàng tìm đối</div>
+                        <Button size="sm" variant="info" className="fw-bold">
+                          <FaSearchengin className="fs-5" /> Tìm đối
+                        </Button>
+                      </>
+                    )}
+
+                    {booking.status === "find_competitor" && (
+                      <>
+                        <div className="text-center mb-1">Đang tìm đối</div>
+                        <Button size="sm" variant="warning" className="fw-bold">
+                          <TbSearchOff className="fs-5" /> Hủy tìm đối
+                        </Button>
+                      </>
+                    )}
+
+                    {booking.status === "have_competitor" && (
+                      <>
+                        <div className="text-center mb-1">Đã có đối</div>
+                        <Button size="sm" variant="success" className="fw-bold">
+                          <BsListStars className="fs-5" /> Xem đối
+                        </Button>
+                      </>
+                    )}
+
+                    <Button size="sm" variant="danger" className="mt-1">
+                      <ImCancelCircle className="fs-5" /> Hủy sân
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </WrapperTable>

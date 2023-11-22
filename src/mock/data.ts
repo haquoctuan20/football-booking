@@ -98,3 +98,22 @@ export const FACILITIES = [
       "https://fastly.picsum.photos/id/818/900/600.jpg?hmac=6ZVQ7Wnu0PW7i7J_2Z-g4s1IdDaPbbTM1AYM1G1twwA",
   },
 ];
+
+export const MY_BOOKING = [
+  {
+    id: 1,
+    status: "done",
+  },
+  {
+    id: 2,
+    status: "find_competitor",
+  },
+  {
+    id: 3,
+    status: "have_competitor",
+  },
+  {
+    id: 4,
+    status: "done",
+  },
+];

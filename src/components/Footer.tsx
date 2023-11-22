@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { FaCalendar } from "react-icons/fa";
+import { FaFacebookSquare, FaTiktok, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const Footer = () => {
   return (
@@ -26,13 +26,13 @@ const Footer = () => {
         </div>
         <div className="footer-social">
           <a href="#" className="social-icon">
-            <FaCalendar />
+            <FaFacebookSquare />
           </a>
           <a href="#" className="social-icon">
-            <FaCalendar />
+            <FaTiktok />
           </a>
           <a href="#" className="social-icon">
-            <FaCalendar />
+            <FaYoutube />
           </a>
         </div>
       </div>
