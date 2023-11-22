@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Row, Tab, Tabs } from "react-bootstrap";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
+import BookingManagement from "./BookingManagement";
 
 interface TabsProfile {
   eventKey: string;
@@ -15,7 +17,12 @@ const TabsProfile: TabsProfile[] = [
     component: <>Thông tin đội bóng</>,
   },
   {
-    eventKey: "Home",
+    eventKey: "my-booking",
+    title: "Lịch của tôi",
+    component: <BookingManagement />,
+  },
+  {
+    eventKey: "home",
     title: "Home",
     component: <>Tab content for Home</>,
   },
@@ -33,6 +40,33 @@ const TabsProfile: TabsProfile[] = [
 
 const Profile = () => {
   const [key, setKey] = useState(TabsProfile[0].eventKey);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const tabQuery = searchParams.get("tab");
+
+    if (!tabQuery) {
+      setSearchParams({ tab: TabsProfile[0].eventKey });
+      return;
+    }
+
+    const tabCorrect = TabsProfile.find(
+      (tab: TabsProfile) => tab.eventKey === tabQuery
+    );
+
+    if (tabCorrect) {
+      setKey(tabCorrect.eventKey);
+    } else {
+      setSearchParams({ tab: TabsProfile[0].eventKey });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  const handleChangeTabs = (key: string) => {
+    setKey(key);
+    setSearchParams({ tab: key });
+  };
 
   return (
     <WrapperProfile>
@@ -66,7 +100,7 @@ const Profile = () => {
 
       <Tabs
         activeKey={key}
-        onSelect={(k) => setKey(k as string)}
+        onSelect={(k) => handleChangeTabs(k as string)}
         className="mb-3 tabs-list"
       >
         {TabsProfile.map((tab: TabsProfile, index: number) => (

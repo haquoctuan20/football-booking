@@ -18,3 +18,51 @@ input {
     box-shadow: 0 0 0 1px #198754;
   }
 }
+
+//
+
+@for $i from 1 through 1000 {
+  .width-#{$i} {
+    width: ($i + px) !important;
+  }
+
+  .height-#{$i} {
+    height: ($i + px) !important;
+  }
+}
+
+@for $i from 1 through 1000 {
+  .min-width-#{$i} {
+    min-width: ($i + px) !important;
+  }
+
+  .min-height-#{$i} {
+    min-height: ($i + px) !important;
+  }
+}
+
+@for $i from 1 through 1000 {
+  .max-width-#{$i} {
+    max-width: ($i + px) !important;
+  }
+
+  .max-height-#{$i} {
+    max-height: ($i + px) !important;
+  }
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@for $i from 1 through 1000 {
+  .truncate-width-#{$i} {
+    display: inline-block;
+    width: ($i + px) !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
