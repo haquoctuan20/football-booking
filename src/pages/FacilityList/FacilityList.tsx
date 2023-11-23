@@ -1,7 +1,6 @@
 import { Col, Form, Row } from "react-bootstrap";
 import styled from "styled-components";
 import Facility from "./Facility";
-import { Link } from "react-router-dom";
 
 const FacilityList = () => {
   return (
@@ -13,17 +12,11 @@ const FacilityList = () => {
           {/* list facility */}
 
           <div className="mt-4">
-            <Link to={"/facility-detail/123id123"}>
-              <Facility />
-            </Link>
+            <Facility />
 
-            <Link to={"/facility-detail/123id123"}>
-              <Facility />
-            </Link>
+            <Facility />
 
-            <Link to={"/facility-detail/123id123"}>
-              <Facility />
-            </Link>
+            <Facility />
           </div>
         </Col>
 
