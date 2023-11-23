@@ -1,6 +1,7 @@
 import { Col, Form, Row } from "react-bootstrap";
 import styled from "styled-components";
 import Facility from "./Facility";
+import PaginationComponent from "../../components/PaginationComponent";
 
 const FacilityList = () => {
   return (
@@ -22,6 +23,17 @@ const FacilityList = () => {
 
         <Col md={4}>Bộ lọc</Col>
       </Row>
+
+      <div className="mt-2 mb-5">
+        <PaginationComponent
+          activePage={1}
+          total={123}
+          perPage={10}
+          onClick={(page: number) => {
+            console.log("page: ", page);
+          }}
+        />
+      </div>
     </WrapperFacilityList>
   );
 };
