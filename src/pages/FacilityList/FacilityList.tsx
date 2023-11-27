@@ -7,6 +7,8 @@ const FacilityList = () => {
   return (
     <WrapperFacilityList className="mt-3">
       <Row>
+        <Col md={4}>Bộ lọc</Col>
+
         <Col md={8}>
           <Form.Label htmlFor="search">Tìm kiếm</Form.Label>
           <Form.Control type="text" id="search" />
@@ -20,8 +22,6 @@ const FacilityList = () => {
             <Facility />
           </div>
         </Col>
-
-        <Col md={4}>Bộ lọc</Col>
       </Row>
 
       <div className="mt-2 mb-5">

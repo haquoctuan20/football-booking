@@ -54,6 +54,13 @@ const MainLayout = () => {
                         <ImProfile className="me-2" /> Trang cá nhân
                       </Link>
 
+                      <Link
+                        className="px-3 py-1 dropdown-item"
+                        to={`/administrator`}
+                      >
+                        <ImProfile className="me-2" /> Trang quản lý
+                      </Link>
+
                       <Dropdown.Divider />
 
                       <Dropdown.Item onClick={handleLogout}>
