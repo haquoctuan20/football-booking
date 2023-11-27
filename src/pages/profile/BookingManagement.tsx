@@ -12,9 +12,13 @@ import ModalCompetitor from "./ModalCompetitor";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { TabsProfile } from "./Profile";
+import PopoverConfirm from "../../components/PopoverConfirm";
+import LoadingComponent from "../../components/LoadingComponent";
 
 const BookingManagement = () => {
   const [loadingFetchBooking, setLoadingFetchBooking] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const [searchParams] = useSearchParams();
 
   const handleFetchBooking = () => {
@@ -31,6 +35,48 @@ const BookingManagement = () => {
     }
   };
 
+  const handleCancelBooking = () => {
+    try {
+      setLoading(true);
+
+      console.log("Fetching...");
+    } catch (error) {
+      console.log("🚀 - handleFetchBooking - error: ", error);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  };
+
+  const handleCancelFindingCompetitor = () => {
+    try {
+      setLoading(true);
+
+      console.log("Fetching...");
+    } catch (error) {
+      console.log("🚀 - handleFetchBooking - error: ", error);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  };
+
+  const handleStartFindingCompetitor = () => {
+    try {
+      setLoading(true);
+
+      console.log("Fetching...");
+    } catch (error) {
+      console.log("🚀 - handleFetchBooking - error: ", error);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  };
+
   useEffect(() => {
     const tabQuery = searchParams.get("tab");
 
@@ -41,6 +87,8 @@ const BookingManagement = () => {
 
   return (
     <WrapperBookingManagement>
+      {loading && <LoadingComponent />}
+
       {loadingFetchBooking ? (
         <SkeletonRow />
       ) : (
@@ -79,6 +127,7 @@ const BookingManagement = () => {
                               size="sm"
                               variant="info"
                               className="fw-bold"
+                              onClick={handleStartFindingCompetitor}
                             >
                               <FaSearchengin className="fs-5" /> Tìm đối
                             </Button>
@@ -88,13 +137,20 @@ const BookingManagement = () => {
                         {booking.status === "find_competitor" && (
                           <>
                             <div className="text-center mb-1">Đang tìm đối</div>
-                            <Button
-                              size="sm"
-                              variant="warning"
-                              className="fw-bold"
+
+                            <PopoverConfirm
+                              content="Bạn có chắc chắn muốn hủy tìm đối?"
+                              heading="Hủy tìm đối"
+                              callbackConfirm={handleCancelFindingCompetitor}
                             >
-                              <TbSearchOff className="fs-5" /> Hủy tìm đối
-                            </Button>
+                              <Button
+                                size="sm"
+                                variant="warning"
+                                className="fw-bold"
+                              >
+                                <TbSearchOff className="fs-5" /> Hủy tìm đối
+                              </Button>
+                            </PopoverConfirm>
                           </>
                         )}
 
@@ -109,9 +165,15 @@ const BookingManagement = () => {
                           </>
                         )}
 
-                        <Button size="sm" variant="danger" className="mt-1">
-                          <ImCancelCircle className="fs-5" /> Hủy sân
-                        </Button>
+                        <PopoverConfirm
+                          content="Bạn có chắc chắn muốn hủy sân?"
+                          heading="Hủy đặt sân"
+                          callbackConfirm={handleCancelBooking}
+                        >
+                          <Button size="sm" variant="danger" className="mt-1">
+                            <ImCancelCircle className="fs-5" /> Hủy sân
+                          </Button>
+                        </PopoverConfirm>
                       </div>
                     </td>
                   </tr>

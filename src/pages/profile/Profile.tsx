@@ -102,9 +102,10 @@ const Profile = () => {
             <p>Đội bóng</p>
           </Col>
 
-          <Col>
-            <Button>Button</Button>
-            <Button>Button</Button>
+          <Col className="d-flex justify-content-center align-items-center">
+            <Button variant="secondary">
+              <AiTwotoneSchedule className="fs-5" /> Chỉnh sửa
+            </Button>
           </Col>
         </Row>
       </div>

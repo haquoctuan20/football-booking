@@ -18,7 +18,7 @@ const WrapperLoadingComponent = styled.div`
   width: 100%;
   height: 100%;
   background-color: #9191914a;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(4px);
   z-index: 3;
 
   display: flex;
