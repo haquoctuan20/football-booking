@@ -13,7 +13,7 @@ interface TabsProfile {
   title: JSX.Element | string;
 }
 
-const TabsProfile: TabsProfile[] = [
+export const TabsProfile: TabsProfile[] = [
   {
     eventKey: "team",
     title: (
