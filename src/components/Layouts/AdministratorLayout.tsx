@@ -1,33 +1,70 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, matchPath, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigationStore } from "../../store/useNavigationStore";
+import { useEffect, useState } from "react";
+import { RouteTitle, RouteTitleAttribute } from "../../constants/routeTitle";
 
 const AdministratorLayout = () => {
+  const { title, setTitle } = useNavigationStore();
+  const [routeActive, setRouteActive] = useState<RouteTitleAttribute | null>(
+    null
+  );
+
+  const location = useLocation();
+
+  const checkMatchUrl = () => {
+    const match = RouteTitle.find((route: RouteTitleAttribute) => {
+      const isMatch = matchPath(route.path, location.pathname);
+
+      if (isMatch) {
+        return isMatch;
+      }
+    });
+
+    if (match) {
+      setTitle(match.title);
+      setRouteActive(match);
+    }
+  };
+
+  useEffect(() => {
+    checkMatchUrl();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
+
   return (
     <WrapperAdministratorLayout>
       <div className="nav-admin bg-dark text-white">
-        <Link to="/" className="text-white">
+        <Link to="/" className="text-white width-200">
           Trở về trang chủ
         </Link>
+
+        <div>
+          <div className="fw-bold">{title}</div>
+        </div>
       </div>
 
       <div className="admin-main-content ">
         <div className="left-side bg-secondary">
           <ul className="nav flex-column">
-            <li className="nav-item">
-              <Link className="nav-link text-white" to="facility">
-                Quản lý sân
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white" to="#">
-                123 123 123 123
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white" to="#">
-                123 123 123 123
-              </Link>
-            </li>
+            {RouteTitle.map((route: RouteTitleAttribute, index: number) => {
+              if (route.isMenu) {
+                return (
+                  <li
+                    className={`nav-item ${
+                      routeActive && routeActive.parent === route.parent
+                        ? "active"
+                        : ""
+                    }`}
+                    key={index}
+                  >
+                    <Link className="nav-link text-white" to={route.path}>
+                      {route.title}
+                    </Link>
+                  </li>
+                );
+              }
+            })}
           </ul>
         </div>
 
@@ -64,10 +101,12 @@ const WrapperAdministratorLayout = styled.div`
   }
 
   .nav-item {
-    transition: all 0.3s ease-in-out;
-
     &:hover {
       background-color: #198754;
     }
+  }
+
+  .active {
+    background-color: #198754;
   }
 `;

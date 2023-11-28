@@ -105,6 +105,10 @@ function App() {
         {/* administrator */}
         <Route path="/administrator/" element={<AdministratorLayout />}>
           <Route path="facility" element={<FacilityManagement />} />
+          <Route path="facility/edit/:id" element={<>detail - edit</>} />
+          <Route path="facility/create" element={<>create</>} />
+          <Route path="home" element={<>home</>} />
+          <Route path="about" element={<>about</>} />
         </Route>
       </Routes>
     </>
