@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { WrapperAuth } from "./AuthStyled";
-import { AccountServices } from "../../datasource/Account";
-import { useAccountStore } from "../../store/useAccountStore";
-import { useState } from "react";
 import LoadingComponent from "../../components/LoadingComponent";
+import { AccountServices } from "../../datasource/Account";
+import { Account, useAccountStore } from "../../store/useAccountStore";
+import { WrapperAuth } from "./AuthStyled";
+import useNotification from "../../hooks/useNotification";
 
 const schema = yup
   .object({
@@ -27,29 +28,50 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      email: "huyhoang2016bk@gmail.com",
+      password: "123backan",
+    },
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigate = useNavigate();
 
   const setAccount = useAccountStore((state) => state.setAccount);
+  const { handleMessageError } = useNotification();
 
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = (params: any) => {
-    setLoading(true);
+  const handleLogin = async (params: any) => {
+    try {
+      setLoading(true);
+      const { data } = await AccountServices.login(
+        params.email,
+        params.password
+      );
 
-    console.log("🚀 -> handleLogin -> params:", params);
-    const rs = AccountServices.login();
-    console.log("🚀 - handleLogin - rs: ", rs);
+      AccountServices.setAccessToken(data);
 
-    AccountServices.setAccessToken(rs.accessToken);
-    setAccount({ email: rs.email });
+      const {
+        data: { user },
+      } = await AccountServices.getInfoUser();
 
-    setTimeout(() => {
-      setLoading(false);
+      const userData: Account = {
+        bio: user.bio,
+        email: user.email,
+        id: user.id,
+        image: user.image,
+        roles: user.roles,
+        username: user.username,
+      };
+
+      setAccount(userData);
+
       navigate("/");
-    }, 2000);
+    } catch (error) {
+      handleMessageError(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
