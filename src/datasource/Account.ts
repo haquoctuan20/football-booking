@@ -20,14 +20,20 @@ export const AccountServices = {
     return axiosClient.get("/todos/1");
   },
 
-  login: () => {
-    return {
-      email: "test@gmail.com",
-      accessToken: "accessToken",
+  login: (email: string, password: string) => {
+    const user = {
+      email,
+      password,
     };
+
+    return axiosClient.post("/api/users/login", { user });
   },
 
   logout: () => {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
+  },
+
+  getInfoUser: () => {
+    return axiosClient.get("/api/user");
   },
 };

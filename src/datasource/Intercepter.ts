@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
+import { AccountServices } from "./Account";
 
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -7,8 +8,7 @@ const axiosClient = axios.create({
 });
 
 const requestHandler = (request: any) => {
-  //handle get token
-  const authToken = "auth-token";
+  const authToken = AccountServices.getAccessToken();
 
   request.headers = {
     "Access-Control-Allow-Origin": "*",
