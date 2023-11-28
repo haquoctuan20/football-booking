@@ -98,6 +98,12 @@ const WrapperAdministratorLayout = styled.div`
 
   .left-side {
     width: 200px;
+    min-width: 200px;
+  }
+
+  .right-side {
+    flex: 1;
+    overflow: auto;
   }
 
   .nav-item {

@@ -94,12 +94,12 @@ const BookingManagement = () => {
       ) : (
         <>
           <WrapperTable>
-            <Table bordered responsive="xl">
+            <Table bordered responsive="xl" hover>
               <thead>
                 <tr>
                   <th className="min-width-250">Tên sân</th>
                   <th className="min-width-150">Thời gian</th>
-                  <th className="min-width-250">Địa chỉ</th>
+                  <th className="min-width-300">Địa chỉ</th>
                   <th className="min-width-120">Giá</th>
                   <th className="min-width-150">Trạng thái</th>
                 </tr>
@@ -114,7 +114,7 @@ const BookingManagement = () => {
                     <td className="min-width-150">
                       {moment(new Date()).format("HH:mm DD/MM/yyyy")}
                     </td>
-                    <td className="min-width-250">Lorem ipsum dolor</td>
+                    <td className="min-width-300">Lorem ipsum dolor</td>
                     <td className="min-width-120">10.000.000 d</td>
                     <td className="min-width-150 ">
                       <div className="d-flex flex-column">

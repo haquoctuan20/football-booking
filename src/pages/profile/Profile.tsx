@@ -6,6 +6,7 @@ import BookingManagement from "./BookingManagement";
 
 import { FaPeopleGroup } from "react-icons/fa6";
 import { AiTwotoneSchedule } from "react-icons/ai";
+import { faker } from "@faker-js/faker";
 
 interface TabsProfile {
   eventKey: string;
@@ -91,9 +92,9 @@ const Profile = () => {
           </Col>
 
           <Col md={3}>
-            <p>Username</p>
-            <p>Email</p>
-            <p>SDT</p>
+            <p>Tên: {faker.person.fullName()}</p>
+            <p>Email: {faker.internet.email()}</p>
+            <p>SDT: {faker.phone.number()}</p>
           </Col>
 
           <Col md={4}>
