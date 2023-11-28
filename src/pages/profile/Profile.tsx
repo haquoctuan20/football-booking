@@ -6,6 +6,7 @@ import BookingManagement from "./BookingManagement";
 
 import { FaPeopleGroup } from "react-icons/fa6";
 import { AiTwotoneSchedule } from "react-icons/ai";
+import { faker } from "@faker-js/faker";
 
 interface TabsProfile {
   eventKey: string;
@@ -13,7 +14,7 @@ interface TabsProfile {
   title: JSX.Element | string;
 }
 
-const TabsProfile: TabsProfile[] = [
+export const TabsProfile: TabsProfile[] = [
   {
     eventKey: "team",
     title: (
@@ -91,9 +92,9 @@ const Profile = () => {
           </Col>
 
           <Col md={3}>
-            <p>Username</p>
-            <p>Email</p>
-            <p>SDT</p>
+            <p>Tên: {faker.person.fullName()}</p>
+            <p>Email: {faker.internet.email()}</p>
+            <p>SDT: {faker.phone.number()}</p>
           </Col>
 
           <Col md={4}>
@@ -102,9 +103,10 @@ const Profile = () => {
             <p>Đội bóng</p>
           </Col>
 
-          <Col>
-            <Button>Button</Button>
-            <Button>Button</Button>
+          <Col className="d-flex justify-content-center align-items-center">
+            <Button variant="secondary">
+              <AiTwotoneSchedule className="fs-5" /> Chỉnh sửa
+            </Button>
           </Col>
         </Row>
       </div>

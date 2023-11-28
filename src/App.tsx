@@ -15,6 +15,9 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import HomePage from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
 import "./styles/index.scss";
+import AdministratorLayout from "./components/Layouts/AdministratorLayout";
+import FacilityManagement from "./pages/Administrator/FacilityManagement";
+import FacilityPage from "./pages/Administrator/FacilityPage";
 
 function App() {
   return (
@@ -33,6 +36,7 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<MainLayout />}>
+          {/* public */}
           <Route index element={<HomePage />} />
 
           <Route
@@ -71,6 +75,7 @@ function App() {
             }
           />
 
+          {/* auth */}
           <Route
             path="login"
             element={
@@ -96,6 +101,15 @@ function App() {
               </AuthLayout>
             }
           />
+        </Route>
+
+        {/* administrator */}
+        <Route path="/administrator/" element={<AdministratorLayout />}>
+          <Route path="facility" element={<FacilityManagement />} />
+          <Route path="facility/edit/:id" element={<>detail - edit</>} />
+          <Route path="facility/create" element={<FacilityPage />} />
+          <Route path="home" element={<>home</>} />
+          <Route path="about" element={<>about</>} />
         </Route>
       </Routes>
     </>

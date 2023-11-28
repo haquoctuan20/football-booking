@@ -7,6 +7,8 @@ import * as yup from "yup";
 import { WrapperAuth } from "./AuthStyled";
 import { AccountServices } from "../../datasource/Account";
 import { useAccountStore } from "../../store/useAccountStore";
+import { useState } from "react";
+import LoadingComponent from "../../components/LoadingComponent";
 
 const schema = yup
   .object({
@@ -32,7 +34,11 @@ const LoginPage = () => {
 
   const setAccount = useAccountStore((state) => state.setAccount);
 
+  const [loading, setLoading] = useState(false);
+
   const handleLogin = (params: any) => {
+    setLoading(true);
+
     console.log("🚀 -> handleLogin -> params:", params);
     const rs = AccountServices.login();
     console.log("🚀 - handleLogin - rs: ", rs);
@@ -40,11 +46,16 @@ const LoginPage = () => {
     AccountServices.setAccessToken(rs.accessToken);
     setAccount({ email: rs.email });
 
-    navigate("/");
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/");
+    }, 2000);
   };
 
   return (
     <WrapperAuth>
+      {loading && <LoadingComponent />}
+
       <h4 className="title-auth">Đăng nhập</h4>
 
       <Form onSubmit={handleSubmit(handleLogin)}>

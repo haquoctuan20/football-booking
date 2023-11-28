@@ -183,4 +183,7 @@ const WrapperBooking = styled.div`
       }
     }
   }
+  .swiper {
+    z-index: 0;
+  }
 `;
