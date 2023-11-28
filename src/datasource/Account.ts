@@ -1,6 +1,13 @@
 import { ACCESS_TOKEN_KEY } from "../constants/constants";
 import { axiosClient } from "./Intercepter";
 
+export interface accountRegister {
+  username: string;
+  email: string;
+  password: string;
+  role: string;
+}
+
 export const AccountServices = {
   setAccessToken: (token: string) => {
     localStorage.setItem(ACCESS_TOKEN_KEY, token);
@@ -35,5 +42,20 @@ export const AccountServices = {
 
   getInfoUser: () => {
     return axiosClient.get("/api/user");
+  },
+
+  register: (account: accountRegister) => {
+    return axiosClient.post("/api/users", {
+      user: account,
+    });
+  },
+
+  verifyRegister: (email: string, otp: string) => {
+    return axiosClient.post("/api/users/verify", {
+      user: {
+        email,
+        otp,
+      },
+    });
   },
 };

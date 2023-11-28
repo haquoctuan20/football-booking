@@ -21,12 +21,21 @@ const useNotification = () => {
     toast(msg);
   };
 
+  const handleMessageError = (error: any) => {
+    const errorsList = error.response.data.errors.body;
+    if (errorsList) {
+      return toast.error(errorsList.join(" "));
+    }
+    return toast.error("Đã xảy ra lỗi, vui lòng thử lại!");
+  };
+
   return {
     messageSuccess,
     messageInfo,
     messageError,
     messageWarning,
     messageDefault,
+    handleMessageError,
   };
 };
 

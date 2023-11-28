@@ -9,6 +9,7 @@ import LoadingComponent from "../../components/LoadingComponent";
 import { AccountServices } from "../../datasource/Account";
 import { Account, useAccountStore } from "../../store/useAccountStore";
 import { WrapperAuth } from "./AuthStyled";
+import useNotification from "../../hooks/useNotification";
 
 const schema = yup
   .object({
@@ -33,10 +34,10 @@ const LoginPage = () => {
     },
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigate = useNavigate();
 
   const setAccount = useAccountStore((state) => state.setAccount);
+  const { handleMessageError } = useNotification();
 
   const [loading, setLoading] = useState(false);
 
@@ -67,7 +68,7 @@ const LoginPage = () => {
 
       navigate("/");
     } catch (error) {
-      console.log("🚀 -> handleLogin -> error:", error);
+      handleMessageError(error);
     } finally {
       setLoading(false);
     }
