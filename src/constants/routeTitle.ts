@@ -7,7 +7,7 @@ export interface RouteTitleAttribute {
 
 export const RouteTitle: RouteTitleAttribute[] = [
   {
-    title: "Quản lý sân",
+    title: "Quản lý cơ sở",
     path: "/administrator/facility",
     parent: "/administrator/facility",
     isMenu: true,
@@ -19,7 +19,7 @@ export const RouteTitle: RouteTitleAttribute[] = [
     isMenu: false,
   },
   {
-    title: "Tạo sân mới",
+    title: "Tạo cơ sở mới",
     path: "/administrator/facility/create",
     parent: "/administrator/facility",
     isMenu: false,

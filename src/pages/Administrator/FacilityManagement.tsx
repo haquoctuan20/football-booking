@@ -20,7 +20,7 @@ const FacilityManagement = () => {
           to="/administrator/facility/create"
           className="btn btn-success  btn-sm"
         >
-          Tạo sân mới
+          Thêm cơ sở mới
         </Link>
         ----
         <Link
