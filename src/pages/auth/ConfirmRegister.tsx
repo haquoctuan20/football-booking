@@ -26,15 +26,13 @@ const ConfirmRegister = () => {
     resolver: yupResolver(schema),
   });
 
-  const { handleMessageError } = useNotification();
-  const mailVerify = useRegisterStore((state) => state.mailVerify);
+  const { handleMessageError, messageSuccess } = useNotification();
+  const { mailVerify, resetMailVerify } = useRegisterStore((state) => state);
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
   const handleValidateCode = async (params: any) => {
-    console.log("🚀 -> handleValidateCode -> params:", params);
-
     try {
       setLoading(true);
 
@@ -43,8 +41,26 @@ const ConfirmRegister = () => {
         return;
       }
 
-      const rs = await AccountServices.verifyRegister(mailVerify, params.otp);
-      console.log("🚀 -> handleValidateCode -> rs:", rs);
+      const { data } = await AccountServices.verifyRegister(
+        mailVerify,
+        params.otp
+      );
+
+      messageSuccess(data);
+      resetMailVerify();
+      navigate("/login");
+    } catch (error) {
+      handleMessageError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const resendOtp = async () => {
+    try {
+      setLoading(true);
+      await AccountServices.resendOtp(mailVerify as string);
+      messageSuccess("Mã xác nhận đã được gửi lại, vui lòng kiểm tra.");
     } catch (error) {
       handleMessageError(error);
     } finally {
@@ -71,6 +87,12 @@ const ConfirmRegister = () => {
           </Button>
         </div>
       </Form>
+
+      <div>
+        <Button variant="light" onClick={resendOtp}>
+          Gửi lại mã xác nhận
+        </Button>
+      </div>
     </WrapperAuth>
   );
 };

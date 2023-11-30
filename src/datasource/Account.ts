@@ -51,11 +51,17 @@ export const AccountServices = {
   },
 
   verifyRegister: (email: string, otp: string) => {
-    return axiosClient.post("/api/users/verify", {
+    return axiosClient.post("/api/users/verify?action=VERIFY_EMAIL", {
       user: {
         email,
         otp,
       },
     });
+  },
+
+  resendOtp: (email: string) => {
+    return axiosClient.post(
+      `/api/users/send-otp?action=VERIFY_EMAIL&email=${email}`
+    );
   },
 };
