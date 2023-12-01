@@ -17,3 +17,7 @@ export interface CreateFacility {
   ownerId: string;
   fields: FieldInterface[];
 }
+
+export interface IFacility extends CreateFacility {
+  id: string;
+}

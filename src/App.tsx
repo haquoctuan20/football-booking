@@ -18,6 +18,7 @@ import "./styles/index.scss";
 import AdministratorLayout from "./components/Layouts/AdministratorLayout";
 import FacilityManagement from "./pages/Administrator/FacilityManagement";
 import FacilityPage from "./pages/Administrator/FacilityPage";
+import FacilityPrice from "./pages/Administrator/FacilityPrice";
 
 function App() {
   return (
@@ -108,6 +109,7 @@ function App() {
           <Route path="facility" element={<FacilityManagement />} />
           <Route path="facility/edit/:id" element={<>detail - edit</>} />
           <Route path="facility/create" element={<FacilityPage />} />
+          <Route path="facility-price/:id" element={<FacilityPrice />} />
           <Route path="home" element={<>home</>} />
           <Route path="about" element={<>about</>} />
         </Route>

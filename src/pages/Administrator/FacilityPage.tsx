@@ -9,6 +9,7 @@ import useNotification from "../../hooks/useNotification";
 import { useAccountStore } from "../../store/useAccountStore";
 import { FacilityService } from "../../datasource/Factility";
 import MessageError from "../../components/MessageError";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup
   .object({
@@ -37,8 +38,10 @@ const FacilityPage = () => {
     },
   });
 
-  const { messageWarning, handleMessageError } = useNotification();
+  const { messageWarning, handleMessageError, messageSuccess } =
+    useNotification();
   const { account } = useAccountStore();
+  const navigate = useNavigate();
 
   const [fields, setFields] = useState<FieldInterface[]>([]);
   const [fieldTmp, setFieldTmp] = useState<string | null>(null);
@@ -76,8 +79,9 @@ const FacilityPage = () => {
         fields: fields,
       };
 
-      const rs = await FacilityService.createFacility(facilityAdd);
-      console.log("🚀 -> handleAddFacility -> rs:", rs);
+      await FacilityService.createFacility(facilityAdd);
+      messageSuccess("Thêm cơ sở thành công");
+      navigate("/administrator/facility");
     } catch (error) {
       handleMessageError(error);
     }
@@ -139,7 +143,7 @@ const FacilityPage = () => {
         </Form.Group>
 
         <Row>
-          <Col xl={6}>
+          <Col xl={4}>
             <Form.Group className="mb-3" onChange={onChangeField}>
               <Form.Label>Sân trong cơ sở:</Form.Label>
               <div>Loại sân</div>
@@ -164,7 +168,7 @@ const FacilityPage = () => {
             </Button>
           </Col>
 
-          <Col xl={6}>
+          <Col xl={8}>
             <Form.Label>Số sân trong cơ sở</Form.Label>
             <Form.Control {...register("numOfFields")} type="text" disabled />
 
