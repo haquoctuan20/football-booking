@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import * as yup from "yup";
@@ -8,15 +8,16 @@ import { CreateFacility, FieldInterface } from "../../constants/facility";
 import useNotification from "../../hooks/useNotification";
 import { useAccountStore } from "../../store/useAccountStore";
 import { FacilityService } from "../../datasource/Factility";
+import MessageError from "../../components/MessageError";
 
 const schema = yup
   .object({
     name: yup.string().required("Trường này bắt buộc nhập"),
     // address
-    number: yup.string().required("Trường này bắt buộc nhập"),
-    street: yup.string().required("Trường này bắt buộc nhập"),
-    ward: yup.string().required("Trường này bắt buộc nhập"),
-    city: yup.string().required("Trường này bắt buộc nhập"),
+    number: yup.string().required("Thiếu số"),
+    street: yup.string().required("Thiếu tên đường"),
+    ward: yup.string().required("Thiếu phường"),
+    city: yup.string().required("Thiếu thành phố"),
 
     //
     numOfFields: yup.string().required("Trường này bắt buộc nhập"),
@@ -92,64 +93,115 @@ const FacilityPage = () => {
     <WrapperFacilityPage>
       <Container>
         <Form.Group className="mb-3">
-          <Form.Label>Tên cơ sở</Form.Label>
+          <Form.Label>
+            Tên cơ sở <span className="required-field">*</span>
+          </Form.Label>
           <Form.Control {...register("name")} type="text" />
-          <p>{errors.name?.message}</p>
+          <MessageError msg={errors.name?.message} />
         </Form.Group>
 
         <Form.Group className="mb-3">
           <Form.Label>Địa chỉ</Form.Label>
           <br />
+          <Row>
+            <Col xl={3}>
+              <div>
+                Thành phố <span className="required-field">*</span>
+              </div>
+              <Form.Control {...register("city")} type="text" />
+              <MessageError msg={errors.city?.message} />
+            </Col>
 
-          <Form.Label>Thành phố</Form.Label>
-          <Form.Control {...register("city")} type="text" />
-          <p>{errors.city?.message}</p>
+            <Col xl={4}>
+              <div>
+                Phường <span className="required-field">*</span>
+              </div>
+              <Form.Control {...register("ward")} type="text" />
+              <MessageError msg={errors.ward?.message} />
+            </Col>
 
-          <Form.Label>Phường</Form.Label>
-          <Form.Control {...register("ward")} type="text" />
-          <p>{errors.ward?.message}</p>
+            <Col xl={4}>
+              <div>
+                Đường <span className="required-field">*</span>
+              </div>
+              <Form.Control {...register("street")} type="text" />
+              <MessageError msg={errors.street?.message} />
+            </Col>
 
-          <Form.Label>Đường</Form.Label>
-          <Form.Control {...register("street")} type="text" />
-          <p>{errors.street?.message}</p>
-
-          <Form.Label>Số</Form.Label>
-          <Form.Control {...register("number")} type="text" />
-          <p>{errors.number?.message}</p>
-
-          <Form.Label>Số sân trong cơ sở</Form.Label>
-          <Form.Control {...register("numOfFields")} type="text" disabled />
+            <Col xl={1}>
+              <div>
+                Số <span className="required-field">*</span>
+              </div>
+              <Form.Control {...register("number")} type="text" />
+              <MessageError msg={errors.number?.message} />
+            </Col>
+          </Row>
         </Form.Group>
 
-        <Form.Group className="mb-3" onChange={onChangeField}>
-          <Form.Label>Sân trong cơ sở:</Form.Label>
-          <Form.Check
-            label="5x5"
-            name="group1"
-            type="radio"
-            id={`reverse-radio-1`}
-            value={"5x5"}
-          />
-          <Form.Check
-            label="7x7"
-            name="group1"
-            type="radio"
-            id={`reverse-radio-2`}
-            value={"7x7"}
-          />
-        </Form.Group>
+        <Row>
+          <Col xl={6}>
+            <Form.Group className="mb-3" onChange={onChangeField}>
+              <Form.Label>Sân trong cơ sở:</Form.Label>
+              <div>Loại sân</div>
+              <Form.Check
+                label="5x5"
+                name="group1"
+                type="radio"
+                id={`reverse-radio-1`}
+                value={"5x5"}
+              />
+              <Form.Check
+                label="7x7"
+                name="group1"
+                type="radio"
+                id={`reverse-radio-2`}
+                value={"7x7"}
+              />
+            </Form.Group>
 
-        <Button onClick={handleAddField}>Thêm sân</Button>
+            <Button variant="secondary" size="sm" onClick={handleAddField}>
+              Thêm sân
+            </Button>
+          </Col>
 
-        <br />
+          <Col xl={6}>
+            <Form.Label>Số sân trong cơ sở</Form.Label>
+            <Form.Control {...register("numOfFields")} type="text" disabled />
 
-        {fields.map((field: FieldInterface, index: number) => (
-          <div key={index}>
-            <span>Index: {field.index}</span> - Type: <span>{field.type}</span>
-          </div>
-        ))}
+            <div className="table-fields mt-2">
+              {/* {fields.map((field: FieldInterface, index: number) => (
+                <div key={index}>
+                  <span>Index: {field.index}</span> - Type:{" "}
+                  <span>{field.type}</span>
+                </div>
+              ))} */}
 
-        <Button onClick={handleSubmit(handleAddFacility)}>Thêm cơ sở</Button>
+              <Table size="sm">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Loại sân</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {fields.map((field: FieldInterface, index: number) => (
+                    <tr key={index}>
+                      <td>{field.index}</td>
+                      <td>{field.type}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+          </Col>
+        </Row>
+
+        <div className="w-100 text-center mt-5">
+          <Button variant="success" onClick={handleSubmit(handleAddFacility)}>
+            Thêm cơ sở
+          </Button>
+        </div>
       </Container>
     </WrapperFacilityPage>
   );
@@ -157,4 +209,9 @@ const FacilityPage = () => {
 
 export default FacilityPage;
 
-const WrapperFacilityPage = styled.div``;
+const WrapperFacilityPage = styled.div`
+  .table-fields {
+    max-height: 300px;
+    overflow: auto;
+  }
+`;

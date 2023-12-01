@@ -22,7 +22,8 @@ const useNotification = () => {
   };
 
   const handleMessageError = (error: any) => {
-    const errorsList = error.response.data.errors.body;
+    const errorsList = error?.response?.data?.errors?.body;
+
     if (errorsList) {
       return toast.error(errorsList.join(" "));
     }

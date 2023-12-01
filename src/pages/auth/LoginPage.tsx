@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -28,15 +28,11 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: {
-      email: "huyhoang2016bk@gmail.com",
-      password: "123backan",
-    },
   });
 
   const navigate = useNavigate();
 
-  const setAccount = useAccountStore((state) => state.setAccount);
+  const { setAccount, resetAccount } = useAccountStore((state) => state);
   const { handleMessageError } = useNotification();
 
   const [loading, setLoading] = useState(false);
@@ -73,6 +69,11 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    resetAccount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <WrapperAuth>
