@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
-const SkeletonRow = () => {
+interface SkeletonRowProps {
+  className?: string;
+}
+
+const SkeletonRow = ({ className = "" }: SkeletonRowProps) => {
   return (
-    <WrapperSkeletonRow>
+    <WrapperSkeletonRow className={className}>
       <div className="skeleton-row"></div>
       <div className="skeleton-row"></div>
       <div className="skeleton-row"></div>

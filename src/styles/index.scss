@@ -18,6 +18,15 @@ input {
     box-shadow: 0 0 0 1px #198754;
   }
 }
+// form
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0px !important;
+}
+
+.required-field {
+  color: red;
+}
 
 //
 

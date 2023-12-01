@@ -19,10 +19,11 @@ const requestHandler = (request: any) => {
 };
 
 const redirectToLogin = (response: any) => {
-  // if (response?.status === 401 || response?.status === 403) {
-  //   //handle remove token
-  //   window.location = <any>"/login";
-  // }
+  if (response?.status === 401) {
+    //handle remove token
+    window.location = <any>"/login";
+    AccountServices.logout();
+  }
 };
 
 const errorHandler = (error: any) => {

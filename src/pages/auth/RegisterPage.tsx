@@ -35,12 +35,6 @@ const RegisterPage = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: {
-      username: "tuancons1s",
-      email: "tuancons1s@mail1s.com",
-      password: "tuancons1s",
-      role: ROLES.user,
-    },
   });
 
   const navigate = useNavigate();

@@ -1,5 +1,6 @@
 import { ACCESS_TOKEN_KEY } from "../constants/constants";
 import { axiosClient } from "./Intercepter";
+import { axiosAuth } from "./IntercepterAuth";
 
 export interface accountRegister {
   username: string;
@@ -33,7 +34,7 @@ export const AccountServices = {
       password,
     };
 
-    return axiosClient.post("/api/users/login", { user });
+    return axiosAuth.post("/api/users/login", { user });
   },
 
   logout: () => {
@@ -45,13 +46,13 @@ export const AccountServices = {
   },
 
   register: (account: accountRegister) => {
-    return axiosClient.post("/api/users", {
+    return axiosAuth.post("/api/users", {
       user: account,
     });
   },
 
   verifyRegister: (email: string, otp: string) => {
-    return axiosClient.post("/api/users/verify?action=VERIFY_EMAIL", {
+    return axiosAuth.post("/api/users/verify?action=VERIFY_EMAIL", {
       user: {
         email,
         otp,
@@ -60,7 +61,7 @@ export const AccountServices = {
   },
 
   resendOtp: (email: string) => {
-    return axiosClient.post(
+    return axiosAuth.post(
       `/api/users/send-otp?action=VERIFY_EMAIL&email=${email}`
     );
   },
