@@ -39,52 +39,54 @@ const FacilityList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
+  if (!accessToken) {
+    return (
+      <WrapperFacilityList className="mt-3">
+        Vui lòng đăng nhập để sử dụng tính năng này
+      </WrapperFacilityList>
+    );
+  }
+
   return (
     <WrapperFacilityList className="mt-3">
-      {accessToken ? (
-        <>
-          <Row>
-            <Col md={4}>
-              <Form.Label>Bộ lọc</Form.Label>
-            </Col>
+      <Row>
+        <Col md={4}>
+          <Form.Label>Bộ lọc</Form.Label>
+        </Col>
 
-            <Col md={8}>
-              <Form.Label htmlFor="search">Tìm kiếm</Form.Label>
-              <Form.Control type="text" id="search" />
-              {/* list facility */}
+        <Col md={8}>
+          <Form.Label htmlFor="search">Tìm kiếm</Form.Label>
+          <Form.Control type="text" id="search" />
+          {/* list facility */}
 
-              {loading ? (
-                <>
-                  <SkeletonRow className="mt-4 mb-5" />
-                  <SkeletonRow className="mb-5" />
-                  <SkeletonRow className="mb-5" />
-                  <SkeletonRow className="mb-5" />
-                  <SkeletonRow className="mb-5" />
-                  <SkeletonRow />
-                </>
-              ) : (
-                <div className="mt-4">
-                  {facilities.map((fac: IFacility, index: number) => (
-                    <Facility key={index} {...fac} />
-                  ))}
-                </div>
-              )}
-            </Col>
-          </Row>
-          <div className="mt-2 mb-5">
-            <PaginationComponent
-              activePage={1}
-              total={123}
-              perPage={10}
-              onClick={(page: number) => {
-                console.log("page: ", page);
-              }}
-            />
-          </div>
-        </>
-      ) : (
-        <>Vui lòng đăng nhập để sử dụng tính năng này</>
-      )}
+          {loading ? (
+            <>
+              <SkeletonRow className="mt-4 mb-5" />
+              <SkeletonRow className="mb-5" />
+              <SkeletonRow className="mb-5" />
+              <SkeletonRow className="mb-5" />
+              <SkeletonRow className="mb-5" />
+              <SkeletonRow />
+            </>
+          ) : (
+            <div className="mt-4">
+              {facilities.map((fac: IFacility, index: number) => (
+                <Facility key={index} {...fac} />
+              ))}
+            </div>
+          )}
+        </Col>
+      </Row>
+      <div className="mt-2 mb-5">
+        <PaginationComponent
+          activePage={1}
+          total={123}
+          perPage={10}
+          onClick={(page: number) => {
+            console.log("page: ", page);
+          }}
+        />
+      </div>
     </WrapperFacilityList>
   );
 };

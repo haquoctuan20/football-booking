@@ -118,7 +118,7 @@ const FacilityPrice = () => {
       messageSuccess("Thêm bảng giá thành công");
       handleGetPriceByFacilityById(id);
     } catch (error) {
-      console.log("🚀 -> handleAddPrice -> error:", error);
+      handleMessageError(error);
     } finally {
       setLoading(false);
     }
@@ -178,9 +178,7 @@ const FacilityPrice = () => {
 
           <Col lg={4}>
             <Form.Label>Thời gian:</Form.Label>
-            <MessageError
-              msg={errors.startAtTime?.message || errors.endAtTime?.message}
-            />
+            <MessageError msg={errors.startAtTime?.message || errors.endAtTime?.message} />
 
             <div>Bắt đầu</div>
             <ReactDatePicker
@@ -213,9 +211,7 @@ const FacilityPrice = () => {
 
           <Col lg={4}>
             <Form.Label>Bảng giá:</Form.Label>
-            <MessageError
-              msg={errors.amount?.message || errors.specialAmount?.message}
-            />
+            <MessageError msg={errors.amount?.message || errors.specialAmount?.message} />
             {/* <MessageError msg={errors.specialAmount?.message} /> */}
 
             <div>amount</div>
@@ -256,15 +252,11 @@ const FacilityPrice = () => {
                       <td>{price?.fieldType}</td>
                       <td>
                         {price?.startAt?.hour}:
-                        {price?.startAt?.minute === 0
-                          ? "00"
-                          : price?.startAt?.minute}
+                        {price?.startAt?.minute === 0 ? "00" : price?.startAt?.minute}
                       </td>
                       <td>
                         {price?.endAt?.hour}:
-                        {price?.endAt?.minute === 0
-                          ? "00"
-                          : price?.endAt?.minute}
+                        {price?.endAt?.minute === 0 ? "00" : price?.endAt?.minute}
                       </td>
 
                       <td>{price?.amount}</td>

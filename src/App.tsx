@@ -67,14 +67,14 @@ function App() {
             }
           />
 
-          <Route
+          {/* <Route
             path="facility-detail/:id"
             element={
               <PageLayout title="Thông tin sân bóng">
                 <FacilityDetail />
               </PageLayout>
             }
-          />
+          /> */}
 
           {/* auth */}
           <Route

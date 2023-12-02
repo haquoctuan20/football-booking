@@ -3,6 +3,10 @@ export interface FieldInterface {
   type: string;
 }
 
+export interface IField extends FieldInterface {
+  id: string;
+}
+
 interface AddressFacility {
   number: string;
   street: string;
