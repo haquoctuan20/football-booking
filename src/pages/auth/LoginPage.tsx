@@ -58,6 +58,7 @@ const LoginPage = () => {
         image: user.image,
         roles: user.roles,
         username: user.username,
+        accessToken: data,
       };
 
       setAccount(userData);

@@ -9,6 +9,7 @@ export interface Account {
   image: string;
   roles: string | null;
   username: string;
+  accessToken: string | null;
 }
 
 const initAccount: Account = {
@@ -18,6 +19,7 @@ const initAccount: Account = {
   image: "",
   roles: "",
   username: "",
+  accessToken: null,
 };
 
 interface AccountState {

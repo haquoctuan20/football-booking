@@ -10,6 +10,7 @@ import { useAccountStore } from "../../store/useAccountStore";
 import { FacilityService } from "../../datasource/Factility";
 import MessageError from "../../components/MessageError";
 import { useNavigate } from "react-router-dom";
+import LoadingComponent from "../../components/LoadingComponent";
 
 const schema = yup
   .object({
@@ -45,6 +46,7 @@ const FacilityPage = () => {
 
   const [fields, setFields] = useState<FieldInterface[]>([]);
   const [fieldTmp, setFieldTmp] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const onChangeField = (e: any) => {
     setFieldTmp(e.target.value);
@@ -66,6 +68,8 @@ const FacilityPage = () => {
 
   const handleAddFacility = async (params: any) => {
     try {
+      setLoading(true);
+
       const facilityAdd: CreateFacility = {
         name: params.name,
         address: {
@@ -84,6 +88,8 @@ const FacilityPage = () => {
       navigate("/administrator/facility");
     } catch (error) {
       handleMessageError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -95,6 +101,8 @@ const FacilityPage = () => {
 
   return (
     <WrapperFacilityPage>
+      {loading && <LoadingComponent />}
+
       <Container>
         <Form.Group className="mb-3">
           <Form.Label>

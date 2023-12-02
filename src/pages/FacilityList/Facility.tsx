@@ -1,8 +1,11 @@
 import { Button, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { IFacility } from "../../constants/facility";
 
-const Facility = () => {
+interface FacilityProps extends IFacility {}
+
+const Facility = (props: FacilityProps) => {
   return (
     <WrapperFacility>
       <Row className="h-100">
@@ -13,25 +16,26 @@ const Facility = () => {
             className="img-facility"
           />
         </Col>
-        <Col
-          md={8}
-          className="ps-0 h-100 d-flex flex-column justify-content-between"
-        >
+        <Col md={8} className="ps-0 h-100 d-flex flex-column justify-content-between">
           <div>
-            <Link to={"/booking/123id123"} className="facility-name">
-              Sân bóng 123
+            <Link to={`/booking/${props.id}`} className="facility-name">
+              {props?.name}
             </Link>
             <div>
-              <strong>Địa chỉ: </strong> Đường Tân Mai - Tân Mai, Quận Hoàng
-              Mai, Hà Nội
+              <strong>Địa chỉ: </strong> {props?.address?.number} {props?.address?.street},{" "}
+              {props?.address?.ward}, {props?.address?.city}
             </div>
             <div>
-              <strong>Giá tham khảo: </strong>{" "}
-              <span className="price">400.000₫ - 900.000₫ </span>/ Trận
+              <strong>Số sân: </strong> {props?.numOfFields}
             </div>
+
+            {/* <div>
+              <strong>Giá tham khảo: </strong> <span className="price">400.000₫ - 900.000₫ </span>/
+              Trận
+            </div> */}
           </div>
 
-          <Link to={"/booking/123id123"}>
+          <Link to={`/booking/${props.id}`}>
             <Button size="sm" variant="outline-success">
               Xem chi tiết | Đặt sân
             </Button>
@@ -45,7 +49,7 @@ const Facility = () => {
 export default Facility;
 
 const WrapperFacility = styled.div`
-  height: 200px;
+  height: 180px;
   width: 100%;
   border: 1px solid #dee2e6;
   border-radius: 8px;
