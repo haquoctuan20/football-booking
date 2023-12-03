@@ -1,5 +1,5 @@
 import moment from "moment";
-import { Button, Table } from "react-bootstrap";
+import { Button, Form, Table } from "react-bootstrap";
 import styled from "styled-components";
 import { MY_BOOKING } from "../../mock/data";
 import { WrapperTable } from "../../styles/table";
@@ -14,24 +14,32 @@ import { useSearchParams } from "react-router-dom";
 import { TabsProfile } from "./Profile";
 import PopoverConfirm from "../../components/PopoverConfirm";
 import LoadingComponent from "../../components/LoadingComponent";
+import { useAccountStore } from "../../store/useAccountStore";
+import { BookingService } from "../../datasource/Booking";
+import useNotification from "../../hooks/useNotification";
+import { formatCurrency } from "../../utils/number";
 
 const BookingManagement = () => {
+  const { account } = useAccountStore();
+  const { handleMessageError, messageSuccess } = useNotification();
+
   const [loadingFetchBooking, setLoadingFetchBooking] = useState(false);
+  const [myBooking, setMyBooking] = useState([]);
+
   const [loading, setLoading] = useState(false);
 
   const [searchParams] = useSearchParams();
 
-  const handleFetchBooking = () => {
+  const handleFetchBooking = async () => {
     try {
       setLoadingFetchBooking(true);
 
-      console.log("Fetching...");
+      const { data } = await BookingService.getMyBooking(account.id);
+      setMyBooking(data);
     } catch (error) {
-      console.log("🚀 - handleFetchBooking - error: ", error);
+      handleMessageError(error);
     } finally {
-      setTimeout(() => {
-        setLoadingFetchBooking(false);
-      }, 1000);
+      setLoadingFetchBooking(false);
     }
   };
 
@@ -63,11 +71,13 @@ const BookingManagement = () => {
     }
   };
 
-  const handleStartFindingCompetitor = () => {
+  const handleStartFindingCompetitor = async (bookingId: string) => {
     try {
       setLoading(true);
 
-      console.log("Fetching...");
+      await BookingService.switchStatusBooking(bookingId);
+      messageSuccess("Thay đổi trạng thái tìm đối thành công");
+      handleFetchBooking();
     } catch (error) {
       console.log("🚀 - handleFetchBooking - error: ", error);
     } finally {
@@ -97,32 +107,50 @@ const BookingManagement = () => {
             <Table bordered responsive="xl" hover>
               <thead>
                 <tr>
-                  <th className="min-width-250">Tên sân</th>
-                  <th className="min-width-150">Thời gian</th>
-                  <th className="min-width-300">Địa chỉ</th>
+                  <th className="min-width-250">Thời gian</th>
+                  <th className="min-width-80">Số sân</th>
                   <th className="min-width-120">Giá</th>
+                  <th className="min-width-150">Trạng thái tìm đối</th>
                   <th className="min-width-150">Trạng thái</th>
                 </tr>
               </thead>
               <tbody>
-                {MY_BOOKING.map((booking: any, index: number) => (
-                  <tr key={index} className="height-120 max-height-120">
+                {myBooking.map((booking: any, index: number) => (
+                  <tr key={index} className="height-80 max-height-120">
                     <td className="min-width-250">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Rerum, quasi odio quae nihil nam atque.
+                      {`${booking?.startAt?.hour}:${
+                        booking?.startAt?.minute === 0 ? "00" : booking?.startAt?.minute
+                      } - ${booking?.endAt?.hour}:${
+                        booking?.endAt?.minute === 0 ? "00" : booking?.endAt?.minute
+                      }, ${moment(booking?.date).format("DD-MM-YYYY")}`}
                     </td>
+
+                    <td className="min-width-80">{booking?.fieldIndex}</td>
+
+                    <td className="min-width-120">{formatCurrency(booking?.price)}</td>
+
                     <td className="min-width-150">
-                      {moment(new Date()).format("HH:mm DD/MM/yyyy")}
+                      <div className="d-flex flex-column align-items-center">
+                        <div className="text-center mb-1">
+                          {booking?.hasOpponent ? "Đang tìm đối" : "Sẵn sàng tìm đối"}{" "}
+                        </div>
+                        <Form.Check
+                          type="switch"
+                          id="hasOpponent-switch"
+                          checked={booking?.hasOpponent}
+                          label={booking?.hasOpponent ? "Tắt tìm đối" : "Bật tìm đối"}
+                          onChange={() => {
+                            handleStartFindingCompetitor(booking?.id);
+                          }}
+                        />
+                      </div>
                     </td>
-                    <td className="min-width-300">Lorem ipsum dolor</td>
-                    <td className="min-width-120">10.000.000 d</td>
+
                     <td className="min-width-150 ">
                       <div className="d-flex flex-column">
-                        {booking.status === "done" && (
+                        {/* {booking.status === "done" && (
                           <>
-                            <div className="text-center mb-1">
-                              Sẵn sàng tìm đối
-                            </div>
+                            <div className="text-center mb-1">Sẵn sàng tìm đối</div>
                             <Button
                               size="sm"
                               variant="info"
@@ -132,9 +160,9 @@ const BookingManagement = () => {
                               <FaSearchengin className="fs-5" /> Tìm đối
                             </Button>
                           </>
-                        )}
+                        )} */}
 
-                        {booking.status === "find_competitor" && (
+                        {/* {booking.status === "find_competitor" && (
                           <>
                             <div className="text-center mb-1">Đang tìm đối</div>
 
@@ -143,16 +171,12 @@ const BookingManagement = () => {
                               heading="Hủy tìm đối"
                               callbackConfirm={handleCancelFindingCompetitor}
                             >
-                              <Button
-                                size="sm"
-                                variant="warning"
-                                className="fw-bold"
-                              >
+                              <Button size="sm" variant="warning" className="fw-bold">
                                 <TbSearchOff className="fs-5" /> Hủy tìm đối
                               </Button>
                             </PopoverConfirm>
                           </>
-                        )}
+                        )} */}
 
                         {booking.status === "have_competitor" && (
                           <>
@@ -165,7 +189,7 @@ const BookingManagement = () => {
                           </>
                         )}
 
-                        <PopoverConfirm
+                        {/* <PopoverConfirm
                           content="Bạn có chắc chắn muốn hủy sân?"
                           heading="Hủy đặt sân"
                           callbackConfirm={handleCancelBooking}
@@ -173,7 +197,7 @@ const BookingManagement = () => {
                           <Button size="sm" variant="danger" className="mt-1">
                             <ImCancelCircle className="fs-5" /> Hủy sân
                           </Button>
-                        </PopoverConfirm>
+                        </PopoverConfirm> */}
                       </div>
                     </td>
                   </tr>

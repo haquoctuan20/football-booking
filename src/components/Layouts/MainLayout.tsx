@@ -37,27 +37,16 @@ const MainLayout = () => {
               {account.email ? (
                 <>
                   <Dropdown className="h-100 dropdown-setting">
-                    <Dropdown.Toggle
-                      className="h-100"
-                      variant="success"
-                      id="dropdown-basic"
-                    >
-                      <BsMenuButtonWideFill className="fs-5 me-2" />{" "}
-                      {account.email}
+                    <Dropdown.Toggle className="h-100" variant="success" id="dropdown-basic">
+                      <BsMenuButtonWideFill className="fs-5 me-2" /> {account.email}
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Link
-                        className="px-3 py-1 dropdown-item"
-                        to={`/profile/${"123id123"}`}
-                      >
+                      <Link className="px-3 py-1 dropdown-item" to={`/profile/${account.id}`}>
                         <ImProfile className="me-2" /> Trang cá nhân
                       </Link>
 
-                      <Link
-                        className="px-3 py-1 dropdown-item"
-                        to={`/administrator`}
-                      >
+                      <Link className="px-3 py-1 dropdown-item" to={`/administrator`}>
                         <ImProfile className="me-2" /> Trang quản lý
                       </Link>
 
@@ -96,8 +85,7 @@ const MainLayout = () => {
 export default MainLayout;
 
 const WrapperNav = styled.div`
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 
   height: 60px;
   background-color: #1c1c1c;

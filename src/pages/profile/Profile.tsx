@@ -7,6 +7,7 @@ import BookingManagement from "./BookingManagement";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { AiTwotoneSchedule } from "react-icons/ai";
 import { faker } from "@faker-js/faker";
+import { useAccountStore } from "../../store/useAccountStore";
 
 interface TabsProfile {
   eventKey: string;
@@ -51,6 +52,8 @@ export const TabsProfile: TabsProfile[] = [
 ];
 
 const Profile = () => {
+  const { account } = useAccountStore();
+
   const [key, setKey] = useState(TabsProfile[0].eventKey);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -62,9 +65,7 @@ const Profile = () => {
       return;
     }
 
-    const tabCorrect = TabsProfile.find(
-      (tab: TabsProfile) => tab.eventKey === tabQuery
-    );
+    const tabCorrect = TabsProfile.find((tab: TabsProfile) => tab.eventKey === tabQuery);
 
     if (tabCorrect) {
       setKey(tabCorrect.eventKey);
@@ -92,15 +93,15 @@ const Profile = () => {
           </Col>
 
           <Col md={3}>
-            <p>Tên: {faker.person.fullName()}</p>
-            <p>Email: {faker.internet.email()}</p>
+            <p>Tên: {account.username}</p>
+            <p>Email: {account.email}</p>
             <p>SDT: {faker.phone.number()}</p>
           </Col>
 
           <Col md={4}>
-            <p>Tuổi tác</p>
+            {/* <p>Tuổi tác</p>
             <p>Giới tính</p>
-            <p>Đội bóng</p>
+            <p>Đội bóng</p> */}
           </Col>
 
           <Col className="d-flex justify-content-center align-items-center">
