@@ -16,4 +16,12 @@ export const BookingService = {
   switchStatusBooking: (bookingId: string) => {
     return axiosBooking.post("/booking/switchStatus", { bookingId });
   },
+
+  getMatchingRequest: () => {
+    return axiosBooking.post("/booking/getBooking", {});
+  },
+
+  matchingRequest: (bookingId: string) => {
+    return axiosBooking.post("/booking/matchingRequest", { bookingId });
+  },
 };

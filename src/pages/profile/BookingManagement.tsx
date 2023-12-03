@@ -132,7 +132,7 @@ const BookingManagement = () => {
                     <td className="min-width-150">
                       <div className="d-flex flex-column align-items-center">
                         <div className="text-center mb-1">
-                          {booking?.hasOpponent ? "Đang tìm đối" : "Sẵn sàng tìm đối"}{" "}
+                          {booking?.hasOpponent ? "Đang tìm đối" : "Sẵn sàng tìm đối"}
                         </div>
                         <Form.Check
                           type="switch"

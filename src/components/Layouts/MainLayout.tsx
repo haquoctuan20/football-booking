@@ -31,6 +31,10 @@ const MainLayout = () => {
               <Link to="/facilities-list" className="nav-item">
                 Tìm sân
               </Link>
+
+              <Link to="/matching-request" className="nav-item">
+                Tìm đối
+              </Link>
             </div>
 
             <div className="button-setting">

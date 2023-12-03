@@ -19,6 +19,7 @@ import AdministratorLayout from "./components/Layouts/AdministratorLayout";
 import FacilityManagement from "./pages/Administrator/FacilityManagement";
 import FacilityPage from "./pages/Administrator/FacilityPage";
 import FacilityPrice from "./pages/Administrator/FacilityPrice";
+import MatchingRequest from "./pages/MatchingRequest/MatchingRequest";
 
 function App() {
   return (
@@ -54,6 +55,15 @@ function App() {
             element={
               <PageLayout title="Tìm sân">
                 <FacilityList />
+              </PageLayout>
+            }
+          />
+
+          <Route
+            path="matching-request"
+            element={
+              <PageLayout title="Tìm đối">
+                <MatchingRequest />
               </PageLayout>
             }
           />
