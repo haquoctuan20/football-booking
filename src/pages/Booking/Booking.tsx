@@ -12,7 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import moment from "moment";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -210,7 +210,11 @@ const Booking = () => {
         {facility?.address.city}
       </p>
 
-      <Form.Label>Thời gian muốn đặt sân:</Form.Label>
+      <Link to={`/matching-request?facilityId=${facility?.id}`}>
+        <p>Xem danh sách đối trong cơ sở</p>
+      </Link>
+
+      <Form.Label>Đặt sân:</Form.Label>
       <div className="d-flex justify-content-start align-items-end">
         <div className="me-2">
           <div className="my-1">Ngày: </div>
@@ -342,6 +346,20 @@ const Booking = () => {
           </Button>
         </div>
       </div>
+
+      <div className="my-5">
+        <div>
+          <Form.Label>Đánh giá: </Form.Label> {facility?.rating}
+        </div>
+        <Form.Label>Bình luận:</Form.Label>
+
+        {facility?.comments?.map((comment: any, index: number) => (
+          <div className="facility-comment" key={index}>
+            <div>Một người dùng đã đánh giá {comment?.rating} sao</div>
+            <div className="facility-comment__body">{comment?.body}</div>
+          </div>
+        ))}
+      </div>
     </WrapperBooking>
   );
 };
@@ -397,5 +415,18 @@ const WrapperBooking = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+  }
+
+  .facility-comment {
+    background-color: #f3f3f3;
+    padding: 8px;
+    margin: 8px 16px;
+    border-radius: 8px;
+
+    width: fit-content;
+
+    &__body {
+      padding-left: 12px;
+    }
   }
 `;

@@ -24,4 +24,6 @@ export interface CreateFacility {
 
 export interface IFacility extends CreateFacility {
   id: string;
+  rating?: number | string;
+  comments?: any[];
 }
