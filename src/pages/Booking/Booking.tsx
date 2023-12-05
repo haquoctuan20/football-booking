@@ -10,7 +10,7 @@ import { Navigation, Pagination } from "swiper/modules";
 // Import Swiper styles
 import { yupResolver } from "@hookform/resolvers/yup";
 import moment from "moment";
-import { Button, Form } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "swiper/css";
@@ -26,12 +26,11 @@ import useNotification from "../../hooks/useNotification";
 import { useAccountStore } from "../../store/useAccountStore";
 import { roundToNearestHalfHour } from "../../utils/dateTime";
 import LoadingComponent from "../../components/LoadingComponent";
+import { formatCurrency } from "../../utils/number";
 
 const schema = yup
   .object({
     date: yup.date().required("Trường này bắt buộc nhập"),
-    startAtTime: yup.date().required("Trường này bắt buộc nhập"),
-    endAtTime: yup.date().required("Trường này bắt buộc nhập"),
   })
   .required();
 
@@ -48,13 +47,11 @@ const Booking = () => {
   });
 
   const date = watch("date");
-  const startAtTime = watch("startAtTime");
-  const endAtTime = watch("endAtTime");
 
   const {
     account: { accessToken, id: idUser },
   } = useAccountStore();
-  const { handleMessageError } = useNotification();
+  const { handleMessageError, messageSuccess } = useNotification();
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -62,20 +59,47 @@ const Booking = () => {
   const [facility, setFacility] = useState<IFacility>();
   const [loadingFetching, setLoadingFetching] = useState(false);
 
-  const [fields, setFields] = useState<IField[]>([]);
+  const [fieldType, setFieldType] = useState<string | null>("5x5");
+
+  const [prices, setPrices] = useState([]);
+  const [loadingGetPrice, setLoadingGetPrice] = useState(false);
+
+  const [fields, setFields] = useState([]);
   const [loadingFetchFields, setLoadingFetchFields] = useState(false);
 
   const [fieldSelect, setFieldSelect] = useState<any>(null);
+  const [priceSelect, setPriceSelect] = useState<any>(null);
 
   const [loadingCreate, setLoadingCreate] = useState(false);
 
-  const handleClickSwiper = (facility: any) => {
-    if (fieldSelect && facility.id === fieldSelect.id) {
-      setFieldSelect(null);
+  const handleSelectFieldType = (value: any) => {
+    setFieldType(value.target.value);
+    setFieldSelect(null);
+    setPriceSelect(null);
+    setFields([]);
+  };
+
+  const handleClickSwiper = (price: any) => {
+    if (priceSelect && price.id === priceSelect.id) {
       return;
     }
 
-    setFieldSelect(facility);
+    setPriceSelect(price);
+    setFieldSelect(null);
+
+    const paramsGetAvailableFields = {
+      facilityId: id,
+      startAt: price?.startAt,
+      endAt: price?.endAt,
+      date: moment(date).format("yyyy-MM-DD"),
+    };
+
+    handleGetAvailableFields(paramsGetAvailableFields);
+  };
+
+  const handleSelectField = (field: any) => {
+    console.log("🚀 - handleSelectField - field: ", field);
+    setFieldSelect(field);
   };
 
   const handleGetFacilityById = async (id: string) => {
@@ -91,43 +115,23 @@ const Booking = () => {
     }
   };
 
-  const handleChangeTime = (dateValue: Date | null, type: "date" | "startAtTime" | "endAtTime") => {
+  const handleChangeTime = (dateValue: Date | null, type: "date") => {
     if (!dateValue) {
       return;
     }
 
-    // reset field select when change filter
     setFieldSelect(null);
-
-    if (type === "startAtTime") {
-      setValue(type, dateValue);
-      const endTime = moment(dateValue).add(90, "minutes");
-      setValue("endAtTime", moment(endTime).toDate());
-      return;
-    }
+    setPriceSelect(null);
 
     setValue(type, dateValue);
   };
 
-  const handleGetAvailableFields = async () => {
+  const handleGetAvailableFields = async (params: any) => {
     try {
       setLoadingFetchFields(true);
-      const paramsSearch = {
-        facilityId: id,
-        startAt: {
-          hour: moment(startAtTime).hour(),
-          minute: moment(startAtTime).minute(),
-        },
-        endAt: {
-          hour: moment(endAtTime).hour(),
-          minute: moment(endAtTime).minute(),
-        },
-        date: moment(date).format("yyyy-MM-DD"),
-      };
-      const { data } = await BookingService.getAvailableFields(paramsSearch);
 
+      const { data } = await BookingService.getAvailableFields(params);
       const fieldsTmp = data.map((f: any) => ({ ...f, id: v4() }));
-
       setFields(fieldsTmp);
     } catch (error) {
       handleMessageError(error);
@@ -141,20 +145,17 @@ const Booking = () => {
       setLoadingCreate(true);
       const params = {
         facilityId: id,
-        fieldIndex: fieldSelect?.index.toString(),
-        startAt: {
-          hour: moment(startAtTime).hour(),
-          minute: moment(startAtTime).minute(),
-        },
-        endAt: {
-          hour: moment(endAtTime).hour(),
-          minute: moment(endAtTime).minute(),
-        },
+        fieldIndex: fieldSelect?.field?.index,
+        startAt: priceSelect?.startAt,
+        endAt: priceSelect?.endAt,
         date: moment(date).format("yyyy-MM-DD"),
       };
 
       const rs = await BookingService.createBooking(params);
-      console.log("🚀 -> handleCreateBooking -> rs:", rs);
+
+      console.log("🚀 - handleCreateBooking - rs: ", rs);
+
+      messageSuccess("Đặt sân thành công");
 
       navigate(`/profile/${idUser}?tab=my-booking`);
     } catch (error) {
@@ -164,6 +165,31 @@ const Booking = () => {
     }
   };
 
+  const handleGetPrice = async (params: any) => {
+    try {
+      setLoadingGetPrice(true);
+      const { data } = await FacilityService.getPrice(params);
+      setPrices(data);
+    } catch (error) {
+      handleMessageError(error);
+    } finally {
+      setLoadingGetPrice(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!fieldType || !id) {
+      return;
+    }
+
+    const paramsGetPrice = {
+      fieldType: fieldType,
+      facilityId: id,
+    };
+
+    handleGetPrice(paramsGetPrice);
+  }, [fieldType, id]);
+
   useEffect(() => {
     if (!id) {
       return;
@@ -172,14 +198,6 @@ const Booking = () => {
     handleGetFacilityById(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-
-  useEffect(() => {
-    if (!date || !startAtTime || !endAtTime) return;
-
-    handleGetAvailableFields();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [date, startAtTime, endAtTime]);
 
   if (!accessToken) {
     return (
@@ -204,7 +222,7 @@ const Booking = () => {
     <WrapperBooking className="mt-3">
       {loadingCreate && <LoadingComponent />}
 
-      <h3>{facility?.name}</h3>
+      <h2>{facility?.name}</h2>
       <p>
         {facility?.address.number}, {facility?.address.street}, {facility?.address.ward},{" "}
         {facility?.address.city}
@@ -214,10 +232,22 @@ const Booking = () => {
         <p>Xem danh sách đối trong cơ sở</p>
       </Link>
 
-      <Form.Label>Đặt sân:</Form.Label>
-      <div className="d-flex justify-content-start align-items-end">
-        <div className="me-2">
-          <div className="my-1">Ngày: </div>
+      <hr />
+
+      <h4>Đặt sân</h4>
+      <Row>
+        <Col lg={4}>
+          <Form.Label>Loại sân</Form.Label>
+          <Form.Select onChange={handleSelectFieldType} value={fieldType ? fieldType : ""}>
+            <option value="5x5">5x5</option>
+            <option value="7x7">7x7</option>
+          </Form.Select>
+        </Col>
+
+        <Col lg={4}>
+          <div>
+            <Form.Label>Ngày</Form.Label>
+          </div>
           <ReactDatePicker
             selected={date}
             locale="vi"
@@ -228,56 +258,23 @@ const Booking = () => {
               handleChangeTime(date, "date");
             }}
           />
-        </div>
+        </Col>
+      </Row>
 
-        <div className="me-2">
-          <div className="my-1">Thời gian bắt đầu: </div>
-          <ReactDatePicker
-            showTimeSelect
-            showTimeSelectOnly
-            locale="vi"
-            dateFormat="HH:mm"
-            autoComplete="off"
-            timeCaption="Bắt đầu"
-            selected={startAtTime}
-            onChange={(date) => {
-              handleChangeTime(date, "startAtTime");
-            }}
-          />
-        </div>
-
-        <div className="me-2">
-          <div className="my-1">Thời gian kết thúc: </div>
-          <ReactDatePicker
-            showTimeSelect
-            showTimeSelectOnly
-            locale="vi"
-            dateFormat="HH:mm"
-            autoComplete="off"
-            timeCaption="Kết thúc"
-            selected={endAtTime}
-            minTime={startAtTime}
-            disabled
-            onChange={(date) => {
-              handleChangeTime(date, "endAtTime");
-            }}
-          />
-        </div>
-      </div>
-
-      {loadingFetchFields ? (
+      {loadingGetPrice ? (
         <>
-          <SkeletonRow className="mt-3" />
+          <SkeletonRow className="my-3" />
+          <SkeletonRow className="" />
         </>
       ) : (
         <>
-          <Form.Label className="mt-3">Chọn sân: </Form.Label>
+          <Form.Label className="mt-3">Chọn sân </Form.Label>
 
-          {fields.length === 0 ? (
+          {prices.length === 0 ? (
             <p>Không có sân nào trong khoảng thời gian này</p>
           ) : (
             <Swiper
-              slidesPerView={5}
+              slidesPerView={4}
               spaceBetween={30}
               pagination={{
                 clickable: true,
@@ -286,19 +283,54 @@ const Booking = () => {
               modules={[Pagination, Navigation]}
               className="facility-swiper"
             >
-              {fields.map((field: IField, index: number) => (
+              {prices.map((price: any, index: number) => (
                 <SwiperSlide
-                  className={`${field.id === fieldSelect?.id ? "active" : ""}`}
+                  className={`${price.id === priceSelect?.id ? "active" : ""}`}
                   key={index}
-                  onClick={() => handleClickSwiper(field)}
+                  onClick={() => handleClickSwiper(price)}
                 >
                   {/* <img src={field.image} className="img-swiper" alt="san bong" /> */}
-                  <div>#: {field.index}</div>
-                  <div>Loại sân: {field.type}</div>
+                  <div>
+                    <strong>#{index + 1}</strong>
+                  </div>
+                  <div>Giá: {formatCurrency(price?.amount)}</div>
+                  <div>Giá đặc biệt: {formatCurrency(price?.specialAmount)}</div>
+                  <div>
+                    Thời gian: {price?.startAt?.hour}:
+                    {price?.startAt?.minute === 0 ? "00" : price?.startAt?.minute} -{" "}
+                    {price?.endAt?.hour}:{price?.endAt?.minute === 0 ? "00" : price?.endAt?.minute}
+                  </div>
                 </SwiperSlide>
               ))}
             </Swiper>
           )}
+        </>
+      )}
+
+      {loadingFetchFields ? (
+        <>
+          <SkeletonRow className="mt-3" />
+        </>
+      ) : (
+        <>
+          <div className="mt-3">
+            <Form.Label>Slot</Form.Label>
+          </div>
+
+          <div className="container-time">
+            {fields
+              .filter((f: any) => f?.field?.type === fieldType)
+              .map((field: any, index: number) => (
+                <div
+                  className={`time-block ${field?.id === fieldSelect?.id && "time-block__active"}`}
+                  key={index}
+                  onClick={() => handleSelectField(field)}
+                >
+                  <div>Số: {field?.field?.index}</div>
+                  <div>{formatCurrency(field?.amount)}</div>
+                </div>
+              ))}
+          </div>
         </>
       )}
 
@@ -318,16 +350,17 @@ const Booking = () => {
                 {facility?.address.city}
               </div>
               <div>
-                <strong>Thời gian: </strong> {moment(startAtTime).format("HH:mm")} -{" "}
-                {moment(endAtTime).format("HH:mm")} ngày {moment(date).format("DD/MM/yyyy")}
+                <strong>Thời gian: </strong> {priceSelect?.startAt?.hour}:
+                {priceSelect?.startAt?.minute} -{priceSelect?.endAt?.hour}:
+                {priceSelect?.endAt?.minute}, Ngày {moment(date).format("DD/MM/yyyy")}
               </div>
               <div>
                 <strong>Số: </strong>
-                {fieldSelect?.index}
+                {fieldSelect?.field?.index}
               </div>
               <div>
                 <strong>Loại sân: </strong>
-                {fieldSelect?.type}
+                {fieldSelect?.field?.type}
               </div>
             </div>
           </div>
@@ -377,7 +410,6 @@ const WrapperBooking = styled.div`
   }
 
   .swiper-slide {
-    text-align: center;
     background: #f8f8f8;
     border: 1px solid #ececec;
     border-radius: 16px;
@@ -427,6 +459,40 @@ const WrapperBooking = styled.div`
 
     &__body {
       padding-left: 12px;
+    }
+  }
+
+  .container-time {
+    width: 100%;
+    height: 200px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    padding: 8px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+
+    .time-block {
+      background-color: #fff;
+      width: 120px;
+      height: 60px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+
+      border: 1px solid #f8f8f8;
+      margin: 2px;
+
+      &:hover {
+        border: 1px solid #198754;
+      }
+
+      &__active {
+        border: 1px solid #198754;
+      }
     }
   }
 `;

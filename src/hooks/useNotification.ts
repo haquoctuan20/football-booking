@@ -22,6 +22,7 @@ const useNotification = () => {
   };
 
   const handleMessageError = (error: any) => {
+    console.log("🚀 - handleMessageError - error: ", error);
     const errorsList = error?.response?.data?.errors?.body;
 
     if (errorsList) {

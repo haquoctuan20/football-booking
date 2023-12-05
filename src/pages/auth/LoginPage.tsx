@@ -40,24 +40,21 @@ const LoginPage = () => {
   const handleLogin = async (params: any) => {
     try {
       setLoading(true);
-      const { data } = await AccountServices.login(
-        params.email,
-        params.password
-      );
+      const { data } = await AccountServices.login(params.email, params.password);
 
       AccountServices.setAccessToken(data);
 
-      const {
-        data: { user },
-      } = await AccountServices.getInfoUser();
+      const { data: user } = await AccountServices.getInfoUser();
 
       const userData: Account = {
-        bio: user.bio,
+        age: user.age,
         email: user.email,
+        gender: user.gender,
         id: user.id,
         image: user.image,
         roles: user.roles,
         username: user.username,
+        status: user.status,
         accessToken: data,
       };
 

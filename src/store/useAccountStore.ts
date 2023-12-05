@@ -3,23 +3,27 @@ import { persist } from "zustand/middleware";
 import { NAME_ACCOUNT_STORE } from "../constants/constants";
 
 export interface Account {
-  bio: string | null;
+  age: null | string | number;
   email: string;
+  gender: string | null;
   id: string;
   image: string;
-  roles: string | null;
+  roles: string[];
   username: string;
   accessToken: string | null;
+  status: string;
 }
 
 const initAccount: Account = {
-  bio: "",
+  age: null,
   email: "",
+  gender: null,
   id: "",
   image: "",
-  roles: "",
+  roles: [],
   username: "",
   accessToken: null,
+  status: "",
 };
 
 interface AccountState {

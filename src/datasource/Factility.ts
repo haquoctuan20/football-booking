@@ -25,4 +25,8 @@ export const FacilityService = {
   getPriceByFacilityId: (facilityId: string) => {
     return axiosFacility.post("/price/getPrice", { facilityId });
   },
+
+  getPrice: (data: any) => {
+    return axiosFacility.post("/price/getPrice", data);
+  },
 };
