@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Row, Tab, Tabs } from "react-bootstrap";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import BookingManagement from "./BookingManagement";
 
-import { FaPeopleGroup } from "react-icons/fa6";
-import { AiTwotoneSchedule } from "react-icons/ai";
 import { faker } from "@faker-js/faker";
+import { AiTwotoneSchedule } from "react-icons/ai";
+import { FaPeopleGroup } from "react-icons/fa6";
+import { UserService } from "../../datasource/User";
 import { useAccountStore } from "../../store/useAccountStore";
+import useNotification from "../../hooks/useNotification";
+import SkeletonRow from "../../components/SkeletonRow";
 
 interface TabsProfile {
   eventKey: string;
@@ -34,28 +37,43 @@ export const TabsProfile: TabsProfile[] = [
     ),
     component: <BookingManagement />,
   },
-  {
-    eventKey: "home",
-    title: "Home",
-    component: <>Tab content for Home</>,
-  },
-  {
-    eventKey: "Contact",
-    title: "Contact",
-    component: <>Tab content for Contact</>,
-  },
-  {
-    eventKey: "About",
-    title: "About",
-    component: <>Tab content for About</>,
-  },
 ];
 
 const Profile = () => {
   const { account } = useAccountStore();
+  const { id } = useParams();
+  const { handleMessageError } = useNotification();
+
+  const [user, setUser] = useState<any>();
+  const [loadingFetchUser, setLoadingFetchUser] = useState(false);
 
   const [key, setKey] = useState(TabsProfile[0].eventKey);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleChangeTabs = (key: string) => {
+    setKey(key);
+    setSearchParams({ tab: key });
+  };
+
+  const handleGetInforUser = async (id: string) => {
+    try {
+      setLoadingFetchUser(true);
+      const { data } = await UserService.getInfoUserById(id);
+      setUser(data);
+    } catch (error) {
+      handleMessageError(error);
+    } finally {
+      setLoadingFetchUser(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+
+    handleGetInforUser(id);
+  }, [id]);
 
   useEffect(() => {
     const tabQuery = searchParams.get("tab");
@@ -76,40 +94,43 @@ const Profile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
-  const handleChangeTabs = (key: string) => {
-    setKey(key);
-    setSearchParams({ tab: key });
-  };
-
   return (
     <WrapperProfile>
       <div className="profile-nav mt-3 p-3">
-        <Row>
-          <Col md={2} className="d-flex justify-content-center">
-            <img
-              className="avatar"
-              src="https://fastly.picsum.photos/id/271/600/600.jpg?hmac=oQxkoh7h_eeQYZdscWjW2y_uLJ7EAGSSyp5PkehioBk"
-            />
-          </Col>
+        {loadingFetchUser ? (
+          <>
+            <SkeletonRow />
+          </>
+        ) : (
+          <Row>
+            <Col md={2} className="d-flex justify-content-center">
+              <img
+                className="avatar"
+                src="https://fastly.picsum.photos/id/271/600/600.jpg?hmac=oQxkoh7h_eeQYZdscWjW2y_uLJ7EAGSSyp5PkehioBk"
+              />
+            </Col>
 
-          <Col md={3}>
-            <p>Tên: {account.username}</p>
-            <p>Email: {account.email}</p>
-            <p>SDT: {faker.phone.number()}</p>
-          </Col>
+            <Col md={4}>
+              <p>Tên: {user?.username}</p>
+              <p>Email: {user?.email}</p>
+              <p>SDT: {user?.phone}</p>
+            </Col>
 
-          <Col md={4}>
-            {/* <p>Tuổi tác</p>
+            <Col md={4}>
+              {/* <p>Tuổi tác</p>
             <p>Giới tính</p>
             <p>Đội bóng</p> */}
-          </Col>
+            </Col>
 
-          <Col className="d-flex justify-content-center align-items-center">
-            <Button variant="secondary">
-              <AiTwotoneSchedule className="fs-5" /> Chỉnh sửa
-            </Button>
-          </Col>
-        </Row>
+            <Col className="d-flex justify-content-center align-items-center">
+              {id && id === account.id && (
+                <Button variant="secondary">
+                  <AiTwotoneSchedule className="fs-5" /> Chỉnh sửa
+                </Button>
+              )}
+            </Col>
+          </Row>
+        )}
       </div>
 
       <Tabs

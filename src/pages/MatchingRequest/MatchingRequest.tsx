@@ -17,10 +17,13 @@ const MatchingRequest = () => {
 
   const [loadingMatch, setLoadingMatch] = useState(false);
 
-  const handleGetMatchingRequest = async () => {
+  const handleGetAllBooking = async () => {
     try {
       setLoadingFetchRequest(true);
-      const { data } = await BookingService.getMatchingRequest();
+      const paramsGetMatchingRequest = {
+        hasOpponent: false,
+      };
+      const { data } = await BookingService.getAllBooking(paramsGetMatchingRequest);
       setRequests(data);
     } catch (error) {
       handleMessageError(error);
@@ -37,7 +40,7 @@ const MatchingRequest = () => {
 
       const rs = await BookingService.matchingRequest(bookingId);
       messageSuccess("Bắt đối thành công, chờ đối thủ xác nhận");
-      handleGetMatchingRequest();
+      handleGetAllBooking();
       console.log("🚀 -> handleMatchingRequest -> rs:", rs);
     } catch (error) {
       handleMessageError(error);
@@ -47,7 +50,7 @@ const MatchingRequest = () => {
   };
 
   useEffect(() => {
-    handleGetMatchingRequest();
+    handleGetAllBooking();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -83,16 +86,12 @@ const MatchingRequest = () => {
                       }, ${moment(request?.date).format("DD-MM-YYYY")}`}
                     </div>
                     <div>
-                      <strong>Số sân: </strong>
+                      <strong>Sân số: </strong>
                       {request?.fieldIndex}
                     </div>
                     <div>
                       <strong>Giá: </strong>
                       {formatCurrency(request?.price)}
-                    </div>
-                    <div>
-                      <strong>Trạng thái tìm đối: </strong>
-                      {request?.opponentId === null ? "Đang tìm đối" : "Đã có đối"}
                     </div>
                   </div>
 

@@ -61,8 +61,6 @@ export const AccountServices = {
   },
 
   resendOtp: (email: string) => {
-    return axiosAuth.post(
-      `/api/users/send-otp?action=VERIFY_EMAIL&email=${email}`
-    );
+    return axiosAuth.post(`/api/users/send-otp?action=VERIFY_EMAIL&email=${email}`);
   },
 };

@@ -17,11 +17,11 @@ export const BookingService = {
     return axiosBooking.post("/booking/switchStatus", { bookingId });
   },
 
-  getMatchingRequest: () => {
-    return axiosBooking.post("/booking/getBooking", {});
+  getAllBooking: (params?: any) => {
+    return axiosBooking.post("/booking/getBooking", params ? params : {});
   },
 
   matchingRequest: (bookingId: string) => {
-    return axiosBooking.post("/booking/matchingRequest", { bookingId });
+    return axiosBooking.post("/matching/request", { request: { bookingId } });
   },
 };
