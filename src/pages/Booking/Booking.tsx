@@ -18,14 +18,14 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { v4 } from "uuid";
 import * as yup from "yup";
+import LoadingComponent from "../../components/LoadingComponent";
 import SkeletonRow from "../../components/SkeletonRow";
-import { IFacility, IField } from "../../constants/facility";
+import { IFacility } from "../../constants/facility";
 import { BookingService } from "../../datasource/Booking";
 import { FacilityService } from "../../datasource/Factility";
 import useNotification from "../../hooks/useNotification";
 import { useAccountStore } from "../../store/useAccountStore";
 import { roundToNearestHalfHour } from "../../utils/dateTime";
-import LoadingComponent from "../../components/LoadingComponent";
 import { formatCurrency } from "../../utils/number";
 
 const schema = yup

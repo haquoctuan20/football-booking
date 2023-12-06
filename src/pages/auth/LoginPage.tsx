@@ -42,6 +42,8 @@ const LoginPage = () => {
       setLoading(true);
       const { data } = await AccountServices.login(params.email, params.password);
 
+      if (!data) return;
+
       AccountServices.setAccessToken(data);
 
       const { data: user } = await AccountServices.getInfoUser();
