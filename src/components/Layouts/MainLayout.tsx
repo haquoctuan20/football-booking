@@ -8,6 +8,7 @@ import { useAccountStore } from "../../store/useAccountStore";
 import Footer from "../Footer";
 import { IoLogIn } from "react-icons/io5";
 import { IoLogOut } from "react-icons/io5";
+import { MdManageAccounts } from "react-icons/md";
 
 const MainLayout = () => {
   const account = useAccountStore((state) => state.account);
@@ -47,11 +48,11 @@ const MainLayout = () => {
 
                     <Dropdown.Menu>
                       <Link className="px-3 py-1 dropdown-item" to={`/profile/${account.id}`}>
-                        <ImProfile className="me-2" /> Trang cá nhân
+                        <ImProfile className="fs-5 me-2" /> Trang cá nhân
                       </Link>
 
                       <Link className="px-3 py-1 dropdown-item" to={`/administrator`}>
-                        <ImProfile className="me-2" /> Trang quản lý
+                        <MdManageAccounts className=" fs-5 me-2" /> Trang quản lý
                       </Link>
 
                       <Dropdown.Divider />
@@ -129,6 +130,7 @@ const WrapperNav = styled.div`
   }
 
   .dropdown-item {
+    height: 40px;
     color: #000;
     display: flex;
     align-items: center;

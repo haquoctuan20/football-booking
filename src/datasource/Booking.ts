@@ -24,4 +24,8 @@ export const BookingService = {
   matchingRequest: (bookingId: string) => {
     return axiosBooking.post("/matching/request", { bookingId });
   },
+
+  getMatchingRequest: (params?: any) => {
+    return axiosBooking.post("/matching/getMatchingRequest", params ? params : {});
+  },
 };

@@ -11,6 +11,8 @@ import { UserService } from "../../datasource/User";
 import { useAccountStore } from "../../store/useAccountStore";
 import useNotification from "../../hooks/useNotification";
 import SkeletonRow from "../../components/SkeletonRow";
+import { BsFillStarFill } from "react-icons/bs";
+import MatchingRequestManagement from "./MatchingRequestManagement";
 
 interface TabsProfile {
   eventKey: string;
@@ -28,14 +30,26 @@ export const TabsProfile: TabsProfile[] = [
     ),
     component: <>Thông tin đội bóng</>,
   },
+];
+
+export const TabsProfileManage: TabsProfile[] = [
   {
     eventKey: "my-booking",
     title: (
       <>
-        <AiTwotoneSchedule className="fs-5" /> Lịch của tôi
+        <AiTwotoneSchedule className="fs-5" /> Lịch trận chính
       </>
     ),
     component: <BookingManagement />,
+  },
+  {
+    eventKey: "my-matching-request",
+    title: (
+      <>
+        <BsFillStarFill className="fs-5" /> Lịch đá đối
+      </>
+    ),
+    component: <MatchingRequestManagement />,
   },
 ];
 
@@ -83,7 +97,9 @@ const Profile = () => {
       return;
     }
 
-    const tabCorrect = TabsProfile.find((tab: TabsProfile) => tab.eventKey === tabQuery);
+    const allTabs = [...TabsProfile, ...TabsProfileManage];
+
+    const tabCorrect = allTabs.find((tab: TabsProfile) => tab.eventKey === tabQuery);
 
     if (tabCorrect) {
       setKey(tabCorrect.eventKey);
@@ -138,11 +154,18 @@ const Profile = () => {
         onSelect={(k) => handleChangeTabs(k as string)}
         className="mb-3 tabs-list"
       >
-        {TabsProfile.map((tab: TabsProfile, index: number) => (
-          <Tab key={index} eventKey={tab.eventKey} title={tab.title}>
+        {TabsProfile.map((tab: TabsProfile) => (
+          <Tab key={tab.eventKey} eventKey={tab.eventKey} title={tab.title}>
             {tab.component}
           </Tab>
         ))}
+
+        {id === account.id &&
+          TabsProfileManage.map((tab: TabsProfile) => (
+            <Tab key={tab.eventKey} eventKey={tab.eventKey} title={tab.title}>
+              {tab.component}
+            </Tab>
+          ))}
       </Tabs>
     </WrapperProfile>
   );

@@ -1,23 +1,18 @@
 import moment from "moment";
-import { Button, Form, Table } from "react-bootstrap";
+import { Form, Table } from "react-bootstrap";
 import styled from "styled-components";
-import { MY_BOOKING } from "../../mock/data";
 import { WrapperTable } from "../../styles/table";
 
-import { FaSearchengin } from "react-icons/fa";
-import { ImCancelCircle } from "react-icons/im";
-import { TbSearchOff } from "react-icons/tb";
-import SkeletonRow from "../../components/SkeletonRow";
-import ModalCompetitor from "./ModalCompetitor";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { TabsProfile } from "./Profile";
-import PopoverConfirm from "../../components/PopoverConfirm";
 import LoadingComponent from "../../components/LoadingComponent";
-import { useAccountStore } from "../../store/useAccountStore";
+import SkeletonRow from "../../components/SkeletonRow";
 import { BookingService } from "../../datasource/Booking";
 import useNotification from "../../hooks/useNotification";
+import { useAccountStore } from "../../store/useAccountStore";
 import { formatCurrency } from "../../utils/number";
+import ModalCompetitor from "./ModalCompetitor";
+import { TabsProfileManage } from "./Profile";
 
 const BookingManagement = () => {
   const { account } = useAccountStore();
@@ -90,7 +85,7 @@ const BookingManagement = () => {
   useEffect(() => {
     const tabQuery = searchParams.get("tab");
 
-    if (tabQuery === TabsProfile[1].eventKey) {
+    if (tabQuery === TabsProfileManage[0].eventKey) {
       handleFetchBooking();
     }
   }, [searchParams]);
