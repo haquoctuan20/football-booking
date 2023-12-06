@@ -1,0 +1,83 @@
+<mxfile host="app.diagrams.net" modified="2023-12-06T14:43:10.889Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="xrKtbePamFi-2YGHU7ER" version="22.1.6" type="device">
+  <diagram name="Page-1" id="Gh2BJ1RbEqABY2QSSFiH">
+    <mxGraphModel dx="1195" dy="667" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="1vRP8Gzs_9DjGjvX8Ugc-1" target="1vRP8Gzs_9DjGjvX8Ugc-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-1" value="Bắt đối" style="rounded=0;whiteSpace=wrap;html=1;direction=west;" vertex="1" parent="1">
+          <mxGeometry x="14" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-7" value="true" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="1vRP8Gzs_9DjGjvX8Ugc-4" target="1vRP8Gzs_9DjGjvX8Ugc-10">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="454" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-9" value="fasle" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="1vRP8Gzs_9DjGjvX8Ugc-4" target="1vRP8Gzs_9DjGjvX8Ugc-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-4" value="&#xa;&lt;span style=&quot;color: rgb(5, 5, 5); font-family: &amp;quot;Segoe UI Historic&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(240, 240, 240); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;isFindingOpponet&lt;/span&gt;&#xa;&#xa;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="234" y="190" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="1vRP8Gzs_9DjGjvX8Ugc-8" target="1vRP8Gzs_9DjGjvX8Ugc-19">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="274" y="499.9999999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-8" value="Đang &lt;b&gt;tắt&lt;/b&gt; bắt đối&lt;br&gt;hoặc&lt;br&gt;Đã match" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="214" y="360" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-12" value="null" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="1vRP8Gzs_9DjGjvX8Ugc-10" target="1vRP8Gzs_9DjGjvX8Ugc-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-14" value="&quot;string_ID&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="1vRP8Gzs_9DjGjvX8Ugc-10" target="1vRP8Gzs_9DjGjvX8Ugc-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-10" value="&#xa;&lt;span style=&quot;color: rgb(5, 5, 5); font-family: &amp;quot;Segoe UI Historic&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(240, 240, 240); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;OpponentId &lt;/span&gt;&#xa;&#xa;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="444" y="190" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="1vRP8Gzs_9DjGjvX8Ugc-11" target="1vRP8Gzs_9DjGjvX8Ugc-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-11" value="Đang tìm đối&lt;br&gt;Chưa match" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="624" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="1vRP8Gzs_9DjGjvX8Ugc-13" target="1vRP8Gzs_9DjGjvX8Ugc-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-13" value="Đã match&lt;br&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="424" y="360" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-17" value="&#xa;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Không thể thao tác các hành động khác&lt;/span&gt;&#xa;&#xa;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="424" y="580" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-19" value="&#xa;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Không thể tìm thấy đối này&lt;/span&gt;&lt;br style=&quot;border-color: var(--border-color); color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Không thể bắt đối&lt;/span&gt;&#xa;&#xa;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="214" y="500" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-20" value="&lt;br style=&quot;border-color: var(--border-color); color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;User khác có thể bắt đối&lt;br&gt;&lt;/span&gt;Có thể tắt bắt đối&lt;br&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="624" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-22" value="Đang bật bắt đối" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="324" y="190" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="1vRP8Gzs_9DjGjvX8Ugc-23" target="1vRP8Gzs_9DjGjvX8Ugc-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="1vRP8Gzs_9DjGjvX8Ugc-23" target="1vRP8Gzs_9DjGjvX8Ugc-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="814" y="500" />
+              <mxPoint x="814" y="120" />
+              <mxPoint x="274" y="120" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1vRP8Gzs_9DjGjvX8Ugc-23" value="Chuyển&amp;nbsp;&lt;br&gt;isFindingOpponet&amp;nbsp;= falsle" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="424" y="470" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

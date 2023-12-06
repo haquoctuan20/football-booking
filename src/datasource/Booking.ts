@@ -22,6 +22,6 @@ export const BookingService = {
   },
 
   matchingRequest: (bookingId: string) => {
-    return axiosBooking.post("/matching/request", { request: { bookingId } });
+    return axiosBooking.post("/matching/request", { bookingId });
   },
 };
