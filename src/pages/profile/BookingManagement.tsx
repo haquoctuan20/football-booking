@@ -105,8 +105,8 @@ const BookingManagement = () => {
                   <th className="min-width-250">Thời gian</th>
                   <th className="min-width-80">Số sân</th>
                   <th className="min-width-120">Giá</th>
-                  <th className="min-width-150">Trạng thái tìm đối</th>
-                  <th className="min-width-150">Trạng thái</th>
+                  <th className="min-width-150 text-center">Trạng thái tìm đối</th>
+                  <th className="min-width-150"></th>
                 </tr>
               </thead>
               <tbody>
@@ -141,7 +141,7 @@ const BookingManagement = () => {
                       </div>
                     </td>
 
-                    <td className="min-width-150 ">
+                    <td className="min-width-150">
                       <div className="d-flex flex-column">
                         {/* {booking.status === "done" && (
                           <>
@@ -173,14 +173,13 @@ const BookingManagement = () => {
                           </>
                         )} */}
 
-                        {booking.status === "have_competitor" && (
+                        {booking.hasOpponent === true && (
                           <>
-                            <div className="text-center mb-1">Đã có đối</div>
                             {/* <Button size="sm" variant="success" className="fw-bold">
                           <BsListStars className="fs-5" /> Xem đối
                         </Button> */}
 
-                            <ModalCompetitor />
+                            <ModalCompetitor bookingId={booking.id} />
                           </>
                         )}
 
