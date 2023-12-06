@@ -21,7 +21,7 @@ const MatchingRequest = () => {
     try {
       setLoadingFetchRequest(true);
       const paramsGetMatchingRequest = {
-        hasOpponent: false,
+        hasOpponent: true,
       };
       const { data } = await BookingService.getAllBooking(paramsGetMatchingRequest);
       setRequests(data);
