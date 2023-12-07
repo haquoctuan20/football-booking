@@ -28,4 +28,8 @@ export const BookingService = {
   getMatchingRequest: (params?: any) => {
     return axiosBooking.post("/matching/getMatchingRequest", params ? params : {});
   },
+
+  responseMatchingRequest: (matchRequestId: string, action: "ACCEPTED" | "DENIED") => {
+    return axiosBooking.post("/matching/respond", { matchRequestId, action });
+  },
 };

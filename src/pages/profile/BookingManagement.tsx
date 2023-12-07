@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { WrapperTable } from "../../styles/table";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import LoadingComponent from "../../components/LoadingComponent";
 import SkeletonRow from "../../components/SkeletonRow";
 import { BookingService } from "../../datasource/Booking";
@@ -103,7 +103,7 @@ const BookingManagement = () => {
               <thead>
                 <tr>
                   <th className="min-width-250">Thời gian</th>
-                  <th className="min-width-80">Số sân</th>
+                  <th className="min-width-80">Số</th>
                   <th className="min-width-120">Giá</th>
                   <th className="min-width-150 text-center">Trạng thái tìm đối</th>
                   <th className="min-width-150"></th>
@@ -125,73 +125,43 @@ const BookingManagement = () => {
                     <td className="min-width-120">{formatCurrency(booking?.price)}</td>
 
                     <td className="min-width-150">
-                      <div className="d-flex flex-column align-items-center">
-                        <div className="text-center mb-1">
-                          {booking?.hasOpponent ? "Đang tìm đối" : "Sẵn sàng tìm đối"}
+                      {booking.opponentId === null && (
+                        <div className="d-flex flex-column align-items-center">
+                          <div className="text-center mb-1">
+                            {booking?.hasOpponent ? "Đang tìm đối" : "Sẵn sàng tìm đối"}
+                          </div>
+                          <Form.Check
+                            type="switch"
+                            id="hasOpponent-switch"
+                            checked={booking?.hasOpponent}
+                            label={booking?.hasOpponent ? "Tắt tìm đối" : "Bật tìm đối"}
+                            onChange={() => {
+                              handleStartFindingCompetitor(booking?.id);
+                            }}
+                          />
                         </div>
-                        <Form.Check
-                          type="switch"
-                          id="hasOpponent-switch"
-                          checked={booking?.hasOpponent}
-                          label={booking?.hasOpponent ? "Tắt tìm đối" : "Bật tìm đối"}
-                          onChange={() => {
-                            handleStartFindingCompetitor(booking?.id);
-                          }}
-                        />
-                      </div>
+                      )}
+
+                      {booking.opponentId !== null && (
+                        <div className="d-flex flex-column align-items-center">
+                          <div className="text-center mb-1">Đã nhận đối</div>
+                          <Link to={`/profile/${booking.opponentId}?tab=team`}>Xem đối thủ</Link>
+                        </div>
+                      )}
                     </td>
 
                     <td className="min-width-150">
                       <div className="d-flex flex-column">
-                        {/* {booking.status === "done" && (
+                        {booking.hasOpponent === true && booking.opponentId === null && (
                           <>
-                            <div className="text-center mb-1">Sẵn sàng tìm đối</div>
-                            <Button
-                              size="sm"
-                              variant="info"
-                              className="fw-bold"
-                              onClick={handleStartFindingCompetitor}
-                            >
-                              <FaSearchengin className="fs-5" /> Tìm đối
-                            </Button>
-                          </>
-                        )} */}
-
-                        {/* {booking.status === "find_competitor" && (
-                          <>
-                            <div className="text-center mb-1">Đang tìm đối</div>
-
-                            <PopoverConfirm
-                              content="Bạn có chắc chắn muốn hủy tìm đối?"
-                              heading="Hủy tìm đối"
-                              callbackConfirm={handleCancelFindingCompetitor}
-                            >
-                              <Button size="sm" variant="warning" className="fw-bold">
-                                <TbSearchOff className="fs-5" /> Hủy tìm đối
-                              </Button>
-                            </PopoverConfirm>
-                          </>
-                        )} */}
-
-                        {booking.hasOpponent === true && (
-                          <>
-                            {/* <Button size="sm" variant="success" className="fw-bold">
-                          <BsListStars className="fs-5" /> Xem đối
-                        </Button> */}
-
-                            <ModalCompetitor bookingId={booking.id} />
+                            <ModalCompetitor
+                              bookingId={booking.id}
+                              handleCallback={() => {
+                                handleFetchBooking();
+                              }}
+                            />
                           </>
                         )}
-
-                        {/* <PopoverConfirm
-                          content="Bạn có chắc chắn muốn hủy sân?"
-                          heading="Hủy đặt sân"
-                          callbackConfirm={handleCancelBooking}
-                        >
-                          <Button size="sm" variant="danger" className="mt-1">
-                            <ImCancelCircle className="fs-5" /> Hủy sân
-                          </Button>
-                        </PopoverConfirm> */}
                       </div>
                     </td>
                   </tr>

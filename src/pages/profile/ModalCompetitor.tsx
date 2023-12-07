@@ -12,13 +12,14 @@ interface ModalCompetitorProps {
 }
 
 const ModalCompetitor = (props: ModalCompetitorProps) => {
-  const { handleMessageError } = useNotification();
+  const { handleMessageError, messageSuccess } = useNotification();
 
   const [show, setShow] = useState(false);
 
   const [loadingFetching, setLoadingFetching] = useState(false);
   const [requests, setRequests] = useState<any>([]);
-  const [requestSelect, setRequestSelect] = useState<any>(null);
+
+  const [loadingAction, setLoadingAction] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -38,8 +39,34 @@ const ModalCompetitor = (props: ModalCompetitorProps) => {
     }
   };
 
-  const handleClickRequest = (req: any) => {
-    setRequestSelect(req);
+  const handleAccepted = async (id: string) => {
+    try {
+      setLoadingAction(true);
+      await BookingService.responseMatchingRequest(id, "ACCEPTED");
+      handleGetRequests();
+      messageSuccess("Nhận đối thành công");
+
+      if (props.handleCallback) {
+        props.handleCallback();
+      }
+    } catch (error) {
+      handleMessageError(error);
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+
+  const handleDenied = async (id: string) => {
+    try {
+      setLoadingAction(true);
+      await BookingService.responseMatchingRequest(id, "DENIED");
+      handleGetRequests();
+      messageSuccess("Từ chối thành công");
+    } catch (error) {
+      handleMessageError(error);
+    } finally {
+      setLoadingAction(false);
+    }
   };
 
   useEffect(() => {
@@ -70,20 +97,33 @@ const ModalCompetitor = (props: ModalCompetitorProps) => {
                 <div
                   key={index}
                   className={`match-request ${
-                    re?.id === requestSelect?.id ? "match-request__active" : ""
+                    re?.status !== "PENDING" ? "match-request__denied" : ""
                   }`}
-                  onClick={() => handleClickRequest(re)}
                 >
-                  <div className="px-2">
-                    <Form.Check // prettier-ignore
-                      type="checkbox"
-                      id={re?.id}
-                      checked={re?.id === requestSelect?.id}
-                    />
-                  </div>
                   <div>
                     <div>{re?.id}</div>
                     <div>{re?.id}</div>
+                  </div>
+
+                  <div className="d-flex flex-column ">
+                    <Button
+                      size="sm"
+                      variant="success"
+                      className="mb-2"
+                      onClick={() => handleAccepted(re.id)}
+                      disabled={loadingAction || re?.status !== "PENDING"}
+                    >
+                      Nhận đối
+                    </Button>
+
+                    <Button
+                      size="sm"
+                      variant="warning"
+                      disabled={loadingAction || re?.status !== "PENDING"}
+                      onClick={() => handleDenied(re.id)}
+                    >
+                      Từ chối
+                    </Button>
                   </div>
                 </div>
               ))}
@@ -92,11 +132,8 @@ const ModalCompetitor = (props: ModalCompetitorProps) => {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleClose} disabled={loadingAction}>
             Đóng
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Xác nhận
           </Button>
         </Modal.Footer>
       </Modal>
@@ -109,7 +146,7 @@ export default ModalCompetitor;
 const BodyModalCompetitor = styled.div`
   .match-request {
     width: 100%;
-    height: 90px;
+    height: 100px;
     border: 1px solid #c3c3c3;
     border-radius: 8px;
     padding: 5px;
@@ -117,13 +154,14 @@ const BodyModalCompetitor = styled.div`
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
     &:hover {
       border: 1px solid #198754;
     }
 
-    &__active {
-      border: 1px solid #198754;
+    &__denied {
+      background: #e5e5e5;
     }
   }
 `;
