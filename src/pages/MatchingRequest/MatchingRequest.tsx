@@ -17,14 +17,24 @@ const MatchingRequest = () => {
 
   const [loadingMatch, setLoadingMatch] = useState(false);
 
+  const [limit] = useState(10);
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(0);
+
   const handleGetAllBooking = async () => {
     try {
       setLoadingFetchRequest(true);
       const paramsGetMatchingRequest = {
         hasOpponent: true,
+        limit: limit,
+        skip: page * limit,
       };
-      const { data } = await BookingService.getAllBooking(paramsGetMatchingRequest);
+
+      const {
+        data: { data, total },
+      } = await BookingService.getAllBooking(paramsGetMatchingRequest);
       setRequests(data);
+      setTotal(total);
     } catch (error) {
       handleMessageError(error);
     } finally {
@@ -52,7 +62,7 @@ const MatchingRequest = () => {
   useEffect(() => {
     handleGetAllBooking();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [page]);
 
   return (
     <WrapperMatchingRequest>
@@ -111,7 +121,14 @@ const MatchingRequest = () => {
           </Row>
 
           <div className="my-5">
-            <PaginationComponent activePage={1} total={80} onClick={() => {}} perPage={10} />
+            <PaginationComponent
+              activePage={page + 1}
+              total={total}
+              perPage={limit}
+              onClick={(page: number) => {
+                setPage(page - 1);
+              }}
+            />
           </div>
         </div>
       )}

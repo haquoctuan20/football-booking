@@ -18,10 +18,23 @@ const FacilityList = () => {
   const [loading, setLoading] = useState(false);
   const [facilities, setFacilities] = useState<IFacility[]>([]);
 
+  const [limit] = useState(10);
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(0);
+
   const handleGetAllFacility = async () => {
     try {
       setLoading(true);
-      const { data } = await FacilityService.getAllFacility();
+
+      const params = {
+        limit: limit,
+        skip: page * limit,
+      };
+
+      const {
+        data: { data, total },
+      } = await FacilityService.getAllFacilityFilter(params);
+      setTotal(total);
       setFacilities(data);
     } catch (error) {
       handleMessageError(error);
@@ -37,7 +50,7 @@ const FacilityList = () => {
 
     handleGetAllFacility();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken]);
+  }, [accessToken, page]);
 
   if (!accessToken) {
     return (
@@ -79,11 +92,11 @@ const FacilityList = () => {
       </Row>
       <div className="mt-2 mb-5">
         <PaginationComponent
-          activePage={1}
-          total={123}
-          perPage={10}
+          activePage={page + 1}
+          total={total}
+          perPage={limit}
           onClick={(page: number) => {
-            console.log("page: ", page);
+            setPage(page - 1);
           }}
         />
       </div>

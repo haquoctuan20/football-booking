@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import { Pagination } from "react-bootstrap";
 import styled from "styled-components";
 import { SHOW_PAGINATION_ITEMS } from "../constants/constants";
-import { FaLessThanEqual } from "react-icons/fa";
 
 interface PaginationComponentProps {
   activePage: number;
@@ -11,15 +10,9 @@ interface PaginationComponentProps {
   onClick?: (pageNumber: number) => void;
 }
 
-const PaginationComponent = ({
-  activePage,
-  total,
-  perPage,
-  onClick,
-}: PaginationComponentProps) => {
+const PaginationComponent = ({ activePage, total, perPage, onClick }: PaginationComponentProps) => {
   const pages = Math.ceil(total / perPage);
   const [active, setActive] = useState(activePage);
-  console.log("🚀 - active: ", active);
 
   const itemsPagination = useMemo(() => {
     const items = [];
@@ -57,27 +50,15 @@ const PaginationComponent = ({
           <>
             {active > 0 && active < 4 ? (
               <>
-                <Pagination.Item
-                  key={1}
-                  active={1 === active}
-                  onClick={() => handleClickItem(1)}
-                >
+                <Pagination.Item key={1} active={1 === active} onClick={() => handleClickItem(1)}>
                   1
                 </Pagination.Item>
 
-                <Pagination.Item
-                  key={2}
-                  active={2 === active}
-                  onClick={() => handleClickItem(2)}
-                >
+                <Pagination.Item key={2} active={2 === active} onClick={() => handleClickItem(2)}>
                   2
                 </Pagination.Item>
 
-                <Pagination.Item
-                  key={3}
-                  active={3 === active}
-                  onClick={() => handleClickItem(3)}
-                >
+                <Pagination.Item key={3} active={3 === active} onClick={() => handleClickItem(3)}>
                   3
                 </Pagination.Item>
                 <Pagination.Ellipsis
@@ -86,19 +67,13 @@ const PaginationComponent = ({
                   active={4 === active}
                 />
 
-                <Pagination.Last
-                  onClick={() => handleClickItem(pages)}
-                  key={"last-first"}
-                />
+                <Pagination.Last onClick={() => handleClickItem(pages)} key={"last-first"} />
               </>
             ) : (
               <>
                 {active < pages ? (
                   <>
-                    <Pagination.First
-                      onClick={() => handleClickItem(1)}
-                      key={"first-middle"}
-                    />
+                    <Pagination.First onClick={() => handleClickItem(1)} key={"first-middle"} />
 
                     <Pagination.Ellipsis
                       onClick={() => handleClickItem(active - 2)}
@@ -125,25 +100,15 @@ const PaginationComponent = ({
                     </Pagination.Item>
 
                     <Pagination.Ellipsis
-                      onClick={() =>
-                        handleClickItem(
-                          active + 2 > pages ? active + 1 : active + 2
-                        )
-                      }
+                      onClick={() => handleClickItem(active + 2 > pages ? active + 1 : active + 2)}
                       key={active + 2 > pages ? active + 1 : active + 2}
                     />
 
-                    <Pagination.Last
-                      onClick={() => handleClickItem(pages)}
-                      key={"last-middle"}
-                    />
+                    <Pagination.Last onClick={() => handleClickItem(pages)} key={"last-middle"} />
                   </>
                 ) : (
                   <>
-                    <Pagination.First
-                      onClick={() => handleClickItem(1)}
-                      key={"first-end"}
-                    />
+                    <Pagination.First onClick={() => handleClickItem(1)} key={"first-end"} />
 
                     <Pagination.Ellipsis
                       onClick={() => handleClickItem(active - 2)}

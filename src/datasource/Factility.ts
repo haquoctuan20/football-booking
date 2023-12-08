@@ -10,6 +10,10 @@ export const FacilityService = {
     return axiosFacility.get("/facility");
   },
 
+  getAllFacilityFilter: (params: any) => {
+    return axiosFacility.post("/facility/getByFilter", params);
+  },
+
   getFacilityByUsername: (username: string) => {
     return axiosFacility.post("/facility/getByUsername", { username });
   },
