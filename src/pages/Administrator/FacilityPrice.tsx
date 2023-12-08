@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { FacilityService } from "../../datasource/Factility";
 import { useEffect, useState } from "react";
 import { IFacility } from "../../constants/facility";
-import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
+import { Button, Col, Container, Form, InputGroup, Row, Table } from "react-bootstrap";
 import ReactDatePicker, { registerLocale } from "react-datepicker";
 import vi from "date-fns/locale/vi";
 registerLocale("vi", vi);
@@ -53,6 +53,8 @@ const FacilityPrice = () => {
   const [loadingPrice, setLoadingPrice] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [timeline, setTimeline] = useState<number>(90);
+
   const onChangeField = (e: any) => {
     setValue("fieldType", e.target.value);
   };
@@ -88,7 +90,7 @@ const FacilityPrice = () => {
 
     setValue("startAtTime", date);
 
-    const endTime = moment(date).add(90, "minutes");
+    const endTime = moment(date).add(timeline, "minutes");
 
     setValue("endAtTime", moment(endTime).toDate());
   };
@@ -122,6 +124,14 @@ const FacilityPrice = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleChangeTimeline = (e: any) => {
+    setTimeline(e.target.value);
+
+    const endTime = moment(startAtTime).add(Number(e.target.value), "minutes");
+
+    setValue("endAtTime", moment(endTime).toDate());
   };
 
   useEffect(() => {
@@ -193,6 +203,19 @@ const FacilityPrice = () => {
                 handleChangeTime(date);
               }}
             />
+
+            <div className="mt-2">Thời gian mỗi trận</div>
+
+            <InputGroup className="mb-3">
+              <Form.Control
+                type="number"
+                id="inputPassword5"
+                min={0}
+                value={timeline}
+                onChange={handleChangeTimeline}
+              />
+              <InputGroup.Text id="basic-addon2">Phút</InputGroup.Text>
+            </InputGroup>
 
             <div className="mt-2">Kết thúc</div>
             <ReactDatePicker
@@ -282,5 +305,11 @@ const WrapperFacilityPrice = styled.div`
     border-radius: 8px;
 
     margin-bottom: 12px;
+  }
+
+  .react-datepicker-wrapper,
+  .react-datepicker__input-container,
+  .react-datepicker-wrapper input {
+    width: 100%;
   }
 `;
