@@ -32,4 +32,8 @@ export const BookingService = {
   responseMatchingRequest: (matchRequestId: string, action: "ACCEPTED" | "DENIED") => {
     return axiosBooking.post("/matching/respond", { matchRequestId, action });
   },
+
+  cancelRequest: (id: string) => {
+    return axiosBooking.post("/matching/delete", { id });
+  },
 };

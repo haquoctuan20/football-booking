@@ -132,7 +132,7 @@ const BookingManagement = () => {
                           </div>
                           <Form.Check
                             type="switch"
-                            id="hasOpponent-switch"
+                            id={`hasOpponent-switch-${booking?.id}`}
                             checked={booking?.hasOpponent}
                             label={booking?.hasOpponent ? "Tắt tìm đối" : "Bật tìm đối"}
                             onChange={() => {
