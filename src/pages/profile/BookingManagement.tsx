@@ -13,6 +13,7 @@ import { useAccountStore } from "../../store/useAccountStore";
 import { formatCurrency } from "../../utils/number";
 import ModalCompetitor from "./ModalCompetitor";
 import { TabsProfileManage } from "./Profile";
+import PaginationComponent from "../../components/PaginationComponent";
 
 const BookingManagement = () => {
   const { account } = useAccountStore();
@@ -25,12 +26,25 @@ const BookingManagement = () => {
 
   const [searchParams] = useSearchParams();
 
+  const [limit] = useState(10);
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(0);
+
   const handleFetchBooking = async () => {
     try {
       setLoadingFetchBooking(true);
 
-      const { data } = await BookingService.getMyBooking(account.id);
+      const params = {
+        limit: limit,
+        skip: page * limit,
+        userId: account.id,
+      };
+
+      const {
+        data: { data, total },
+      } = await BookingService.getMyBooking(params);
       setMyBooking(data);
+      setTotal(total);
     } catch (error) {
       handleMessageError(error);
     } finally {
@@ -88,7 +102,8 @@ const BookingManagement = () => {
     if (tabQuery === TabsProfileManage[0].eventKey) {
       handleFetchBooking();
     }
-  }, [searchParams]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, page]);
 
   return (
     <WrapperBookingManagement>
@@ -171,6 +186,17 @@ const BookingManagement = () => {
           </WrapperTable>
         </>
       )}
+
+      <div className="mt-2 mb-5">
+        <PaginationComponent
+          activePage={page + 1}
+          total={total}
+          perPage={limit}
+          onClick={(page: number) => {
+            setPage(page - 1);
+          }}
+        />
+      </div>
     </WrapperBookingManagement>
   );
 };

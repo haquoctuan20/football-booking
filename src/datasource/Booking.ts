@@ -9,8 +9,8 @@ export const BookingService = {
     return axiosBooking.post("/booking/createBooking", createBookingRequest);
   },
 
-  getMyBooking: (userId: string) => {
-    return axiosBooking.post("/booking/getBooking", { userId });
+  getMyBooking: (params: any) => {
+    return axiosBooking.post("/booking/getBooking", params);
   },
 
   switchStatusBooking: (bookingId: string) => {
