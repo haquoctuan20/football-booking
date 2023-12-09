@@ -1,4 +1,4 @@
-import { axiosBooking } from "./IntercepterBooking";
+import { axiosBooking } from "./IntercepterAPI";
 
 export const BookingService = {
   getAvailableFields: (data: any) => {

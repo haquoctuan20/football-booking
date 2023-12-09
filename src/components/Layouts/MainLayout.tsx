@@ -1,4 +1,4 @@
-import { Button, Container, Dropdown } from "react-bootstrap";
+import { Badge, Button, Container, Dropdown } from "react-bootstrap";
 import { BsMenuButtonWideFill } from "react-icons/bs";
 import { ImProfile } from "react-icons/im";
 import { Link, Outlet } from "react-router-dom";
@@ -9,6 +9,9 @@ import Footer from "../Footer";
 import { IoLogIn } from "react-icons/io5";
 import { IoLogOut } from "react-icons/io5";
 import { MdManageAccounts } from "react-icons/md";
+import { FaBell } from "react-icons/fa";
+import { NotificationService } from "../../datasource/Notification";
+import { useEffect } from "react";
 
 const MainLayout = () => {
   const account = useAccountStore((state) => state.account);
@@ -18,6 +21,15 @@ const MainLayout = () => {
     resetAccount();
     AccountServices.logout();
   };
+
+  // const handleGetAllNotification = async () => {
+  //   const rs = await NotificationService.getAllNotification();
+  //   console.log("🚀 -> handleGetAllNotification -> rs:", rs);
+  // };
+
+  // useEffect(() => {
+  //   handleGetAllNotification();
+  // }, []);
 
   return (
     <WrapperMainLayout>
@@ -43,7 +55,10 @@ const MainLayout = () => {
                 <>
                   <Dropdown className="h-100 dropdown-setting">
                     <Dropdown.Toggle className="h-100" variant="success" id="dropdown-basic">
-                      <BsMenuButtonWideFill className="fs-5 me-2" /> {account.email}
+                      <BsMenuButtonWideFill className="fs-5 me-2" /> {account.email}{" "}
+                      <Badge className="ms-1" bg="danger">
+                        9
+                      </Badge>
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
@@ -53,6 +68,13 @@ const MainLayout = () => {
 
                       <Link className="px-3 py-1 dropdown-item" to={`/administrator`}>
                         <MdManageAccounts className=" fs-5 me-2" /> Trang quản lý
+                      </Link>
+
+                      <Link className="px-3 py-1 dropdown-item" to={`/notifications`}>
+                        <FaBell className=" fs-5 me-2" /> Thông báo{" "}
+                        <Badge className="ms-1" bg="danger">
+                          9
+                        </Badge>
                       </Link>
 
                       <Dropdown.Divider />

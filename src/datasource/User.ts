@@ -1,4 +1,4 @@
-import { axiosUser } from "./IntercepterUser";
+import { axiosUser } from "./IntercepterAPI";
 
 export const UserService = {
   getInfoUserById: (id: string) => {

@@ -1,5 +1,5 @@
 import { CreateFacility } from "../constants/facility";
-import { axiosFacility } from "./IntercepterFacility";
+import { axiosFacility } from "./IntercepterAPI";
 
 export const FacilityService = {
   createFacility: (facility: CreateFacility) => {

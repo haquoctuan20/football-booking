@@ -52,7 +52,9 @@ const WsNotification = () => {
   };
 
   useEffect(() => {
-    const ws = new WebSocket(`ws://localhost:7400/ws-endpoint?access_token=${account.accessToken}`);
+    const ws = new WebSocket(
+      `${import.meta.env.VITE_BASE_URL_WS}/ws-endpoint?access_token=${account.accessToken}`
+    );
 
     ws.onopen = () => {
       console.log("WebSocket connected");
