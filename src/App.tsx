@@ -20,10 +20,12 @@ import FacilityManagement from "./pages/Administrator/FacilityManagement";
 import FacilityPage from "./pages/Administrator/FacilityPage";
 import FacilityPrice from "./pages/Administrator/FacilityPrice";
 import MatchingRequest from "./pages/MatchingRequest/MatchingRequest";
+import WsNotification from "./websocket/WsNotification";
 
 function App() {
   return (
     <>
+      <WsNotification />
       <ToastContainer
         position="top-right"
         autoClose={8000}
