@@ -21,6 +21,7 @@ import FacilityPage from "./pages/Administrator/FacilityPage";
 import FacilityPrice from "./pages/Administrator/FacilityPrice";
 import MatchingRequest from "./pages/MatchingRequest/MatchingRequest";
 import WsNotification from "./websocket/WsNotification";
+import Notifications from "./pages/Notifications/Notifications";
 
 function App() {
   return (
@@ -66,6 +67,15 @@ function App() {
             element={
               <PageLayout title="Tìm đối">
                 <MatchingRequest />
+              </PageLayout>
+            }
+          />
+
+          <Route
+            path="notifications"
+            element={
+              <PageLayout title="Thông báo">
+                <Notifications />
               </PageLayout>
             }
           />
