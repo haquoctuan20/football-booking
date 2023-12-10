@@ -13,6 +13,7 @@ import useNotification from "../../hooks/useNotification";
 import SkeletonRow from "../../components/SkeletonRow";
 import { BsFillStarFill } from "react-icons/bs";
 import MatchingRequestManagement from "./MatchingRequestManagement";
+import InformationProfile from "./InformationProfile";
 
 interface TabsProfile {
   eventKey: string;
@@ -25,10 +26,10 @@ export const TabsProfile: TabsProfile[] = [
     eventKey: "team",
     title: (
       <>
-        <FaPeopleGroup className="fs-5" /> Thông tin đội bóng
+        <FaPeopleGroup className="fs-5" /> Thông tin - Đội bóng
       </>
     ),
-    component: <>Thông tin đội bóng</>,
+    component: <InformationProfile />,
   },
 ];
 

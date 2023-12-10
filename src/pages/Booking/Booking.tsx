@@ -28,6 +28,7 @@ import { useAccountStore } from "../../store/useAccountStore";
 import { roundToNearestHalfHour } from "../../utils/dateTime";
 import { formatCurrency } from "../../utils/number";
 import WriteComment from "../../components/WriteComment/WriteComment";
+import CommentsView from "../../components/WriteComment/CommentsView";
 
 const schema = yup
   .object({
@@ -386,14 +387,18 @@ const Booking = () => {
       <div className="my-5">
         <div>
           <Form.Label>Đánh giá: </Form.Label> {facility?.rating}
+          <span
+            style={{
+              fontSize: 26,
+              color: "gold",
+            }}
+          >
+            &#9733; {/* Dấu sao Unicode */}
+          </span>
         </div>
-        <Form.Label>Bình luận:</Form.Label>
 
         {facility?.comments?.map((comment: any, index: number) => (
-          <div className="facility-comment" key={index}>
-            <div>Một người dùng đã đánh giá {comment?.rating} sao</div>
-            <div className="facility-comment__body">{comment?.body}</div>
-          </div>
+          <CommentsView key={index} data={comment} />
         ))}
       </div>
 

@@ -22,8 +22,16 @@ export interface CreateFacility {
   fields: FieldInterface[];
 }
 
+export interface IComment {
+  authorId: string;
+  rating: number;
+  date: null | string;
+  body: string;
+  [key: string]: any;
+}
+
 export interface IFacility extends CreateFacility {
   id: string;
   rating?: number | string;
-  comments?: any[];
+  comments?: IComment[];
 }

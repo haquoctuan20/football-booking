@@ -51,7 +51,7 @@ const WriteComment = ({ targetId, targetType, callback }: WriteCommentProps) => 
       const { data: dataRs } = await BookingService.sendComment(params);
 
       if (callback) {
-        callback();
+        callback(dataRs);
       }
 
       messageSuccess("Đã gửi bình luận");
@@ -63,8 +63,6 @@ const WriteComment = ({ targetId, targetType, callback }: WriteCommentProps) => 
   };
   return (
     <WrapperWriteComment>
-      <div className="fs-5 mb-1">Bình luận</div>
-
       <FloatingLabel label="Chia sẻ trải nghiệm của bạn">
         <Form.Control {...register("body")} as="textarea" style={{ height: "100px" }} />
         <p className="form-error">{errors.body?.message}</p>
@@ -111,4 +109,5 @@ export default WriteComment;
 
 const WrapperWriteComment = styled.div`
   margin-bottom: 50px;
+  margin-top: 20px;
 `;
