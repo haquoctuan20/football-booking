@@ -12,10 +12,12 @@ import { MdManageAccounts } from "react-icons/md";
 import { FaBell } from "react-icons/fa";
 import { NotificationService } from "../../datasource/Notification";
 import { useEffect } from "react";
+import { useNotificationStore } from "../../store/useNotificationStore";
 
 const MainLayout = () => {
   const account = useAccountStore((state) => state.account);
   const resetAccount = useAccountStore((state) => state.resetAccount);
+  const { count } = useNotificationStore();
 
   const handleLogout = () => {
     resetAccount();
@@ -55,10 +57,12 @@ const MainLayout = () => {
                 <>
                   <Dropdown className="h-100 dropdown-setting">
                     <Dropdown.Toggle className="h-100" variant="success" id="dropdown-basic">
-                      <BsMenuButtonWideFill className="fs-5 me-2" /> {account.email}{" "}
-                      <Badge className="ms-1" bg="danger">
-                        9
-                      </Badge>
+                      <BsMenuButtonWideFill className="fs-5 me-2" /> {account.email}
+                      {count > 0 && (
+                        <Badge className="ms-1" bg="danger">
+                          {count}
+                        </Badge>
+                      )}
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
@@ -72,9 +76,11 @@ const MainLayout = () => {
 
                       <Link className="px-3 py-1 dropdown-item" to={`/notifications`}>
                         <FaBell className=" fs-5 me-2" /> Thông báo{" "}
-                        <Badge className="ms-1" bg="danger">
-                          9
-                        </Badge>
+                        {count > 0 && (
+                          <Badge className="ms-1" bg="danger">
+                            {count}
+                          </Badge>
+                        )}
                       </Link>
 
                       <Dropdown.Divider />

@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { ToastOptions, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { IoFootball } from "react-icons/io5";
+import { useNotificationStore } from "../store/useNotificationStore";
 
 const configNotification: ToastOptions = {
   position: "top-right",
@@ -18,6 +19,8 @@ const configNotification: ToastOptions = {
 
 const WsNotification = () => {
   const { account } = useAccountStore();
+  const { fetchCount, increaseCount } = useNotificationStore();
+
   const navigate = useNavigate();
 
   const handelOnMessageCMD10 = (message: any) => {
@@ -52,6 +55,11 @@ const WsNotification = () => {
   };
 
   useEffect(() => {
+    if (account.id === "" || !account.accessToken) {
+      return;
+    }
+    fetchCount();
+
     const ws = new WebSocket(
       `${import.meta.env.VITE_BASE_URL_WS}/ws-endpoint?access_token=${account.accessToken}`
     );
@@ -66,6 +74,7 @@ const WsNotification = () => {
       switch (message.cmd) {
         case 10:
           handelOnMessageCMD10(message.params);
+          increaseCount();
           break;
 
         default:

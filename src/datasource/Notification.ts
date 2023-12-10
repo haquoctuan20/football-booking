@@ -8,4 +8,8 @@ export const NotificationService = {
   readOneNotification: (id: string) => {
     return axiosNotification.put(`/notification/read/${id}`);
   },
+
+  getCountUnread: () => {
+    return axiosNotification.get(`/notification/count-unread`);
+  },
 };

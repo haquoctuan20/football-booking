@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { NotificationService } from "../../datasource/Notification";
 import styled from "styled-components";
+import { NotificationService } from "../../datasource/Notification";
 import CardNotification from "./CardNotification";
 
 const Notifications = () => {

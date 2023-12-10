@@ -6,6 +6,7 @@ import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import useNotification from "../../hooks/useNotification";
 import { NotificationService } from "../../datasource/Notification";
+import { useNotificationStore } from "../../store/useNotificationStore";
 
 export interface INotification {
   detailId: string;
@@ -28,11 +29,14 @@ const CardNotification = ({ data }: CardNotificationProps) => {
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState<INotification>(data);
 
+  const { decreaseCount, increaseCount } = useNotificationStore();
+
   const handleReadNotification = async () => {
     try {
       setLoading(true);
       await NotificationService.readOneNotification(notification.id);
       setNotification({ ...notification, isRead: true });
+      decreaseCount();
     } catch (error) {
       handleMessageError(error);
     } finally {
@@ -66,11 +70,11 @@ const CardNotification = ({ data }: CardNotificationProps) => {
             </div>
 
             <div>
-              <Button size="sm" variant="outline-secondary">
-                action 1
+              <Button size="sm" variant="outline-secondary" onClick={increaseCount}>
+                Test thêm thông báo
               </Button>
-              <Button size="sm" variant="outline-secondary">
-                action 2
+              <Button size="sm" variant="outline-secondary" onClick={decreaseCount}>
+                Test trừ thông báo
               </Button>
               <Button size="sm" variant="outline-secondary">
                 action 3
