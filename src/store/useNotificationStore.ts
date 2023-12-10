@@ -6,6 +6,7 @@ interface NotificationState {
   fetchCount: () => Promise<void>;
   increaseCount: () => void;
   decreaseCount: () => void;
+  resetCount: () => void;
 }
 
 // const initNotificationState: NotificationState = {
@@ -32,5 +33,9 @@ export const useNotificationStore = create<NotificationState>()((set) => ({
 
       return { count: state.count - 1 };
     });
+  },
+
+  resetCount: () => {
+    set(() => ({ count: 0 }));
   },
 }));

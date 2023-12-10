@@ -12,4 +12,8 @@ export const NotificationService = {
   getCountUnread: () => {
     return axiosNotification.get(`/notification/count-unread`);
   },
+
+  readAllNotification: () => {
+    return axiosNotification.put(`/notification/read-all`);
+  },
 };

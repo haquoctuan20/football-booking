@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import useNotification from "../../hooks/useNotification";
 import { NotificationService } from "../../datasource/Notification";
 import { useNotificationStore } from "../../store/useNotificationStore";
+import { Link } from "react-router-dom";
 
 export interface INotification {
   detailId: string;
@@ -29,7 +30,7 @@ const CardNotification = ({ data }: CardNotificationProps) => {
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState<INotification>(data);
 
-  const { decreaseCount, increaseCount } = useNotificationStore();
+  const { decreaseCount } = useNotificationStore();
 
   const handleReadNotification = async () => {
     try {
@@ -49,7 +50,7 @@ const CardNotification = ({ data }: CardNotificationProps) => {
   }, [data]);
 
   return (
-    <WrapperCardNotification>
+    <WrapperCardNotification className={`${notification.isRead ? "" : "unread"}`}>
       <div className="d-flex flex-fill">
         <div className="px-3">
           <RiFootballFill className="fs-2" />
@@ -59,7 +60,7 @@ const CardNotification = ({ data }: CardNotificationProps) => {
 
           <div className="d-flex justify-content-between align-items-end">
             <div className="time-notification">
-              <span>Cho nay thoi gian thong bao</span>
+              {/* <span>Cho nay thoi gian thong bao</span> */}
 
               {notification.isRead && (
                 <span style={{ color: "#198754" }}>
@@ -70,15 +71,17 @@ const CardNotification = ({ data }: CardNotificationProps) => {
             </div>
 
             <div>
-              <Button size="sm" variant="outline-secondary" onClick={increaseCount}>
+              {/* <Button size="sm" variant="outline-secondary" onClick={increaseCount}>
                 Test thêm thông báo
               </Button>
               <Button size="sm" variant="outline-secondary" onClick={decreaseCount}>
                 Test trừ thông báo
-              </Button>
-              <Button size="sm" variant="outline-secondary">
-                action 3
-              </Button>
+              </Button> */}
+              <Link to={`/profile/${notification.fromUserId}?tab=team`}>
+                <Button size="sm" variant="outline-secondary">
+                  Xem người dùng
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -99,9 +102,18 @@ const WrapperCardNotification = styled.div`
   height: 120px;
   border-bottom: 1px solid #c3c3c3;
   padding: 8px;
+  margin-bottom: 4px;
 
   display: flex;
   justify-content: space-between;
+
+  &.unread {
+    background-color: #dcfae9ac;
+  }
+
+  &:hover {
+    background-color: #ececec;
+  }
 
   .action {
     width: 100px;
