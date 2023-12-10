@@ -36,4 +36,8 @@ export const BookingService = {
   cancelRequest: (id: string) => {
     return axiosBooking.post("/matching/delete", { id });
   },
+
+  sendComment: (params: any) => {
+    return axiosBooking.post("/comment", params);
+  },
 };

@@ -28,6 +28,10 @@ input {
   color: red;
 }
 
+.form-error {
+  color: red;
+}
+
 //
 
 @for $i from 1 through 1000 {

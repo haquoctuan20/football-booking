@@ -27,6 +27,7 @@ import useNotification from "../../hooks/useNotification";
 import { useAccountStore } from "../../store/useAccountStore";
 import { roundToNearestHalfHour } from "../../utils/dateTime";
 import { formatCurrency } from "../../utils/number";
+import WriteComment from "../../components/WriteComment/WriteComment";
 
 const schema = yup
   .object({
@@ -176,6 +177,8 @@ const Booking = () => {
       setLoadingGetPrice(false);
     }
   };
+
+  const handleAddComment = (params: any) => {};
 
   useEffect(() => {
     if (!fieldType || !id) {
@@ -393,6 +396,14 @@ const Booking = () => {
           </div>
         ))}
       </div>
+
+      {id && (
+        <WriteComment
+          targetId={id}
+          targetType="facility"
+          callback={() => handleGetFacilityById(id)}
+        />
+      )}
     </WrapperBooking>
   );
 };
