@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Pagination } from "react-bootstrap";
 import styled from "styled-components";
 import { SHOW_PAGINATION_ITEMS } from "../constants/constants";
@@ -31,6 +31,10 @@ const PaginationComponent = ({ activePage, total, perPage, onClick }: Pagination
 
     return items;
   }, [pages, total, perPage, active]);
+
+  useEffect(() => {
+    setActive(activePage);
+  }, [activePage]);
 
   const handleClickItem = (page: number) => {
     setActive(page);
