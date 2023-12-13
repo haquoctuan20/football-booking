@@ -10,14 +10,10 @@ const Facility = (props: FacilityProps) => {
     <WrapperFacility>
       <Row className="h-100">
         <Col md={4} className="h-100 d-flex align-items-center">
-          <img
-            src="https://fastly.picsum.photos/id/658/600/600.jpg?hmac=vPUD4SgPwBnjxO_CWMx32AOw_UmmwBFGnzL_1VxfjYg"
-            alt="san bong"
-            className="img-facility"
-          />
+          <img src="./san-bong.png" alt="san bong" className="img-facility" />
         </Col>
         <Col md={8} className="ps-0 h-100 d-flex flex-column justify-content-between">
-          <div>
+          <div className="facility-info px-2">
             <Link to={`/booking/${props.id}`} className="facility-name">
               {props?.name}
             </Link>
@@ -49,7 +45,7 @@ const Facility = (props: FacilityProps) => {
             </div> */}
           </div>
 
-          <div className="d-flex justify-content-between">
+          <div className="d-flex justify-content-between px-2">
             <Link to={`/profile/${props?.ownerId}?tab=team`} className="d-block">
               Chủ sân
             </Link>
@@ -69,7 +65,6 @@ const Facility = (props: FacilityProps) => {
 export default Facility;
 
 const WrapperFacility = styled.div`
-  height: 180px;
   width: 100%;
   border: 1px solid #dee2e6;
   border-radius: 8px;
@@ -84,8 +79,12 @@ const WrapperFacility = styled.div`
   .img-facility {
     object-fit: fill;
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     border-radius: 8px;
+  }
+
+  .facility-info {
+    height: 150px;
   }
 
   .facility-name {

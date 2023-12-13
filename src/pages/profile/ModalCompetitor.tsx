@@ -78,7 +78,7 @@ const ModalCompetitor = (props: ModalCompetitorProps) => {
   return (
     <>
       <Button size="sm" variant="success" className="fw-bold" onClick={handleShow}>
-        <BsListStars className="fs-5" /> Xem đối
+        <BsListStars className="fs-5" /> Xem lời mời
       </Button>
 
       <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} fullscreen="md">

@@ -8,6 +8,7 @@ import PaginationComponent from "../../components/PaginationComponent";
 import useNotification from "../../hooks/useNotification";
 import SkeletonRow from "../../components/SkeletonRow";
 import LoadingComponent from "../../components/LoadingComponent";
+import { Link } from "react-router-dom";
 
 const MatchingRequest = () => {
   const { handleMessageError, messageSuccess } = useNotification();
@@ -68,7 +69,7 @@ const MatchingRequest = () => {
     <WrapperMatchingRequest>
       {loadingMatch && <LoadingComponent />}
 
-      <div>filter</div>
+      {/* <div>filter</div> */}
 
       {loadingFetchRequest ? (
         <>
@@ -84,24 +85,42 @@ const MatchingRequest = () => {
               <Col key={index} lg={6}>
                 <div className="request-card">
                   <div>
-                    <div>
-                      <strong>Cơ sở: ...</strong>
+                    <div className="info-owner pb-2">
+                      <div className="avt-owner d-flex flex-column align-items-center">
+                        <img src="./san-bong.png" alt="avt" className="pb-1" />
+                        <strong>
+                          <Link to={`/profile/${request?.userId}`}>Tên người cầm đối</Link>
+                        </strong>
+                      </div>
+
+                      <div>
+                        <strong>Tuổi: </strong>
+                        <span>23</span>
+                        ... các thông tin khác
+                      </div>
                     </div>
+
+                    {/* facility */}
                     <div>
-                      <strong>Thời gian: </strong>{" "}
-                      {`${request?.startAt?.hour}:${
-                        request?.startAt?.minute === 0 ? "00" : request?.startAt?.minute
-                      } - ${request?.endAt?.hour}:${
-                        request?.endAt?.minute === 0 ? "00" : request?.endAt?.minute
-                      }, ${moment(request?.date).format("DD-MM-YYYY")}`}
-                    </div>
-                    <div>
-                      <strong>Sân số: </strong>
-                      {request?.fieldIndex}
-                    </div>
-                    <div>
-                      <strong>Giá: </strong>
-                      {formatCurrency(request?.price)}
+                      <div>
+                        <strong>Cơ sở: ...</strong>
+                      </div>
+                      <div>
+                        <strong>Thời gian: </strong>{" "}
+                        {`${request?.startAt?.hour}:${
+                          request?.startAt?.minute === 0 ? "00" : request?.startAt?.minute
+                        } - ${request?.endAt?.hour}:${
+                          request?.endAt?.minute === 0 ? "00" : request?.endAt?.minute
+                        }, ${moment(request?.date).format("DD-MM-YYYY")}`}
+                      </div>
+                      <div>
+                        <strong>Sân số: </strong>
+                        {request?.fieldIndex}
+                      </div>
+                      <div>
+                        <strong>Giá: </strong>
+                        {formatCurrency(request?.price)}
+                      </div>
                     </div>
                   </div>
 
@@ -142,12 +161,12 @@ const WrapperMatchingRequest = styled.div`
   margin-top: 12px;
 
   .request-card {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     padding: 8px;
     border: 1px solid #c3c3c3;
     border-radius: 8px;
 
-    height: 200px;
+    min-height: 200px;
 
     display: flex;
     flex-direction: column;
@@ -155,6 +174,20 @@ const WrapperMatchingRequest = styled.div`
 
     &:hover {
       border: 1px solid #23ce7e;
+    }
+
+    .info-owner {
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 4px;
+
+      .avt-owner {
+        img {
+          width: 100px;
+          height: 100px;
+          object-fit: fill;
+          border-radius: 8px;
+        }
+      }
     }
   }
 `;

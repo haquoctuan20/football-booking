@@ -38,7 +38,7 @@ export const TabsProfileManage: TabsProfile[] = [
     eventKey: "my-booking",
     title: (
       <>
-        <AiTwotoneSchedule className="fs-5" /> Lịch trận chính
+        <AiTwotoneSchedule className="fs-5" /> Lịch trận bóng
       </>
     ),
     component: <BookingManagement />,
@@ -47,7 +47,7 @@ export const TabsProfileManage: TabsProfile[] = [
     eventKey: "my-matching-request",
     title: (
       <>
-        <BsFillStarFill className="fs-5" /> Lịch đá đối
+        <BsFillStarFill className="fs-5" /> Lịch sử bắt đối
       </>
     ),
     component: <MatchingRequestManagement />,
