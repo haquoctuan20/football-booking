@@ -9,4 +9,4 @@ export const ROLES = {
   owner: "ROLE_OWNER",
 };
 
-export const DEFAULT_LIMIT = 5;
+export const DEFAULT_LIMIT = 10;

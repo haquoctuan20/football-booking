@@ -17,11 +17,24 @@ import queryString from "query-string";
 
 const schema = yup.object({
   name: yup.string(),
+  city: yup.string(),
+  ward: yup.string(),
 });
 
+const initFilter = {
+  name: "",
+  city: "",
+  ward: "",
+};
+
 const FacilityList = () => {
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, reset, setValue } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      name: "",
+      city: "",
+      ward: "",
+    },
   });
 
   const {
@@ -54,8 +67,7 @@ const FacilityList = () => {
   };
 
   const handleSearch = (params: any) => {
-    console.log("🚀 - handleSearch - params: ", params);
-
+    console.log("🚀 -> handleSearch -> params:", params);
     const searchObj: any = {
       page: 1,
     };
@@ -63,24 +75,30 @@ const FacilityList = () => {
     for (const key in params) {
       const value = params[key];
       if (value !== null && value !== undefined) {
-        searchObj[key] = value;
-        // if (typeof value === "string" && value.trim() !== "") {
-        // }
+        if (typeof value === "string" && value.trim() !== "") {
+          searchObj[key] = value;
+        }
 
-        // if (typeof value !== "string") {
-        //   searchObj[key] = value;
-        // }
+        if (typeof value !== "string") {
+          searchObj[key] = value;
+        }
       }
     }
 
-    const parsed = queryString.parse(location.search);
-    setSearchParams({ ...parsed, ...searchObj });
+    // const parsed = queryString.parse(location.search);
+    // setSearchParams({ ...parsed, ...searchObj });
+    setSearchParams(searchObj);
   };
 
   const handleSetQuery = (key: "page", value: any) => {
     const parsed = queryString.parse(location.search);
 
     setSearchParams({ ...parsed, [key]: value.toString() });
+  };
+
+  const handleResetFilter = () => {
+    // reset({ ...initFilter });
+    setSearchParams({ page: "1" });
   };
 
   useEffect(() => {
@@ -99,6 +117,10 @@ const FacilityList = () => {
     setPage(Number(pageSearch));
 
     const parsed = queryString.parse(location.search);
+
+    setValue("name", parsed?.name ? parsed?.name.toString() : "");
+    setValue("city", parsed.city ? parsed?.city.toString() : "");
+    setValue("ward", parsed.ward ? parsed?.ward.toString() : "");
 
     delete parsed.page;
 
@@ -129,12 +151,22 @@ const FacilityList = () => {
           </Form.Label>
           <Form.Control type="text" id="search" {...register("name")} />
 
-          <div className="mt-2 d-flex justify-content-around">
-            <Button size="sm" variant="secondary" onClick={handleSubmit(handleSearch)}>
+          <Form.Label htmlFor="city" className="mt-2">
+            Thành phố
+          </Form.Label>
+          <Form.Control type="text" id="city" {...register("city")} />
+
+          <Form.Label htmlFor="ward" className="mt-2">
+            Phường
+          </Form.Label>
+          <Form.Control type="text" id="ward" {...register("ward")} />
+
+          <div className="mt-4 d-flex justify-content-around">
+            <Button size="sm" type="reset" variant="secondary" onClick={handleResetFilter}>
               Đặt lại
             </Button>
 
-            <Button size="sm" onClick={handleSubmit(handleSearch)}>
+            <Button size="sm" variant="success" onClick={handleSubmit(handleSearch)}>
               Tìm kiếm
             </Button>
           </div>
