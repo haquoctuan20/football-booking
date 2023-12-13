@@ -34,4 +34,5 @@ export interface IFacility extends CreateFacility {
   id: string;
   rating?: number | string;
   comments?: IComment[];
+  [key: string]: any;
 }

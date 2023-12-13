@@ -29,17 +29,37 @@ const Facility = (props: FacilityProps) => {
               <strong>Số sân: </strong> {props?.numOfFields}
             </div>
 
+            {props?.rating && (
+              <div>
+                <strong>Đánh giá: </strong> {props?.rating}
+                <span
+                  style={{
+                    fontSize: 16,
+                    color: "gold",
+                  }}
+                >
+                  &#9733; {/* Dấu sao Unicode */}
+                </span>
+              </div>
+            )}
+
             {/* <div>
               <strong>Giá tham khảo: </strong> <span className="price">400.000₫ - 900.000₫ </span>/
               Trận
             </div> */}
           </div>
 
-          <Link to={`/booking/${props.id}`}>
-            <Button size="sm" variant="outline-success">
-              Xem chi tiết | Đặt sân
-            </Button>
-          </Link>
+          <div className="d-flex justify-content-between">
+            <Link to={`/profile/${props?.ownerId}?tab=team`} className="d-block">
+              Chủ sân
+            </Link>
+
+            <Link to={`/booking/${props.id}`} className="d-block">
+              <Button size="sm" variant="outline-success">
+                Xem chi tiết | Đặt sân
+              </Button>
+            </Link>
+          </div>
         </Col>
       </Row>
     </WrapperFacility>
