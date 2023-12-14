@@ -60,6 +60,7 @@ const LoginPage = () => {
         accessToken: data,
         name: user.name,
         phone: user.phone,
+        birthDate: user.birthDate,
       };
 
       setAccount(userData);

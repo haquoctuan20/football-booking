@@ -4,19 +4,20 @@ import { useParams, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import BookingManagement from "./BookingManagement";
 
-import { faker } from "@faker-js/faker";
 import { AiTwotoneSchedule } from "react-icons/ai";
-import { FaPeopleGroup } from "react-icons/fa6";
-import { UserService } from "../../datasource/User";
-import { useAccountStore } from "../../store/useAccountStore";
-import useNotification from "../../hooks/useNotification";
-import SkeletonRow from "../../components/SkeletonRow";
 import { BsFillStarFill } from "react-icons/bs";
-import MatchingRequestManagement from "./MatchingRequestManagement";
-import InformationProfile from "./InformationProfile";
-import { IoCalendarNumber, IoMailSharp, IoPerson } from "react-icons/io5";
 import { FaPhoneAlt, FaTransgender } from "react-icons/fa";
+import { FaPeopleGroup } from "react-icons/fa6";
+import { IoCalendarNumber, IoMailSharp, IoPerson } from "react-icons/io5";
+import { MdEditDocument } from "react-icons/md";
 import { TbNumbers } from "react-icons/tb";
+import SkeletonRow from "../../components/SkeletonRow";
+import { UserService } from "../../datasource/User";
+import useNotification from "../../hooks/useNotification";
+import { useAccountStore } from "../../store/useAccountStore";
+import InformationProfile from "./InformationProfile";
+import MatchingRequestManagement from "./MatchingRequestManagement";
+import UpdateProfile from "./UpdateProfile";
 
 interface TabsProfile {
   eventKey: string;
@@ -68,6 +69,8 @@ const Profile = () => {
   const [key, setKey] = useState(TabsProfile[0].eventKey);
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [openEdit, setOpenEdit] = useState(false);
+
   const handleChangeTabs = (key: string) => {
     setKey(key);
     setSearchParams({ tab: key });
@@ -85,12 +88,19 @@ const Profile = () => {
     }
   };
 
+  const handleCallBackUpdate = () => {
+    setOpenEdit(false);
+    if (!id) return;
+    handleGetInforUser(id);
+  };
+
   useEffect(() => {
     if (!id) {
       return;
     }
 
     handleGetInforUser(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
@@ -184,13 +194,15 @@ const Profile = () => {
 
             <Col className="d-flex justify-content-center align-items-center">
               {id && id === account.id && (
-                <Button variant="secondary">
-                  <AiTwotoneSchedule className="fs-5" /> Chỉnh sửa
+                <Button variant="secondary" onClick={() => setOpenEdit(!openEdit)}>
+                  <MdEditDocument className="fs-5" /> {openEdit ? "Hủy" : "Cập nhật"}
                 </Button>
               )}
             </Col>
           </Row>
         )}
+
+        {openEdit && <UpdateProfile callbackSuccess={handleCallBackUpdate} />}
       </div>
 
       <Tabs

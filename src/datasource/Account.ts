@@ -46,6 +46,10 @@ export const AccountServices = {
     return axiosClient.get("/api/user");
   },
 
+  updateMyProfile: (params: any) => {
+    return axiosClient.put("/api/user", { update: params });
+  },
+
   register: (account: accountRegister) => {
     return axiosAuth.post("/api/users", {
       user: account,

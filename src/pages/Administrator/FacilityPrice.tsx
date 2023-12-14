@@ -199,7 +199,7 @@ const FacilityPrice = () => {
               autoComplete="off"
               timeCaption="Bắt đầu"
               selected={startAtTime}
-              onChange={(date) => {
+              onChange={(date: any) => {
                 handleChangeTime(date);
               }}
             />

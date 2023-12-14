@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import { NAME_ACCOUNT_STORE } from "../constants/constants";
 
 export interface Account {
-  age: null | string | number;
+  age: null | string;
   email: string;
   gender: string | null;
   id: string;
@@ -14,6 +14,7 @@ export interface Account {
   status: string;
   name: string;
   phone: string | null;
+  birthDate: string | null;
 }
 
 const initAccount: Account = {
@@ -28,6 +29,7 @@ const initAccount: Account = {
   accessToken: null,
   status: "",
   name: "",
+  birthDate: "",
 };
 
 interface AccountState {
