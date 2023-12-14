@@ -57,7 +57,7 @@ const InformationProfile = () => {
           <br />
 
           <div>
-            <Form.Label>Đánh giá: </Form.Label>{" "}
+            <Form.Label>Đánh giá </Form.Label>{" "}
             {rate && (
               <>
                 <span>{rate}</span>
