@@ -12,10 +12,13 @@ export interface Account {
   username: string;
   accessToken: string | null;
   status: string;
+  name: string;
+  phone: string | null;
 }
 
 const initAccount: Account = {
   age: null,
+  phone: null,
   email: "",
   gender: null,
   id: "",
@@ -24,6 +27,7 @@ const initAccount: Account = {
   username: "",
   accessToken: null,
   status: "",
+  name: "",
 };
 
 interface AccountState {

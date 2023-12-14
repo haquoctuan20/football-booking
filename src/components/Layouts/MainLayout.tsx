@@ -1,22 +1,19 @@
+import { useEffect } from "react";
 import { Badge, Button, Container, Dropdown } from "react-bootstrap";
 import { BsMenuButtonWideFill } from "react-icons/bs";
+import { FaBell } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
+import { IoLogIn, IoLogOut } from "react-icons/io5";
+import { MdManageAccounts } from "react-icons/md";
 import { Link, Outlet } from "react-router-dom";
 import styled from "styled-components";
 import { AccountServices } from "../../datasource/Account";
-import { useAccountStore } from "../../store/useAccountStore";
-import Footer from "../Footer";
-import { IoLogIn } from "react-icons/io5";
-import { IoLogOut } from "react-icons/io5";
-import { MdManageAccounts } from "react-icons/md";
-import { FaBell } from "react-icons/fa";
-import { NotificationService } from "../../datasource/Notification";
-import { useEffect } from "react";
+import { Account, useAccountStore } from "../../store/useAccountStore";
 import { useNotificationStore } from "../../store/useNotificationStore";
+import Footer from "../Footer";
 
 const MainLayout = () => {
-  const account = useAccountStore((state) => state.account);
-  const resetAccount = useAccountStore((state) => state.resetAccount);
+  const { account, resetAccount, setAccount } = useAccountStore();
   const { count } = useNotificationStore();
 
   const handleLogout = () => {
@@ -24,14 +21,34 @@ const MainLayout = () => {
     AccountServices.logout();
   };
 
-  // const handleGetAllNotification = async () => {
-  //   const rs = await NotificationService.getAllNotification();
-  //   console.log("🚀 -> handleGetAllNotification -> rs:", rs);
-  // };
+  const handleGetInfoUser = async () => {
+    try {
+      const { data: user } = await AccountServices.getInfoUser();
 
-  // useEffect(() => {
-  //   handleGetAllNotification();
-  // }, []);
+      const userData: Account = {
+        age: user.age,
+        email: user.email,
+        gender: user.gender,
+        id: user.id,
+        image: user.image,
+        roles: user.roles,
+        username: user.username,
+        status: user.status,
+        accessToken: account.accessToken,
+        name: user.name,
+        phone: user.phone,
+      };
+
+      setAccount(userData);
+    } catch (error) {
+      console.log("🚀  -> error:", error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetInfoUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <WrapperMainLayout>

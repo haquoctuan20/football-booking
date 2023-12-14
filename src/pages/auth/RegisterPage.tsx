@@ -14,6 +14,7 @@ import { WrapperAuth } from "./AuthStyled";
 
 const schema = yup
   .object({
+    name: yup.string().required("Trường này bắt buộc nhập"),
     username: yup.string().required("Trường này bắt buộc nhập"),
     role: yup.string().required("Trường này bắt buộc nhập"),
     email: yup
@@ -43,11 +44,12 @@ const RegisterPage = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (params: any) => {
+  const handleRegister = async (params: any) => {
     try {
       setLoading(true);
 
       const accountRegister: accountRegister = {
+        name: params.name,
         username: params.username,
         email: params.email,
         password: params.password,
@@ -73,7 +75,11 @@ const RegisterPage = () => {
 
       <h4 className="title-auth">Đăng ký</h4>
 
-      <Form onSubmit={handleSubmit(handleLogin)}>
+      <Form onSubmit={handleSubmit(handleRegister)}>
+        <div className="label-auth">Tên hiển thị</div>
+        <Form.Control {...register("name")} type="text" />
+        <p className="auth-error">{errors.name?.message}</p>
+
         <div className="label-auth">Tên tài khoản</div>
         <Form.Control {...register("username")} type="text" />
         <p className="auth-error">{errors.username?.message}</p>

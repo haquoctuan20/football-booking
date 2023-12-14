@@ -7,6 +7,7 @@ export interface accountRegister {
   email: string;
   password: string;
   role: string;
+  name: string;
 }
 
 export const AccountServices = {
