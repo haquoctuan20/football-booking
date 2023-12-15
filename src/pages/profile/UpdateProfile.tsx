@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Image, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import * as yup from "yup";
@@ -19,6 +19,10 @@ const schema = yup
     name: yup.string().required("Trường này bắt buộc nhập").trim(),
     phone: yup.string().required("Trường này bắt buộc nhập").trim(),
     gender: yup.string().required("Trường này bắt buộc nhập").trim(),
+    image: yup
+      .string()
+      .matches(/^[^\s]+$/, "URL chưa hợp lệ")
+      .required("Trường này bắt buộc nhập"),
     birthDate: yup.date().required("Trường này bắt buộc nhập"),
     age: yup.string(),
   })
@@ -30,7 +34,7 @@ interface UpdateProfileProps {
 
 const UpdateProfile = ({ callbackSuccess }: UpdateProfileProps) => {
   const { handleMessageError, messageSuccess } = useNotification();
-  const { account } = useAccountStore();
+  const { account, fetchingUser } = useAccountStore();
 
   const {
     register,
@@ -43,6 +47,7 @@ const UpdateProfile = ({ callbackSuccess }: UpdateProfileProps) => {
     defaultValues: {
       name: account.name ? account.name : "",
       phone: account.phone ? account.phone : "",
+      image: account.image ? account.image : "",
       gender: account.gender
         ? ["Nam", "Nữ"].includes(account.gender)
           ? account.gender
@@ -55,6 +60,7 @@ const UpdateProfile = ({ callbackSuccess }: UpdateProfileProps) => {
 
   const birthDate = watch("birthDate");
   const age = watch("age");
+  const image = watch("image");
 
   const [loadingUpdate, setLoadingUpdate] = useState(false);
 
@@ -67,9 +73,12 @@ const UpdateProfile = ({ callbackSuccess }: UpdateProfileProps) => {
         phone: params.phone,
         age: params.age,
         gender: params.gender,
+        image: params.image,
+        birthDate: moment(params.birthDate).format("DD/MM/yyyy"),
       };
 
       await AccountServices.updateMyProfile(paramsUpdate);
+      fetchingUser();
       messageSuccess("Cập nhật thành công");
 
       if (callbackSuccess) {
@@ -84,59 +93,80 @@ const UpdateProfile = ({ callbackSuccess }: UpdateProfileProps) => {
 
   return (
     <WrapperUpdateProfile>
-      <div className="text-center fs-5 fw-bold">Cập nhật thông tin</div>
+      <div>
+        <div className="text-center fs-5 fw-bold">Cập nhật thông tin</div>
+        {loadingUpdate ? (
+          <>
+            <SkeletonRow />
+          </>
+        ) : (
+          <Row>
+            <Col lg={4}>
+              <div className="height-90">
+                <Form.Label>Tên hiển thị</Form.Label>
+                <Form.Control type="text" {...register("name")} />
+                <p className="form-error">{errors.name?.message}</p>
+              </div>
+              <div className="height-90">
+                <Form.Label>Số điện thoại</Form.Label>
+                <Form.Control type="text" {...register("phone")} />
+                <p className="form-error">{errors.phone?.message}</p>
+              </div>
+            </Col>
+            <Col lg={2}>
+              <div className="height-90">
+                <Form.Label>Giới tính</Form.Label>
+                <Form.Select {...register("gender")}>
+                  <option value="Nam">Nam</option>
+                  <option value="Nữ">Nữ</option>
+                </Form.Select>
+              </div>
+              <div className="height-90">
+                <Form.Label>Ngày sinh - Tuổi : {age}</Form.Label>
+                <div>
+                  <ReactDatePicker
+                    className="w-100"
+                    selected={birthDate}
+                    locale="vi"
+                    dateFormat="dd/MM/yyyy"
+                    autoComplete="off"
+                    showYearDropdown
+                    onChange={(date: any) => {
+                      const years = moment().diff(date, "years");
+                      setValue("birthDate", date);
+                      setValue("age", years.toString());
+                    }}
+                  />
+                  {/* <Form.Label className="mx-2">Tuổi : {age}</Form.Label> */}
+                </div>
+              </div>
+            </Col>
+            <Col lg={6}>
+              <Form.Label>URL Ảnh đại diện</Form.Label>
+              <Form.Control type="text" {...register("image")} />
+              <p className="form-error">{errors.image?.message}</p>
 
-      {loadingUpdate ? (
-        <>
-          <SkeletonRow />
-        </>
-      ) : (
-        <Row>
-          <Col lg={4}>
-            <Form.Label>Tên hiển thị</Form.Label>
-            <Form.Control type="text" {...register("name")} />
-            <p className="form-error">{errors.name?.message}</p>
+              {image && (
+                <div className="d-flex flex-column align-items-center">
+                  <div>Xem trước</div>
+                  <img src={image} style={{ width: 150, height: 150 }} />
+                </div>
+              )}
+            </Col>
+          </Row>
+        )}
+      </div>
 
-            <Form.Label className="mt-2">Số điện thoại</Form.Label>
-            <Form.Control type="text" {...register("phone")} />
-            <p className="form-error">{errors.phone?.message}</p>
-          </Col>
-
-          <Col lg={4}>
-            <Form.Label className="mt-2">Giới tính</Form.Label>
-            <Form.Select {...register("gender")}>
-              <option value="Nam">Nam</option>
-              <option value="Nữ">Nữ</option>
-            </Form.Select>
-
-            <Form.Label className="mt-2">Sinh nhật</Form.Label>
-            <div>
-              <ReactDatePicker
-                selected={birthDate}
-                locale="vi"
-                dateFormat="dd/MM/yyyy"
-                autoComplete="off"
-                showYearDropdown
-                onChange={(date: any) => {
-                  const years = moment().diff(date, "years");
-                  setValue("birthDate", date);
-                  setValue("age", years.toString());
-                }}
-              />
-              <Form.Label className="mx-2">Tuổi : {age}</Form.Label>
-            </div>
-          </Col>
-        </Row>
-      )}
-
-      <Button
-        className="mt-2"
-        disabled={loadingUpdate}
-        variant="success"
-        onClick={handleSubmit(handleUpdate)}
-      >
-        Cập nhật
-      </Button>
+      <div>
+        <Button
+          className="mt-2"
+          disabled={loadingUpdate}
+          variant="success"
+          onClick={handleSubmit(handleUpdate)}
+        >
+          Cập nhật
+        </Button>
+      </div>
     </WrapperUpdateProfile>
   );
 };
@@ -148,4 +178,13 @@ const WrapperUpdateProfile = styled.div`
   padding: 8px 16px;
   border: 1px solid #ccc;
   border-radius: 8px;
+  height: 350px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
 `;

@@ -47,7 +47,7 @@ export const AccountServices = {
   },
 
   updateMyProfile: (params: any) => {
-    return axiosClient.put("/api/user", { update: params });
+    return axiosClient.put("/api/user", params);
   },
 
   register: (account: accountRegister) => {

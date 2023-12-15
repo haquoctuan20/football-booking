@@ -180,7 +180,7 @@ const Profile = () => {
                 </div>
               </div>
 
-              <div className="d-flex align-items-center mb-2">
+              {/* <div className="d-flex align-items-center mb-2">
                 <IoCalendarNumber className="me-2 fs-5" />
                 <div>
                   {user?.birthDate ? (
@@ -189,7 +189,7 @@ const Profile = () => {
                     <span className="fst-italic">Chưa cập nhật</span>
                   )}
                 </div>
-              </div>
+              </div> */}
             </Col>
 
             <Col className="d-flex justify-content-center align-items-center">

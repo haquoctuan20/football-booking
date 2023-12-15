@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Badge, Button, Container, Dropdown } from "react-bootstrap";
-import { BsMenuButtonWideFill } from "react-icons/bs";
 import { FaBell } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { IoLogIn, IoLogOut } from "react-icons/io5";
@@ -8,13 +7,13 @@ import { MdManageAccounts } from "react-icons/md";
 import { Link, Outlet } from "react-router-dom";
 import styled from "styled-components";
 import { AccountServices } from "../../datasource/Account";
-import { Account, useAccountStore } from "../../store/useAccountStore";
+import { useAccountStore } from "../../store/useAccountStore";
 import { useNotificationStore } from "../../store/useNotificationStore";
 import Footer from "../Footer";
 import NotificationDropdown from "../NotificationDropdown";
 
 const MainLayout = () => {
-  const { account, resetAccount, setAccount } = useAccountStore();
+  const { account, resetAccount, fetchingUser } = useAccountStore();
   const { count } = useNotificationStore();
 
   const handleLogout = () => {
@@ -22,33 +21,8 @@ const MainLayout = () => {
     AccountServices.logout();
   };
 
-  const handleGetInfoUser = async () => {
-    try {
-      const { data: user } = await AccountServices.getInfoUser();
-
-      const userData: Account = {
-        age: user.age,
-        email: user.email,
-        gender: user.gender,
-        id: user.id,
-        image: user.image,
-        roles: user.roles,
-        username: user.username,
-        status: user.status,
-        accessToken: account.accessToken,
-        name: user.name,
-        phone: user.phone,
-        birthDate: user.birthDate,
-      };
-
-      setAccount(userData);
-    } catch (error) {
-      console.log("🚀  -> error:", error);
-    }
-  };
-
   useEffect(() => {
-    handleGetInfoUser();
+    fetchingUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
