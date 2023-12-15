@@ -11,6 +11,7 @@ import { AccountServices } from "../../datasource/Account";
 import { Account, useAccountStore } from "../../store/useAccountStore";
 import { useNotificationStore } from "../../store/useNotificationStore";
 import Footer from "../Footer";
+import NotificationDropdown from "../NotificationDropdown";
 
 const MainLayout = () => {
   const { account, resetAccount, setAccount } = useAccountStore();
@@ -37,6 +38,7 @@ const MainLayout = () => {
         accessToken: account.accessToken,
         name: user.name,
         phone: user.phone,
+        birthDate: user.birthDate,
       };
 
       setAccount(userData);
@@ -69,36 +71,44 @@ const MainLayout = () => {
               </Link>
             </div>
 
-            <div className="button-setting">
-              {account.email ? (
+            <div className="button-setting d-flex align-items-center">
+              {account.id && (
+                <div className="me-1 ">
+                  <NotificationDropdown />
+                </div>
+              )}
+
+              {account.id ? (
                 <>
-                  <Dropdown className="h-100 dropdown-setting">
-                    <Dropdown.Toggle className="h-100" variant="success" id="dropdown-basic">
-                      <BsMenuButtonWideFill className="fs-5 me-2" /> {account.email}
-                      {count > 0 && (
-                        <Badge className="ms-1" bg="danger">
-                          {count}
-                        </Badge>
-                      )}
+                  <Dropdown className=" dropdown-setting" autoClose="inside">
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                      {/* <BsMenuButtonWideFill className="fs-5 me-2" />  */}
+                      {account.name ? account.name : account.username}
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
-                      <Link className="px-3 py-1 dropdown-item" to={`/profile/${account.id}`}>
-                        <ImProfile className="fs-5 me-2" /> Trang cá nhân
-                      </Link>
+                    <Dropdown.Menu align={"end"}>
+                      <Dropdown.Item className="px-0">
+                        <Link className="px-3 py-1 dropdown-item" to={`/profile/${account.id}`}>
+                          <ImProfile className="fs-5 me-2" /> Trang cá nhân
+                        </Link>
+                      </Dropdown.Item>
 
-                      <Link className="px-3 py-1 dropdown-item" to={`/administrator`}>
-                        <MdManageAccounts className=" fs-5 me-2" /> Trang quản lý
-                      </Link>
+                      <Dropdown.Item className="px-0">
+                        <Link className="px-3 py-1 dropdown-item" to={`/administrator`}>
+                          <MdManageAccounts className=" fs-5 me-2" /> Trang quản lý
+                        </Link>
+                      </Dropdown.Item>
 
-                      <Link className="px-3 py-1 dropdown-item" to={`/notifications`}>
-                        <FaBell className=" fs-5 me-2" /> Thông báo{" "}
-                        {count > 0 && (
-                          <Badge className="ms-1" bg="danger">
-                            {count}
-                          </Badge>
-                        )}
-                      </Link>
+                      <Dropdown.Item className="px-0">
+                        <Link className="px-3 py-1 dropdown-item" to={`/notifications`}>
+                          <FaBell className=" fs-5 me-2" /> Thông báo{" "}
+                          {count > 0 && (
+                            <Badge className="ms-1" bg="danger">
+                              {count}
+                            </Badge>
+                          )}
+                        </Link>
+                      </Dropdown.Item>
 
                       <Dropdown.Divider />
 
@@ -114,7 +124,7 @@ const MainLayout = () => {
                 // </Button>
                 <Link to="/login">
                   <Button className="h-100" variant="danger">
-                    <IoLogIn className="fs-5 me-2" /> Đăng nhập
+                    <IoLogIn className="fs-5" /> Đăng nhập
                   </Button>
                 </Link>
               )}
@@ -166,7 +176,7 @@ const WrapperNav = styled.div`
 
     button {
       border: none;
-      border-radius: 0px;
+      //border-radius: 0px;
     }
   }
 
