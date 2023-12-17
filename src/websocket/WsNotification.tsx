@@ -19,7 +19,7 @@ const configNotification: ToastOptions = {
 
 const WsNotification = () => {
   const { account } = useAccountStore();
-  const { fetchCount, increaseCount } = useNotificationStore();
+  const { fetchCount, increaseNotification } = useNotificationStore();
 
   const navigate = useNavigate();
 
@@ -74,7 +74,7 @@ const WsNotification = () => {
       switch (message.cmd) {
         case 10:
           handelOnMessageCMD10(message.params);
-          increaseCount();
+          increaseNotification(message.params);
           break;
 
         default:

@@ -12,28 +12,16 @@ import SkeletonRow from "./SkeletonRow";
 
 const NotificationDropdown = () => {
   const { handleMessageError } = useNotification();
-  const { resetCount, count, decreaseCount } = useNotificationStore();
+  const { resetCount, count, decreaseNotification, notifications, fetchNotifications } =
+    useNotificationStore();
   const navigate = useNavigate();
 
   const [show, setShow] = useState(false);
 
-  const [notifications, setNotifications] = useState<any>([]);
   const [loadingFetch, setLoadingFetch] = useState(false);
 
   const handleToggle = () => {
     setShow(!show);
-  };
-
-  const handleGetAllNotification = async () => {
-    try {
-      setLoadingFetch(true);
-      const { data } = await NotificationService.getAllNotification();
-      setNotifications(data);
-    } catch (error) {
-      handleMessageError(error);
-    } finally {
-      setLoadingFetch(false);
-    }
   };
 
   const handleReadAll = async () => {
@@ -41,7 +29,7 @@ const NotificationDropdown = () => {
       setLoadingFetch(true);
       await NotificationService.readAllNotification();
       resetCount();
-      handleGetAllNotification();
+      fetchNotifications();
     } catch (error) {
       handleMessageError(error);
     } finally {
@@ -56,19 +44,16 @@ const NotificationDropdown = () => {
       }
 
       await NotificationService.readOneNotification(noti.id);
-      decreaseCount();
+      decreaseNotification(noti);
     } catch (error) {
       handleMessageError(error);
     }
   };
 
   useEffect(() => {
-    if (!show) {
-      return;
-    }
-    handleGetAllNotification();
+    fetchNotifications();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [show]);
+  }, []);
 
   return (
     <WrapperNotificationDropdown>

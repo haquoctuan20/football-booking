@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import useNotification from "../../hooks/useNotification";
 import { NotificationService } from "../../datasource/Notification";
 import { useNotificationStore } from "../../store/useNotificationStore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export interface INotification {
   detailId: string;
@@ -26,22 +26,31 @@ interface CardNotificationProps {
 
 const CardNotification = ({ data }: CardNotificationProps) => {
   const { handleMessageError } = useNotification();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState<INotification>(data);
 
-  const { decreaseCount } = useNotificationStore();
+  const { decreaseNotification } = useNotificationStore();
 
   const handleReadNotification = async () => {
     try {
       setLoading(true);
       await NotificationService.readOneNotification(notification.id);
       setNotification({ ...notification, isRead: true });
-      decreaseCount();
+      decreaseNotification(data);
+
+      handleNavigate();
     } catch (error) {
       handleMessageError(error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleNavigate = () => {
+    if (data.type === "BOOKING") {
+      navigate(`/profile/${data.fromUserId}?tab=team`);
     }
   };
 
@@ -50,7 +59,10 @@ const CardNotification = ({ data }: CardNotificationProps) => {
   }, [data]);
 
   return (
-    <WrapperCardNotification className={`${notification.isRead ? "" : "unread"}`}>
+    <WrapperCardNotification
+      className={`${notification.isRead ? "" : "unread"}`}
+      onClick={handleReadNotification}
+    >
       <div className="d-flex flex-fill">
         <div className="px-3">
           <RiFootballFill className="fs-2" />
@@ -69,29 +81,15 @@ const CardNotification = ({ data }: CardNotificationProps) => {
                 </span>
               )}
             </div>
-
-            <div>
-              {/* <Button size="sm" variant="outline-secondary" onClick={increaseCount}>
-                Test thêm thông báo
-              </Button>
-              <Button size="sm" variant="outline-secondary" onClick={decreaseCount}>
-                Test trừ thông báo
-              </Button> */}
-              <Link to={`/profile/${notification.fromUserId}?tab=team`}>
-                <Button size="sm" variant="outline-secondary">
-                  Xem người dùng
-                </Button>
-              </Link>
-            </div>
           </div>
         </div>
       </div>
 
-      <div className="action">
+      {/* <div className="action">
         <Button disabled={notification.isRead} variant="light" onClick={handleReadNotification}>
           {loading ? <Spinner animation="border" size="sm" /> : <GiCheckMark />}
         </Button>
-      </div>
+      </div> */}
     </WrapperCardNotification>
   );
 };
@@ -103,6 +101,7 @@ const WrapperCardNotification = styled.div`
   border-bottom: 1px solid #c3c3c3;
   padding: 8px;
   margin-bottom: 4px;
+  cursor: pointer;
 
   display: flex;
   justify-content: space-between;
