@@ -1,11 +1,12 @@
 import moment from "moment";
-import { Form, Table } from "react-bootstrap";
+import { Button, Form, Table } from "react-bootstrap";
 import styled from "styled-components";
 import { WrapperTable } from "../../styles/table";
 
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import LoadingComponent from "../../components/LoadingComponent";
+import PaginationComponent from "../../components/PaginationComponent";
 import SkeletonRow from "../../components/SkeletonRow";
 import { BookingService } from "../../datasource/Booking";
 import useNotification from "../../hooks/useNotification";
@@ -13,7 +14,7 @@ import { useAccountStore } from "../../store/useAccountStore";
 import { formatCurrency } from "../../utils/number";
 import ModalCompetitor from "./ModalCompetitor";
 import { TabsProfileManage } from "./Profile";
-import PaginationComponent from "../../components/PaginationComponent";
+import PopoverConfirm from "../../components/PopoverConfirm";
 
 const BookingManagement = () => {
   const { account } = useAccountStore();
@@ -52,33 +53,32 @@ const BookingManagement = () => {
     }
   };
 
-  const handleCancelBooking = () => {
+  const handleCancelBooking = async (id: string) => {
     try {
       setLoading(true);
 
-      console.log("Fetching...");
+      await BookingService.cancelRequest(id);
+      messageSuccess("Hủy thành công");
     } catch (error) {
-      console.log("🚀 - handleFetchBooking - error: ", error);
+      handleMessageError(error);
     } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
+      setLoading(false);
     }
   };
 
-  const handleCancelFindingCompetitor = () => {
-    try {
-      setLoading(true);
+  // const handleCancelFindingCompetitor = () => {
+  //   try {
+  //     setLoading(true);
 
-      console.log("Fetching...");
-    } catch (error) {
-      console.log("🚀 - handleFetchBooking - error: ", error);
-    } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-    }
-  };
+  //     console.log("Fetching...");
+  //   } catch (error) {
+  //     console.log("🚀 - handleFetchBooking - error: ", error);
+  //   } finally {
+  //     setTimeout(() => {
+  //       setLoading(false);
+  //     }, 1000);
+  //   }
+  // };
 
   const handleStartFindingCompetitor = async (bookingId: string) => {
     try {
@@ -117,27 +117,51 @@ const BookingManagement = () => {
             <Table bordered responsive="xl" hover>
               <thead>
                 <tr>
-                  <th className="min-width-250">Thời gian</th>
-                  <th className="min-width-80">Số</th>
-                  <th className="min-width-120">Giá</th>
+                  <th className="min-width-250">Thông tin trận bóng</th>
                   <th className="min-width-150 text-center">Trạng thái tìm đối</th>
                   <th className="min-width-150"></th>
                 </tr>
               </thead>
               <tbody>
                 {myBooking.map((booking: any, index: number) => (
-                  <tr key={index} className="height-80 max-height-120">
+                  <tr key={index} className="height-80">
                     <td className="min-width-250">
-                      {`${booking?.startAt?.hour}:${
-                        booking?.startAt?.minute === 0 ? "00" : booking?.startAt?.minute
-                      } - ${booking?.endAt?.hour}:${
-                        booking?.endAt?.minute === 0 ? "00" : booking?.endAt?.minute
-                      }, ${moment(booking?.date).format("DD-MM-YYYY")}`}
+                      {/* facility */}
+                      <div>
+                        <strong>Cơ sở: </strong>
+                        <span>{booking?.facilityName}</span>
+                        {/* <Link to={`/booking/${booking?.facilityId}`}>{booking?.facilityName}</Link> */}
+                      </div>
+
+                      {/* time */}
+                      <div>
+                        <strong>Thời gian: </strong>
+                        <span>
+                          {`${booking?.startAt?.hour}:${
+                            booking?.startAt?.minute === 0 ? "00" : booking?.startAt?.minute
+                          } - ${booking?.endAt?.hour}:${
+                            booking?.endAt?.minute === 0 ? "00" : booking?.endAt?.minute
+                          }, ${moment(booking?.date).format("DD-MM-YYYY")}`}
+                        </span>
+                      </div>
+
+                      {/* slot */}
+                      <div>
+                        <strong>Sân: </strong>
+                        <span>{booking?.fieldIndex}</span>
+                      </div>
+
+                      {/* price */}
+                      <div>
+                        <strong>Giá: </strong>
+                        <span>{formatCurrency(booking?.price)}</span>
+                      </div>
+
+                      {/* detail */}
+                      <div>
+                        <Link to={`/match-detail/${booking?.bookingId}`}>Chi tiết trận đấu</Link>
+                      </div>
                     </td>
-
-                    <td className="min-width-80">{booking?.fieldIndex}</td>
-
-                    <td className="min-width-120">{formatCurrency(booking?.price)}</td>
 
                     <td className="min-width-150">
                       {booking.opponentId === null && (
@@ -157,6 +181,7 @@ const BookingManagement = () => {
                         </div>
                       )}
 
+                      {/* has opponent */}
                       {booking.opponentId !== null && (
                         <div className="d-flex flex-column align-items-center">
                           <div className="text-center mb-1">Đã nhận đối</div>
@@ -177,6 +202,17 @@ const BookingManagement = () => {
                             />
                           </>
                         )}
+
+                        <PopoverConfirm
+                          content="Bạn chắc chắn muốn hủy trận đấu này?"
+                          callbackConfirm={() => {
+                            handleCancelBooking(booking?.id);
+                          }}
+                        >
+                          <Button variant="danger" size="sm" className="mt-1">
+                            Hủy trận
+                          </Button>
+                        </PopoverConfirm>
                       </div>
                     </td>
                   </tr>

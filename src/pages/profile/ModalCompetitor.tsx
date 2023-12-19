@@ -5,6 +5,8 @@ import useNotification from "../../hooks/useNotification";
 import { BookingService } from "../../datasource/Booking";
 import styled from "styled-components";
 import SkeletonRow from "../../components/SkeletonRow";
+import { Link } from "react-router-dom";
+import moment from "moment";
 
 interface ModalCompetitorProps {
   handleCallback?: () => void;
@@ -100,9 +102,20 @@ const ModalCompetitor = (props: ModalCompetitorProps) => {
                     re?.status !== "PENDING" ? "match-request__denied" : ""
                   }`}
                 >
-                  <div>
-                    <div>{re?.id}</div>
-                    <div>{re?.id}</div>
+                  <div className="d-flex">
+                    <div className="pe-1">
+                      <img src={re?.requestorImage} alt="avt" className="requestor-avt" />
+                    </div>
+
+                    <div>
+                      <div>
+                        <Link to={`/profile/${re?.requestorId}`}>
+                          <strong>{re?.requestorName}</strong>
+                        </Link>
+                      </div>
+
+                      <div className="requestor-date">{moment(re?.date).format("DD-MM-YYYY")}</div>
+                    </div>
                   </div>
 
                   <div className="d-flex flex-column ">
@@ -151,7 +164,6 @@ const BodyModalCompetitor = styled.div`
     border-radius: 8px;
     padding: 5px;
     margin-bottom: 5px;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -163,5 +175,17 @@ const BodyModalCompetitor = styled.div`
     &__denied {
       background: #e5e5e5;
     }
+  }
+
+  .requestor-avt {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    object-fit: fill;
+  }
+
+  .requestor-date {
+    font-size: 14px;
+    opacity: 0.8;
   }
 `;

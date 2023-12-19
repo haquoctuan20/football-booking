@@ -232,9 +232,9 @@ const Booking = () => {
         {facility?.address.city}
       </p>
 
-      <Link to={`/matching-request?facilityId=${facility?.id}`}>
+      {/* <Link to={`/matching-request?facilityId=${facility?.id}`}>
         <p>Xem danh sách đối trong cơ sở</p>
-      </Link>
+      </Link> */}
 
       <hr />
 

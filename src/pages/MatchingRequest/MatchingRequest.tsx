@@ -87,23 +87,34 @@ const MatchingRequest = () => {
                   <div>
                     <div className="info-owner pb-2">
                       <div className="avt-owner d-flex flex-column align-items-center">
-                        <img src="./san-bong.png" alt="avt" className="pb-1" />
+                        <img
+                          src={request?.userImage ? request?.userImage : "./san-bong.png"}
+                          alt="avt"
+                          className="pb-1"
+                        />
                         <strong>
-                          <Link to={`/profile/${request?.userId}`}>Tên người cầm đối</Link>
+                          <Link to={`/profile/${request?.userId}`}>
+                            {request?.userName ? request?.userName : "Người dùng"}
+                          </Link>
                         </strong>
                       </div>
 
-                      <div>
+                      {/* <div>
                         <strong>Tuổi: </strong>
                         <span>23</span>
                         ... các thông tin khác
-                      </div>
+                      </div> */}
                     </div>
 
                     {/* facility */}
                     <div>
                       <div>
-                        <strong>Cơ sở: ...</strong>
+                        <strong>
+                          Cơ sở:{" "}
+                          <Link to={`/booking/${request?.facilityId}`}>
+                            {request?.facilityName ? request?.facilityName : "..."}
+                          </Link>
+                        </strong>
                       </div>
                       <div>
                         <strong>Thời gian: </strong>{" "}

@@ -22,6 +22,7 @@ import FacilityPrice from "./pages/Administrator/FacilityPrice";
 import MatchingRequest from "./pages/MatchingRequest/MatchingRequest";
 import WsNotification from "./websocket/WsNotification";
 import Notifications from "./pages/Notifications/Notifications";
+import DetailMatch from "./pages/DetailMatch/DetailMatch";
 
 function App() {
   return (
@@ -85,6 +86,15 @@ function App() {
             element={
               <PageLayout title="Đặt sân">
                 <Booking />
+              </PageLayout>
+            }
+          />
+
+          <Route
+            path="match-detail/:id"
+            element={
+              <PageLayout title="Chi tiết trận đấu">
+                <DetailMatch />
               </PageLayout>
             }
           />
