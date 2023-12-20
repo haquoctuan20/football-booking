@@ -8,7 +8,7 @@ import { AiTwotoneSchedule } from "react-icons/ai";
 import { BsFillStarFill } from "react-icons/bs";
 import { FaPhoneAlt, FaTransgender } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
-import { IoCalendarNumber, IoMailSharp, IoPerson } from "react-icons/io5";
+import { IoMailSharp, IoPerson } from "react-icons/io5";
 import { MdEditDocument } from "react-icons/md";
 import { TbNumbers } from "react-icons/tb";
 import SkeletonRow from "../../components/SkeletonRow";

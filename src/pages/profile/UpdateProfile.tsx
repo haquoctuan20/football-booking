@@ -12,6 +12,7 @@ import ReactDatePicker, { registerLocale } from "react-datepicker";
 import SkeletonRow from "../../components/SkeletonRow";
 import { AccountServices } from "../../datasource/Account";
 import useNotification from "../../hooks/useNotification";
+import UploadCloudinary from "../../components/UploadCloudinary/UploadCloudinary";
 registerLocale("vi", vi);
 
 const schema = yup
@@ -63,6 +64,10 @@ const UpdateProfile = ({ callbackSuccess }: UpdateProfileProps) => {
   const image = watch("image");
 
   const [loadingUpdate, setLoadingUpdate] = useState(false);
+
+  const handleUploadAvatar = (url: string) => {
+    setValue("image", url);
+  };
 
   const handleUpdate = async (params: any) => {
     try {
@@ -142,8 +147,11 @@ const UpdateProfile = ({ callbackSuccess }: UpdateProfileProps) => {
               </div>
             </Col>
             <Col lg={6}>
-              <Form.Label>URL Ảnh đại diện</Form.Label>
-              <Form.Control type="text" {...register("image")} />
+              <Form.Label>Ảnh đại diện</Form.Label>
+
+              <UploadCloudinary urlImage={image} callbackUrl={handleUploadAvatar} />
+
+              {/* <Form.Control type="text" {...register("image")} />
               <p className="form-error">{errors.image?.message}</p>
 
               {image && (
@@ -151,7 +159,7 @@ const UpdateProfile = ({ callbackSuccess }: UpdateProfileProps) => {
                   <div>Xem trước</div>
                   <img src={image} style={{ width: 150, height: 150 }} />
                 </div>
-              )}
+              )} */}
             </Col>
           </Row>
         )}
@@ -178,7 +186,7 @@ const WrapperUpdateProfile = styled.div`
   padding: 8px 16px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  height: 350px;
+  height: 400px;
 
   display: flex;
   flex-direction: column;
