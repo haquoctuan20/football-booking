@@ -29,6 +29,7 @@ import { roundToNearestHalfHour } from "../../utils/dateTime";
 import { formatCurrency } from "../../utils/number";
 import WriteComment from "../../components/WriteComment/WriteComment";
 import CommentsView from "../../components/WriteComment/CommentsView";
+import Payment from "../../components/Payment/Payment";
 
 const schema = yup
   .object({
@@ -382,6 +383,9 @@ const Booking = () => {
             Xác nhận đặt sân
           </Button>
         </div>
+
+        {/* payment */}
+        <Payment />
       </div>
 
       <div className="my-5">
@@ -458,7 +462,7 @@ const WrapperBooking = styled.div`
     padding: 8px;
     border-radius: 8px;
 
-    height: 230px;
+    min-height: 230px;
 
     display: flex;
     flex-direction: column;
