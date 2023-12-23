@@ -237,10 +237,10 @@ const FacilityPrice = () => {
             <MessageError msg={errors.amount?.message || errors.specialAmount?.message} />
             {/* <MessageError msg={errors.specialAmount?.message} /> */}
 
-            <div>amount</div>
+            <div>Giá</div>
             <Form.Control {...register("amount")} type="number" />
 
-            <div className="mt-2">specialAmount</div>
+            <div className="mt-2">Giá dịp đặt biệt</div>
             <Form.Control {...register("specialAmount")} type="number" />
           </Col>
         </Row>
@@ -263,8 +263,8 @@ const FacilityPrice = () => {
                     <th>Loại sân</th>
                     <th>Thời gian bắt đầu</th>
                     <th>Thời gian kết thúc</th>
-                    <th>amount</th>
-                    <th>specialAmount</th>
+                    <th>Giá</th>
+                    <th>Giá dịp đặt biệt</th>
                   </tr>
                 </thead>
 

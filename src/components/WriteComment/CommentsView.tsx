@@ -16,7 +16,7 @@ const CommentsView = ({ data: { body, rating } }: CommentsViewProps) => {
               key={star}
               style={{
                 cursor: "pointer",
-                fontSize: 26,
+                fontSize: 22,
                 color: star <= rating ? "gold" : "gray",
               }}
             >
@@ -34,7 +34,7 @@ const CommentsView = ({ data: { body, rating } }: CommentsViewProps) => {
 export default CommentsView;
 
 const WrapperCommentsView = styled.div`
-  padding: 8px;
+  padding: 4px 8px;
   background-color: #f3f3f3;
   border-radius: 4px;
   margin: 6px 0px;

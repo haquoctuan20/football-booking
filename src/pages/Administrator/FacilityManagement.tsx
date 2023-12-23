@@ -17,9 +17,7 @@ const FacilityManagement = () => {
   const handleGetFacilityByUsername = async () => {
     try {
       setLoadingFetch(true);
-      const { data } = await FacilityService.getFacilityByUsername(
-        account.username
-      );
+      const { data } = await FacilityService.getFacilityByUsername(account.username);
       setFacilities(data);
     } catch (error) {
       handleMessageError(error);
@@ -36,18 +34,8 @@ const FacilityManagement = () => {
   return (
     <div>
       <div>
-        <Link
-          to="/administrator/facility/create"
-          className="btn btn-success  btn-sm"
-        >
+        <Link to="/administrator/facility/create" className="btn btn-success  btn-sm">
           Thêm cơ sở mới
-        </Link>
-        ----
-        <Link
-          to="/administrator/facility/edit/123123123"
-          className="btn btn-success btn-sm"
-        >
-          Chỉnh sửa
         </Link>
       </div>
 
@@ -68,8 +56,8 @@ const FacilityManagement = () => {
               <tr key={index}>
                 <td className="min-width-250">{data.name}</td>
                 <td className="min-width-250">
-                  {data.address.number}, {data.address.street},{" "}
-                  {data.address.ward}, {data.address.city}
+                  {data.address.number}, {data.address.street}, {data.address.ward},{" "}
+                  {data.address.city}
                 </td>
                 <td className="min-width-80">{data.numOfFields}</td>
                 <td className="">

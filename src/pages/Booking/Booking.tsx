@@ -273,7 +273,7 @@ const Booking = () => {
         </>
       ) : (
         <>
-          <Form.Label className="mt-3">Chọn sân </Form.Label>
+          <Form.Label className="mt-3">Slot</Form.Label>
 
           {prices.length === 0 ? (
             <p>Không có sân nào trong khoảng thời gian này</p>
@@ -319,7 +319,7 @@ const Booking = () => {
       ) : (
         <>
           <div className="mt-3">
-            <Form.Label>Slot</Form.Label>
+            <Form.Label>Chọn sân</Form.Label>
           </div>
 
           <div className="container-time">
@@ -385,7 +385,13 @@ const Booking = () => {
         </div>
 
         {/* payment */}
-        <Payment />
+        {fieldSelect && (
+          <div className="container-paypal">
+            <div className="payment-paypal">
+              <Payment />
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="my-5">
@@ -401,9 +407,11 @@ const Booking = () => {
           </span>
         </div>
 
-        {facility?.comments?.map((comment: any, index: number) => (
-          <CommentsView key={index} data={comment} />
-        ))}
+        <div className="container-comments">
+          {facility?.comments?.map((comment: any, index: number) => (
+            <CommentsView key={index} data={comment} />
+          ))}
+        </div>
       </div>
 
       {id && (
@@ -514,5 +522,21 @@ const WrapperBooking = styled.div`
         border: 1px solid #198754;
       }
     }
+  }
+
+  .container-paypal {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+
+    .payment-paypal {
+      width: 400px;
+      z-index: 0;
+    }
+  }
+
+  .container-comments {
+    max-height: 500px;
+    overflow: auto;
   }
 `;

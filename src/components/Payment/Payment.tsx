@@ -1,5 +1,4 @@
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
-import { useRef } from "react";
 
 const Payment = () => {
   return (

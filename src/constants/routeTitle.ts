@@ -33,16 +33,9 @@ export const RouteTitle: RouteTitleAttribute[] = [
   },
   //
   {
-    title: "Home",
-    path: "/administrator/home",
-    parent: "/administrator/home",
-    isMenu: true,
-  },
-  //
-  {
-    title: "About",
-    path: "/administrator/about",
-    parent: "/administrator/about",
+    title: "Cài đặt",
+    path: "/administrator/setting",
+    parent: "/administrator/setting",
     isMenu: true,
   },
 ];

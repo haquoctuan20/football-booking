@@ -23,6 +23,7 @@ import MatchingRequest from "./pages/MatchingRequest/MatchingRequest";
 import WsNotification from "./websocket/WsNotification";
 import Notifications from "./pages/Notifications/Notifications";
 import DetailMatch from "./pages/DetailMatch/DetailMatch";
+import Setting from "./pages/Administrator/Setting";
 
 function App() {
   return (
@@ -142,6 +143,7 @@ function App() {
           <Route path="facility/edit/:id" element={<>detail - edit</>} />
           <Route path="facility/create" element={<FacilityPage />} />
           <Route path="facility-price/:id" element={<FacilityPrice />} />
+          <Route path="setting" element={<Setting />} />
           <Route path="home" element={<>home</>} />
           <Route path="about" element={<>about</>} />
         </Route>
