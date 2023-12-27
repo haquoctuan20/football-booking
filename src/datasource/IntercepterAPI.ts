@@ -66,4 +66,9 @@ const axiosUser = createAxios({
   baseURL: import.meta.env.VITE_BASE_URL_USER,
   timeout: 100000,
 });
-export { axiosNotification, axiosBooking, axiosFacility, axiosUser };
+
+const axiosPayment = createAxios({
+  baseURL: import.meta.env.VITE_BASE_URL_BOOKING,
+  timeout: 100000,
+});
+export { axiosNotification, axiosBooking, axiosFacility, axiosUser, axiosPayment };

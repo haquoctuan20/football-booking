@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { useNavigationStore } from "../../store/useNavigationStore";
 import { useEffect, useState } from "react";
 import { RouteTitle, RouteTitleAttribute } from "../../constants/routeTitle";
+import { useAccountStore } from "../../store/useAccountStore";
 
 const AdministratorLayout = () => {
   const { title, setTitle } = useNavigationStore();
-  const [routeActive, setRouteActive] = useState<RouteTitleAttribute | null>(
-    null
-  );
+  const { fetchingUser } = useAccountStore();
+
+  const [routeActive, setRouteActive] = useState<RouteTitleAttribute | null>(null);
 
   const location = useLocation();
 
@@ -29,6 +30,7 @@ const AdministratorLayout = () => {
 
   useEffect(() => {
     checkMatchUrl();
+    fetchingUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
@@ -52,9 +54,7 @@ const AdministratorLayout = () => {
                 return (
                   <li
                     className={`nav-item ${
-                      routeActive && routeActive.parent === route.parent
-                        ? "active"
-                        : ""
+                      routeActive && routeActive.parent === route.parent ? "active" : ""
                     }`}
                     key={index}
                   >

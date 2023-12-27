@@ -1,9 +1,82 @@
+import { useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import styled from "styled-components";
+import LoadingComponent from "../../components/LoadingComponent";
+import { PaymentService } from "../../datasource/Payment";
+import useNotification from "../../hooks/useNotification";
+import queryString from "query-string";
+import { useAccountStore } from "../../store/useAccountStore";
+import { AccountServices } from "../../datasource/Account";
+import { useNavigate } from "react-router-dom";
 
 const Setting = () => {
+  const { handleMessageError } = useNotification();
+  const { account, fetchingUser } = useAccountStore();
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+
+  const handlePartnerReferral = async () => {
+    try {
+      setLoading(true);
+      const { data } = await PaymentService.partnerReferral();
+
+      const actionURL = data.links.find((i: any) => i?.rel === "action_url");
+
+      window.open(`${actionURL?.href}&displayMode=minibrowser`, "PPFrame", "popup");
+    } catch (error) {
+      handleMessageError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpdatePartner = async (params: { merchantId: string; trackingId: string }) => {
+    try {
+      setLoading(true);
+
+      await AccountServices.updateMyProfile(params);
+
+      navigate("/administrator/setting");
+
+      fetchingUser();
+    } catch (error) {
+      handleMessageError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (account.merchantId && account.trackingId) {
+      return;
+    }
+    /**
+     * trackingId = merchantId
+     * merchantId = merchantIdInPayPal
+     */
+    const parsedReceiver = queryString.parse(location.search);
+
+    const parsed = JSON.parse(JSON.stringify(parsedReceiver));
+
+    if (!parsed.merchantId || !parsed.merchantIdInPayPal) {
+      return;
+    }
+    if (
+      account.merchantId === parsed.merchantIdInPayPal ||
+      account.trackingId === parsed.merchantId
+    ) {
+      return;
+    }
+
+    handleUpdatePartner({ merchantId: parsed.merchantIdInPayPal, trackingId: parsed.merchantId });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search, account]);
+
   return (
     <WrapperSetting>
+      {loading && <LoadingComponent />}
+
       <Row>
         <Col md={4}>
           <h4>Thanh toán</h4>
@@ -34,7 +107,19 @@ const Setting = () => {
               </ul>
             </div>
 
-            <Button variant="success">Kết nối với PayPal</Button>
+            <div className="px-2">
+              {account.merchantId ? (
+                <div>
+                  <strong>Merchant ID: </strong> <span>{account.merchantId}</span>
+                </div>
+              ) : (
+                <>
+                  <Button variant="success" onClick={handlePartnerReferral}>
+                    Kết nối với PayPal
+                  </Button>
+                </>
+              )}
+            </div>
           </div>
         </Col>
       </Row>

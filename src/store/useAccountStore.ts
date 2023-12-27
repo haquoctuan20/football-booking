@@ -16,6 +16,9 @@ export interface Account {
   name: string;
   phone: string | null;
   birthDate: string | null;
+
+  merchantId: string | null;
+  trackingId: string | null;
 }
 
 const initAccount: Account = {
@@ -31,6 +34,8 @@ const initAccount: Account = {
   status: "",
   name: "",
   birthDate: "",
+  merchantId: null,
+  trackingId: null,
 };
 
 interface AccountState {
@@ -66,6 +71,8 @@ export const useAccountStore = create<AccountState>()(
             name: user.name,
             phone: user.phone,
             birthDate: user.birthDate,
+            merchantId: user.merchantId ? user.merchantId : null,
+            trackingId: user.trackingId ? user.trackingId : null,
           };
 
           return { account: userData };
