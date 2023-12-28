@@ -6,10 +6,12 @@ import { IFacility } from "../../constants/facility";
 import { FacilityService } from "../../datasource/Factility";
 import { useAccountStore } from "../../store/useAccountStore";
 import useNotification from "../../hooks/useNotification";
+import useStatusAccount from "../../hooks/useStatusAccount";
 
 const FacilityManagement = () => {
   const { account } = useAccountStore();
   const { handleMessageError } = useNotification();
+  const { isConnectPayment } = useStatusAccount();
 
   const [facilities, setFacilities] = useState<IFacility[]>([]);
   const [loadingFetch, setLoadingFetch] = useState(false);
@@ -34,9 +36,27 @@ const FacilityManagement = () => {
   return (
     <div>
       <div>
-        <Link to="/administrator/facility/create" className="btn btn-success  btn-sm">
-          Thêm cơ sở mới
-        </Link>
+        {isConnectPayment ? (
+          <div>
+            <Link to="/administrator/facility/create" className="btn btn-success  btn-sm">
+              Thêm cơ sở mới
+            </Link>
+          </div>
+        ) : (
+          <div className="d-flex align-items-center">
+            <Button variant="secondary" size="sm">
+              Thêm cơ sở mới
+            </Button>
+
+            <div className="ps-2 ">
+              » <span className="form-error">Bạn chưa cài đặt phương thức thanh toán</span> »{" "}
+              <span>
+                Đi tới
+                <Link to="/administrator/setting"> Phương thức thanh toán</Link>
+              </span>
+            </div>
+          </div>
+        )}
       </div>
 
       {loadingFetch ? (

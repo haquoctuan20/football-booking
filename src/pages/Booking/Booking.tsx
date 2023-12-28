@@ -385,13 +385,15 @@ const Booking = () => {
         </div>
 
         {/* payment */}
-        {fieldSelect && (
+        {/* {fieldSelect && (
           <div className="container-paypal">
             <div className="payment-paypal">
               <Payment />
             </div>
           </div>
-        )}
+        )} */}
+
+        <Payment />
       </div>
 
       <div className="my-5">

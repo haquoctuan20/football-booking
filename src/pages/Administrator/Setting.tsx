@@ -16,6 +16,38 @@ const Setting = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const handleOpenPopup = ({ url = "/", title = "Tiêu đề", w = 400, h = 500 }: any) => {
+    const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+    const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+
+    const width = window.innerWidth
+      ? window.innerWidth
+      : document.documentElement.clientWidth
+      ? document.documentElement.clientWidth
+      : screen.width;
+    const height = window.innerHeight
+      ? window.innerHeight
+      : document.documentElement.clientHeight
+      ? document.documentElement.clientHeight
+      : screen.height;
+
+    const systemZoom = width / window.screen.availWidth;
+    const left = (width - w) / 2 / systemZoom + dualScreenLeft;
+    // const top = (height - h) / 2 / systemZoom + dualScreenTop;
+    const top = 0;
+    window.open(
+      url,
+      title,
+      `
+      scrollbars=yes,
+      width=${w / systemZoom}, 
+      height=${h / systemZoom}, 
+      top=${top}, 
+      left=${left}
+      `
+    );
+  };
+
   const handlePartnerReferral = async () => {
     try {
       setLoading(true);
@@ -23,7 +55,8 @@ const Setting = () => {
 
       const actionURL = data.links.find((i: any) => i?.rel === "action_url");
 
-      window.open(`${actionURL?.href}&displayMode=minibrowser`, "PPFrame", "popup");
+      // window.open(`${actionURL?.href}&displayMode=minibrowser`, "mywindow", "status=1");
+      handleOpenPopup({ url: `${actionURL?.href}&displayMode=minibrowser` });
     } catch (error) {
       handleMessageError(error);
     } finally {
@@ -79,7 +112,7 @@ const Setting = () => {
 
       <Row>
         <Col md={4}>
-          <h4>Thanh toán</h4>
+          <h5>Phương thức thanh toán</h5>
           <div>
             Cung cấp dịch vụ khách hàng tốt hơn bằng cách thiết lập phương thức thanh toán trực
             tuyến đơn giản.

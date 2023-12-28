@@ -6,7 +6,7 @@ const Payment = () => {
       <PayPalScriptProvider
         options={{
           clientId:
-            "AVqc7Ng7WHvvVAU-h3s4ZXs2BuJV2qZZh4bRifJhkpz2M-z8fsF4Gm8Zd82Z20VyLa-Ln_eE-FziGxoV",
+            "Adht7Yqs_kdhjoqRr2LXrGh1B-DLEKqQU7_y3BgxQnUMwjzhG4M3AjEhhMTeu4hn1oP-pu28Kj3UYJVN",
           locale: "en_VN",
         }}
       >
