@@ -8,45 +8,15 @@ import queryString from "query-string";
 import { useAccountStore } from "../../store/useAccountStore";
 import { AccountServices } from "../../datasource/Account";
 import { useNavigate } from "react-router-dom";
+import { handleOpenPopup } from "../../utils/popupWindow";
+import LOGO_PAYPAL from "../../../public/paypal_logo_icon_170865.png";
 
 const Setting = () => {
-  const { handleMessageError } = useNotification();
+  const { handleMessageError, messageSuccess } = useNotification();
   const { account, fetchingUser } = useAccountStore();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-
-  const handleOpenPopup = ({ url = "/", title = "Tiêu đề", w = 400, h = 500 }: any) => {
-    const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-    const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
-
-    const width = window.innerWidth
-      ? window.innerWidth
-      : document.documentElement.clientWidth
-      ? document.documentElement.clientWidth
-      : screen.width;
-    const height = window.innerHeight
-      ? window.innerHeight
-      : document.documentElement.clientHeight
-      ? document.documentElement.clientHeight
-      : screen.height;
-
-    const systemZoom = width / window.screen.availWidth;
-    const left = (width - w) / 2 / systemZoom + dualScreenLeft;
-    // const top = (height - h) / 2 / systemZoom + dualScreenTop;
-    const top = 0;
-    window.open(
-      url,
-      title,
-      `
-      scrollbars=yes,
-      width=${w / systemZoom}, 
-      height=${h / systemZoom}, 
-      top=${top}, 
-      left=${left}
-      `
-    );
-  };
 
   const handlePartnerReferral = async () => {
     try {
@@ -69,6 +39,8 @@ const Setting = () => {
       setLoading(true);
 
       await AccountServices.updateMyProfile(params);
+
+      messageSuccess("Liên kết phương thức thanh toán thành công");
 
       navigate("/administrator/setting");
 
@@ -121,7 +93,7 @@ const Setting = () => {
 
         <Col md={8}>
           <div className="container-payment-method">
-            <img src="/paypal_logo_icon_170865.png" alt="paypal" className="icon-method" />
+            <img src={LOGO_PAYPAL} alt="paypal" className="icon-method" />
 
             <div>
               <ul>

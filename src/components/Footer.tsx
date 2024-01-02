@@ -1,6 +1,7 @@
 import { FaFacebookSquare, FaTiktok, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import LOGO from "../../public/Logo.jpg";
 
 const Footer = () => {
   return (
@@ -8,7 +9,7 @@ const Footer = () => {
       <div className="footer-content pt-3">
         <div className="footer-logo">
           {/* <img src="logo.png" alt="Logo" className="logo"> */}
-          <img src="./Logo.jpg" alt="logo" className="main-logo" />
+          <img src={LOGO} alt="logo" className="main-logo" />
         </div>
         <div className="footer-links">
           <ul>

@@ -12,7 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import moment from "moment";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -20,6 +20,8 @@ import { v4 } from "uuid";
 import * as yup from "yup";
 import LoadingComponent from "../../components/LoadingComponent";
 import SkeletonRow from "../../components/SkeletonRow";
+import CommentsView from "../../components/WriteComment/CommentsView";
+import WriteComment from "../../components/WriteComment/WriteComment";
 import { IFacility } from "../../constants/facility";
 import { BookingService } from "../../datasource/Booking";
 import { FacilityService } from "../../datasource/Factility";
@@ -27,9 +29,7 @@ import useNotification from "../../hooks/useNotification";
 import { useAccountStore } from "../../store/useAccountStore";
 import { roundToNearestHalfHour } from "../../utils/dateTime";
 import { formatCurrency } from "../../utils/number";
-import WriteComment from "../../components/WriteComment/WriteComment";
-import CommentsView from "../../components/WriteComment/CommentsView";
-import Payment from "../../components/Payment/Payment";
+import { handleOpenPopup } from "../../utils/popupWindow";
 
 const schema = yup
   .object({
@@ -101,7 +101,6 @@ const Booking = () => {
   };
 
   const handleSelectField = (field: any) => {
-    console.log("🚀 - handleSelectField - field: ", field);
     setFieldSelect(field);
   };
 
@@ -154,13 +153,15 @@ const Booking = () => {
         date: moment(date).format("yyyy-MM-DD"),
       };
 
-      const rs = await BookingService.createBooking(params);
+      const { data } = await BookingService.createBooking(params);
 
-      console.log("🚀 - handleCreateBooking - rs: ", rs);
+      const approveData = data.links.find((d: any) => d?.rel === "approve");
 
-      messageSuccess("Đặt sân thành công");
+      window.open(approveData?.href, "_self");
 
-      navigate(`/profile/${idUser}?tab=my-booking`);
+      // messageSuccess("Đặt sân thành công");
+
+      // navigate(`/profile/${idUser}?tab=my-booking`);
     } catch (error) {
       handleMessageError(error);
     } finally {
@@ -180,8 +181,6 @@ const Booking = () => {
     }
   };
 
-  const handleAddComment = (params: any) => {};
-
   useEffect(() => {
     if (!fieldType || !id) {
       return;
@@ -193,6 +192,7 @@ const Booking = () => {
     };
 
     handleGetPrice(paramsGetPrice);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fieldType, id]);
 
   useEffect(() => {
@@ -259,7 +259,7 @@ const Booking = () => {
             dateFormat="dd/MM/yyyy"
             autoComplete="off"
             minDate={new Date()}
-            onChange={(date) => {
+            onChange={(date: any) => {
               handleChangeTime(date, "date");
             }}
           />
@@ -383,17 +383,6 @@ const Booking = () => {
             Xác nhận đặt sân
           </Button>
         </div>
-
-        {/* payment */}
-        {/* {fieldSelect && (
-          <div className="container-paypal">
-            <div className="payment-paypal">
-              <Payment />
-            </div>
-          </div>
-        )} */}
-
-        <Payment />
       </div>
 
       <div className="my-5">

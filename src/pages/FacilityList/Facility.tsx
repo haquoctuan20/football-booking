@@ -2,6 +2,7 @@ import { Button, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { IFacility } from "../../constants/facility";
+import THUMB_FACILITY from "../../../public/san-bong.png";
 
 interface FacilityProps extends IFacility {}
 
@@ -10,7 +11,7 @@ const Facility = (props: FacilityProps) => {
     <WrapperFacility>
       <Row className="h-100">
         <Col md={4} className="h-100 d-flex align-items-center">
-          <img src="./san-bong.png" alt="san bong" className="img-facility" />
+          <img src={THUMB_FACILITY} alt="san bong" className="img-facility" />
         </Col>
         <Col md={8} className="ps-0 h-100 d-flex flex-column justify-content-between">
           <div className="facility-info px-2">

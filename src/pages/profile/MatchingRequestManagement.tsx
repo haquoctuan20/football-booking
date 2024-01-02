@@ -109,7 +109,7 @@ const MatchingRequestManagement = () => {
 
                     {/* detail */}
                     <div>
-                      <Link to={`/match-detail/${re?.bookingId}`}>Chi tiết trận đấu</Link>
+                      {/* <Link to={`/match-detail/${re?.bookingId}`}>Chi tiết trận đấu</Link> */}
                     </div>
                   </td>
 

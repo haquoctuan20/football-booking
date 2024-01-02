@@ -159,7 +159,7 @@ const BookingManagement = () => {
 
                       {/* detail */}
                       <div>
-                        <Link to={`/match-detail/${booking?.bookingId}`}>Chi tiết trận đấu</Link>
+                        {/* <Link to={`/match-detail/${booking?.bookingId}`}>Chi tiết trận đấu</Link> */}
                       </div>
                     </td>
 

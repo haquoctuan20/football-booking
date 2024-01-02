@@ -11,6 +11,7 @@ import { useAccountStore } from "../../store/useAccountStore";
 import { useNotificationStore } from "../../store/useNotificationStore";
 import Footer from "../Footer";
 import NotificationDropdown from "../NotificationDropdown";
+import LOGO from "../../../public/Logo.jpg";
 
 const MainLayout = () => {
   const { account, resetAccount, fetchingUser } = useAccountStore();
@@ -33,7 +34,7 @@ const MainLayout = () => {
           <div className="d-flex justify-content-between">
             <div className="d-flex align-items-center">
               <Link to="/" className="nav-item p-0">
-                <img src="./Logo.jpg" alt="logo" className="main-logo" />
+                <img src={LOGO} alt="logo" className="main-logo" />
               </Link>
 
               <Link to="/facilities-list" className="nav-item">
