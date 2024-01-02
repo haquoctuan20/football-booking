@@ -5,11 +5,10 @@ import styled from "styled-components";
 const Footer = () => {
   return (
     <WrapperFooter>
-      <div className="footer-content">
+      <div className="footer-content pt-3">
         <div className="footer-logo">
           {/* <img src="logo.png" alt="Logo" className="logo"> */}
-          <div className="logo">FB logo</div>
-          <span className="logo-text">Your Website</span>
+          <img src="./Logo.jpg" alt="logo" className="main-logo" />
         </div>
         <div className="footer-links">
           <ul>
@@ -36,7 +35,7 @@ const Footer = () => {
           </a>
         </div>
       </div>
-      <div className="footer-bottom">
+      <div className="footer-bottom pt-2">
         <p>&copy; 2023 Your Website. All Rights Reserved.</p>
       </div>
     </WrapperFooter>
@@ -115,5 +114,10 @@ const WrapperFooter = styled.footer`
 
   .footer-bottom p {
     margin: 0;
+  }
+
+  .main-logo {
+    max-width: 220px;
+    border-radius: 8px;
   }
 `;

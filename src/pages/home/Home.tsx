@@ -26,53 +26,69 @@ const HomePage = () => {
       </div>
 
       <Container className="content-process">
-        <Row>
-          <Col sm={4} className="d-flex flex-column align-items-center">
+        <div className="fs-3 fw-bold text-center">
+          Khám phá trải nghiệm đặt sân bóng hiện đại và thuận tiện
+        </div>
+        <Row className="align-items-center">
+          <Col md={5}>
+            <img src="./Convenient.png" alt="thumbnail" className="img-landing-info" />
+          </Col>
+
+          <Col md={7}>
             <div>
               <TbSearchOff className="fs-1" />
             </div>
-            <div className="fs-3 fw-bold"> Tiện Lợi</div>
+            <div className="fs-4 fw-bold">Tiện Lợi</div>
 
             <div className="divider__short my-2"></div>
 
-            <div className="fs-5">
-              Dễ dàng và nhanh chóng, chỉ cần vài cú click, bạn sẽ có ngay sân
-              bóng ưng ý cho trận đấu tuyệt vời. Không còn lo lắng về việc tìm
-              sân - trải nghiệm đặt sân tại đây là sự thuận lợi tuyệt vời.
+            <div>
+              Dễ dàng và nhanh chóng, chỉ cần vài cú click, bạn sẽ có ngay sân bóng ưng ý cho trận
+              đấu tuyệt vời. Không còn lo lắng về việc tìm sân - trải nghiệm đặt sân tại đây là sự
+              thuận lợi tuyệt vời.
+            </div>
+          </Col>
+        </Row>
+
+        <Row className="align-items-center">
+          <Col md={7}>
+            <div>
+              <TbSearchOff className="fs-1" />
+            </div>
+            <div className="fs-4 fw-bold">Hiện Đại</div>
+
+            <div className="divider__short my-2"></div>
+
+            <div>
+              Trải nghiệm sân bóng tuyệt vời với hệ thống sân đạt chuẩn và tiện nghi hiện đại. Sân
+              có đèn, cỏ tự nhiên, và các tiện ích như phòng thay đồ, quầy bar sẽ làm cho mỗi trận
+              đấu trở nên đặc biệt. Thả mình vào không gian chơi bóng tuyệt vời, chúng tôi lo lắng
+              về mọi chi tiết.
             </div>
           </Col>
 
-          <Col sm={4} className="d-flex flex-column align-items-center">
-            <div>
-              <TbSearchOff className="fs-1" />
-            </div>
+          <Col md={5}>
+            <img src="./quality.png" alt="thumbnail" className="img-landing-info" />
+          </Col>
+        </Row>
 
-            <div className="fs-3 fw-bold">Hiện Đại</div>
-
-            <div className="divider__short my-2"></div>
-
-            <div className="fs-5">
-              Trải nghiệm sân bóng tuyệt vời với hệ thống sân đạt chuẩn và tiện
-              nghi hiện đại. Sân có đèn, cỏ tự nhiên, và các tiện ích như phòng
-              thay đồ, quầy bar sẽ làm cho mỗi trận đấu trở nên đặc biệt. Thả
-              mình vào không gian chơi bóng tuyệt vời, chúng tôi lo lắng về mọi
-              chi tiết.
-            </div>
+        <Row className="align-items-center">
+          <Col md={5}>
+            <img src="./checkout.png" alt="thumbnail" className="img-landing-info" />
           </Col>
 
-          <Col sm={4} className="d-flex flex-column align-items-center">
+          <Col md={7}>
             <div>
               <TbSearchOff className="fs-1" />
             </div>
-            <div className="fs-3 fw-bold">Đặt Sân</div>
+            <div className="fs-4 fw-bold">Đặt Sân</div>
 
             <div className="divider__short my-2"></div>
 
-            <div className="fs-5">
-              Đặt sân ngay và hưởng ưu đãi đặc biệt! Ưu đãi giảm giá và quà tặng
-              hấp dẫn đang chờ đợi bạn. Đừng bỏ lỡ cơ hội được trải nghiệm sân
-              bóng tốt nhất với nhóm bạn. Đăng ký ngay để nhận những quyền lợi
-              độc quyền chỉ có tại trang web của chúng tôi!
+            <div>
+              Đặt sân ngay và hưởng ưu đãi đặc biệt! Ưu đãi giảm giá và quà tặng hấp dẫn đang chờ
+              đợi bạn. Đừng bỏ lỡ cơ hội được trải nghiệm sân bóng tốt nhất với nhóm bạn. Đăng ký
+              ngay để nhận những quyền lợi độc quyền chỉ có tại trang web của chúng tôi!
             </div>
           </Col>
         </Row>
@@ -110,6 +126,11 @@ const WrapperHomePage = styled.div`
 
   .divider__short {
     border-top: 4px solid #56e07b;
-    width: 60px;
+    width: 100px;
+  }
+
+  .img-landing-info {
+    max-width: 100%;
+    height: auto;
   }
 `;

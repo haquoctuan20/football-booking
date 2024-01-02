@@ -32,8 +32,8 @@ const MainLayout = () => {
         <Container>
           <div className="d-flex justify-content-between">
             <div className="d-flex align-items-center">
-              <Link to="/" className="nav-item">
-                FB LOGO
+              <Link to="/" className="nav-item p-0">
+                <img src="./Logo.jpg" alt="logo" className="main-logo" />
               </Link>
 
               <Link to="/facilities-list" className="nav-item">
@@ -175,5 +175,10 @@ const WrapperMainLayout = styled.div`
     /* height: calc(100vh - 60px); */
     min-height: calc(100vh - 60px);
     /* height: fit-content; */
+  }
+
+  .main-logo {
+    max-width: 180px;
+    border-radius: 8px;
   }
 `;
