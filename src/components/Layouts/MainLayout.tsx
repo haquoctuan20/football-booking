@@ -11,7 +11,7 @@ import { useAccountStore } from "../../store/useAccountStore";
 import { useNotificationStore } from "../../store/useNotificationStore";
 import Footer from "../Footer";
 import NotificationDropdown from "../NotificationDropdown";
-import LOGO from "../../../public/Logo.jpg";
+import LOGO from "../../assets/Logo.jpg";
 
 const MainLayout = () => {
   const { account, resetAccount, fetchingUser } = useAccountStore();

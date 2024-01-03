@@ -31,7 +31,7 @@ const HomePage = () => {
         </div>
         <Row className="align-items-center">
           <Col md={5}>
-            <img src="./Convenient.png" alt="thumbnail" className="img-landing-info" />
+            <img src="src/assets/Convenient.png" alt="thumbnail" className="img-landing-info" />
           </Col>
 
           <Col md={7}>
@@ -68,13 +68,13 @@ const HomePage = () => {
           </Col>
 
           <Col md={5}>
-            <img src="./quality.png" alt="thumbnail" className="img-landing-info" />
+            <img src="src/assets/quality.png" alt="thumbnail" className="img-landing-info" />
           </Col>
         </Row>
 
         <Row className="align-items-center">
           <Col md={5}>
-            <img src="./checkout.png" alt="thumbnail" className="img-landing-info" />
+            <img src="src/assets/checkout.png" alt="thumbnail" className="img-landing-info" />
           </Col>
 
           <Col md={7}>
@@ -103,7 +103,7 @@ const WrapperHomePage = styled.div`
   .super-banner {
     width: 100%;
     height: 600px;
-    background-image: url("/soccer-players-action-professional-stadium.jpg");
+    background-image: url("src/assets/soccer-players-action-professional-stadium.jpg");
     background-size: cover;
     background-position: bottom;
     background-repeat: no-repeat;

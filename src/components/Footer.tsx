@@ -1,7 +1,7 @@
 import { FaFacebookSquare, FaTiktok, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import LOGO from "../../public/Logo.jpg";
+import LOGO from "../assets/Logo.jpg";
 
 const Footer = () => {
   return (

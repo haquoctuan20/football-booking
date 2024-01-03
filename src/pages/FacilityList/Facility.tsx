@@ -2,7 +2,7 @@ import { Button, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { IFacility } from "../../constants/facility";
-import THUMB_FACILITY from "../../../public/san-bong.png";
+import THUMB_FACILITY from "../../assets/san-bong.png";
 
 interface FacilityProps extends IFacility {}
 

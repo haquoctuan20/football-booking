@@ -34,7 +34,7 @@ const WrapperAuthLayout = styled.div`
 
   .left-side {
     width: 50%;
-    background-image: url("/football-stadium-night-generative-ai.jpg");
+    background-image: url("src/assets/football-stadium-night-generative-ai.jpg");
     background-size: cover;
     background-position: center;
     min-height: calc(100vh - 60px);

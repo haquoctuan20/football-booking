@@ -24,7 +24,7 @@ const WrapperPageLayout = styled.div`
   .hero-title {
     height: 170px;
     width: 100%;
-    background-image: url("/bg-page-layout.jpg");
+    background-image: url("src/assets/bg-page-layout.jpg");
     background-size: contain;
     background-position: center;
 

@@ -3,7 +3,7 @@ import styled from "styled-components";
 const LoadingComponent = () => {
   return (
     <WrapperLoadingComponent>
-      <img className="image-loading" src="/soccer_ball2.png" alt="loading" />
+      <img className="image-loading" src="src/assets/soccer_ball2.png" alt="loading" />
       <div className="fs-5">Đang tải...</div>
     </WrapperLoadingComponent>
   );

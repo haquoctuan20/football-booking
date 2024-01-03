@@ -9,7 +9,7 @@ import { useAccountStore } from "../../store/useAccountStore";
 import { AccountServices } from "../../datasource/Account";
 import { useNavigate } from "react-router-dom";
 import { handleOpenPopup } from "../../utils/popupWindow";
-import LOGO_PAYPAL from "../../../public/paypal_logo_icon_170865.png";
+import LOGO_PAYPAL from "../../assets/paypal_logo_icon_170865.png";
 
 const Setting = () => {
   const { handleMessageError, messageSuccess } = useNotification();
