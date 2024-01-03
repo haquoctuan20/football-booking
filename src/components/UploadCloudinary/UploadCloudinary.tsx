@@ -92,7 +92,7 @@ const UploadCloudinary = ({ urlImage = "", callbackUrl }: UploadCloudinaryProps)
               <Spinner animation="border" size="sm" /> Đang tải...
             </>
           ) : (
-            <>Tải lên ảnh đại diện</>
+            <>{image ? "Tải lên ảnh đại diện" : "Chọn ảnh"}</>
           )}
         </Button>
       </div>
