@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
+import SoccerBall from "../assets/soccer_ball2.png";
+
 const LoadingComponent = () => {
   return (
     <WrapperLoadingComponent>
-      <img className="image-loading" src="src/assets/soccer_ball2.png" alt="loading" />
+      <img className="image-loading" src={SoccerBall} alt="loading" />
       <div className="fs-5">Đang tải...</div>
     </WrapperLoadingComponent>
   );

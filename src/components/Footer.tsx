@@ -8,7 +8,6 @@ const Footer = () => {
     <WrapperFooter>
       <div className="footer-content pt-3">
         <div className="footer-logo">
-          {/* <img src="logo.png" alt="Logo" className="logo"> */}
           <img src={LOGO} alt="logo" className="main-logo" />
         </div>
         <div className="footer-links">

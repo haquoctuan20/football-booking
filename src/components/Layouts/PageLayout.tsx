@@ -1,6 +1,8 @@
 import { Container } from "react-bootstrap";
 import styled from "styled-components";
 
+import BgPageLayout from "../../assets/bg-page-layout.jpg";
+
 interface PageLayoutProps {
   title: string;
   children: JSX.Element;
@@ -24,7 +26,7 @@ const WrapperPageLayout = styled.div`
   .hero-title {
     height: 170px;
     width: 100%;
-    background-image: url("src/assets/bg-page-layout.jpg");
+    background-image: url(${BgPageLayout});
     background-size: contain;
     background-position: center;
 

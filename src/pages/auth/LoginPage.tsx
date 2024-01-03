@@ -7,9 +7,9 @@ import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import LoadingComponent from "../../components/LoadingComponent";
 import { AccountServices } from "../../datasource/Account";
+import useNotification from "../../hooks/useNotification";
 import { Account, useAccountStore } from "../../store/useAccountStore";
 import { WrapperAuth } from "./AuthStyled";
-import useNotification from "../../hooks/useNotification";
 
 const schema = yup
   .object({
@@ -61,6 +61,8 @@ const LoginPage = () => {
         name: user.name,
         phone: user.phone,
         birthDate: user.birthDate,
+        merchantId: user.merchantId,
+        trackingId: user.trackingId,
       };
 
       setAccount(userData);

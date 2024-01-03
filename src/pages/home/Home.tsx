@@ -2,6 +2,11 @@ import { Col, Container, Row } from "react-bootstrap";
 import { TbSearchOff } from "react-icons/tb";
 import styled from "styled-components";
 
+import ConvenientImage from "../../assets/Convenient.png";
+import QualityImage from "../../assets/quality.png";
+import CheckoutImage from "../../assets/checkout.png";
+import ImgHeroBanner from "../../assets/soccer-players-action-professional-stadium.jpg";
+
 const HomePage = () => {
   return (
     <WrapperHomePage>
@@ -31,7 +36,7 @@ const HomePage = () => {
         </div>
         <Row className="align-items-center">
           <Col md={5}>
-            <img src="src/assets/Convenient.png" alt="thumbnail" className="img-landing-info" />
+            <img src={ConvenientImage} alt="thumbnail" className="img-landing-info" />
           </Col>
 
           <Col md={7}>
@@ -68,13 +73,13 @@ const HomePage = () => {
           </Col>
 
           <Col md={5}>
-            <img src="src/assets/quality.png" alt="thumbnail" className="img-landing-info" />
+            <img src={QualityImage} alt="thumbnail" className="img-landing-info" />
           </Col>
         </Row>
 
         <Row className="align-items-center">
           <Col md={5}>
-            <img src="src/assets/checkout.png" alt="thumbnail" className="img-landing-info" />
+            <img src={CheckoutImage} alt="thumbnail" className="img-landing-info" />
           </Col>
 
           <Col md={7}>
@@ -103,7 +108,7 @@ const WrapperHomePage = styled.div`
   .super-banner {
     width: 100%;
     height: 600px;
-    background-image: url("src/assets/soccer-players-action-professional-stadium.jpg");
+    background-image: url(${ImgHeroBanner});
     background-size: cover;
     background-position: bottom;
     background-repeat: no-repeat;

@@ -21,14 +21,8 @@ const schema = yup.object({
   ward: yup.string(),
 });
 
-const initFilter = {
-  name: "",
-  city: "",
-  ward: "",
-};
-
 const FacilityList = () => {
-  const { register, handleSubmit, reset, setValue } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       name: "",

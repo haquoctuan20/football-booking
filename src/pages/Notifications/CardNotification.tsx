@@ -1,13 +1,11 @@
-import { Button, Spinner } from "react-bootstrap";
-import styled from "styled-components";
-import { GiCheckMark } from "react-icons/gi";
-import { RiFootballFill } from "react-icons/ri";
-import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import { useEffect, useState } from "react";
-import useNotification from "../../hooks/useNotification";
+import { IoCheckmarkDoneSharp } from "react-icons/io5";
+import { RiFootballFill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { NotificationService } from "../../datasource/Notification";
+import useNotification from "../../hooks/useNotification";
 import { useNotificationStore } from "../../store/useNotificationStore";
-import { Link, useNavigate } from "react-router-dom";
 
 export interface INotification {
   detailId: string;
@@ -28,14 +26,12 @@ const CardNotification = ({ data }: CardNotificationProps) => {
   const { handleMessageError } = useNotification();
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState<INotification>(data);
 
   const { decreaseNotification } = useNotificationStore();
 
   const handleReadNotification = async () => {
     try {
-      setLoading(true);
       await NotificationService.readOneNotification(notification.id);
       setNotification({ ...notification, isRead: true });
       decreaseNotification(data);
@@ -43,8 +39,6 @@ const CardNotification = ({ data }: CardNotificationProps) => {
       handleNavigate();
     } catch (error) {
       handleMessageError(error);
-    } finally {
-      setLoading(false);
     }
   };
 

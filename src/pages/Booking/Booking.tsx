@@ -29,7 +29,6 @@ import useNotification from "../../hooks/useNotification";
 import { useAccountStore } from "../../store/useAccountStore";
 import { roundToNearestHalfHour } from "../../utils/dateTime";
 import { formatCurrency } from "../../utils/number";
-import { handleOpenPopup } from "../../utils/popupWindow";
 
 const schema = yup
   .object({
@@ -54,7 +53,7 @@ const Booking = () => {
   const {
     account: { accessToken, id: idUser },
   } = useAccountStore();
-  const { handleMessageError, messageSuccess } = useNotification();
+  const { handleMessageError } = useNotification();
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -161,7 +160,7 @@ const Booking = () => {
 
       // messageSuccess("Đặt sân thành công");
 
-      // navigate(`/profile/${idUser}?tab=my-booking`);
+      navigate(`/profile/${idUser}?tab=my-booking`);
     } catch (error) {
       handleMessageError(error);
     } finally {

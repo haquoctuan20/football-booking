@@ -2,6 +2,8 @@
 import { Container } from "react-bootstrap";
 import styled from "styled-components";
 
+import ImgAuth from "../../assets/football-stadium-night-generative-ai.jpg";
+
 interface AuthLayoutProps {
   children: JSX.Element;
 }
@@ -34,7 +36,7 @@ const WrapperAuthLayout = styled.div`
 
   .left-side {
     width: 50%;
-    background-image: url("src/assets/football-stadium-night-generative-ai.jpg");
+    background-image: url(${ImgAuth});
     background-size: cover;
     background-position: center;
     min-height: calc(100vh - 60px);

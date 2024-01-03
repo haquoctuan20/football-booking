@@ -3,27 +3,26 @@ import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import AdministratorLayout from "./components/Layouts/AdministratorLayout";
 import AuthLayout from "./components/Layouts/AuthLayout";
 import MainLayout from "./components/Layouts/MainLayout";
 import PageLayout from "./components/Layouts/PageLayout";
+import FacilityManagement from "./pages/Administrator/FacilityManagement";
+import FacilityPage from "./pages/Administrator/FacilityPage";
+import FacilityPrice from "./pages/Administrator/FacilityPrice";
+import Setting from "./pages/Administrator/Setting";
 import Booking from "./pages/Booking/Booking";
-import FacilityDetail from "./pages/FacilityDetail/FacilityDetail";
+import DetailMatch from "./pages/DetailMatch/DetailMatch";
 import FacilityList from "./pages/FacilityList/FacilityList";
+import MatchingRequest from "./pages/MatchingRequest/MatchingRequest";
+import Notifications from "./pages/Notifications/Notifications";
 import ConfirmRegister from "./pages/auth/ConfirmRegister";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import HomePage from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
 import "./styles/index.scss";
-import AdministratorLayout from "./components/Layouts/AdministratorLayout";
-import FacilityManagement from "./pages/Administrator/FacilityManagement";
-import FacilityPage from "./pages/Administrator/FacilityPage";
-import FacilityPrice from "./pages/Administrator/FacilityPrice";
-import MatchingRequest from "./pages/MatchingRequest/MatchingRequest";
 import WsNotification from "./websocket/WsNotification";
-import Notifications from "./pages/Notifications/Notifications";
-import DetailMatch from "./pages/DetailMatch/DetailMatch";
-import Setting from "./pages/Administrator/Setting";
 
 function App() {
   return (

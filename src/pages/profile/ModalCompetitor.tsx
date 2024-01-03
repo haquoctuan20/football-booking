@@ -1,12 +1,12 @@
+import moment from "moment";
 import { useEffect, useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { BsListStars } from "react-icons/bs";
-import useNotification from "../../hooks/useNotification";
-import { BookingService } from "../../datasource/Booking";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import SkeletonRow from "../../components/SkeletonRow";
-import { Link } from "react-router-dom";
-import moment from "moment";
+import { BookingService } from "../../datasource/Booking";
+import useNotification from "../../hooks/useNotification";
 
 interface ModalCompetitorProps {
   handleCallback?: () => void;
