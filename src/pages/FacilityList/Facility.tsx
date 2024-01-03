@@ -26,7 +26,7 @@ const Facility = (props: FacilityProps) => {
               <strong>Số sân: </strong> {props?.numOfFields}
             </div>
 
-            {props?.rating && (
+            {props?.rating ? (
               <div>
                 <strong>Đánh giá: </strong> {props?.rating}
                 <span
@@ -38,6 +38,11 @@ const Facility = (props: FacilityProps) => {
                   &#9733; {/* Dấu sao Unicode */}
                 </span>
               </div>
+            ) : (
+              <>
+                <strong>Đánh giá: </strong>
+                <span>Chưa có đánh giá</span>
+              </>
             )}
 
             {/* <div>
@@ -53,7 +58,7 @@ const Facility = (props: FacilityProps) => {
 
             <Link to={`/booking/${props.id}`} className="d-block">
               <Button size="sm" variant="outline-success">
-                Xem chi tiết | Đặt sân
+                Xem sân | Đặt sân
               </Button>
             </Link>
           </div>

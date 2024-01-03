@@ -157,6 +157,9 @@ const ModalCompetitor = (props: ModalCompetitorProps) => {
 export default ModalCompetitor;
 
 const BodyModalCompetitor = styled.div`
+  max-height: 500px;
+  overflow: auto;
+
   .match-request {
     width: 100%;
     height: 100px;

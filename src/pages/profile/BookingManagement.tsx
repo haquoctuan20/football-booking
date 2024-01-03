@@ -88,7 +88,7 @@ const BookingManagement = () => {
       messageSuccess("Thay đổi trạng thái tìm đối thành công");
       handleFetchBooking();
     } catch (error) {
-      console.log("🚀 - handleFetchBooking - error: ", error);
+      handleMessageError(error);
     } finally {
       setTimeout(() => {
         setLoading(false);
@@ -159,12 +159,12 @@ const BookingManagement = () => {
 
                       {/* detail */}
                       <div>
-                        {/* <Link to={`/match-detail/${booking?.bookingId}`}>Chi tiết trận đấu</Link> */}
+                        <Link to={`/match-detail/${booking?.id}`}>Chi tiết trận đấu</Link>
                       </div>
                     </td>
 
                     <td className="min-width-150">
-                      {booking.opponentId === null && (
+                      {booking?.opponentId === null && (
                         <div className="d-flex flex-column align-items-center">
                           <div className="text-center mb-1">
                             {booking?.hasOpponent ? "Đang tìm đối" : "Sẵn sàng tìm đối"}
@@ -239,4 +239,4 @@ const BookingManagement = () => {
 
 export default BookingManagement;
 
-export const WrapperBookingManagement = styled.div``;
+const WrapperBookingManagement = styled.div``;

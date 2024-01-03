@@ -10,6 +10,8 @@ import SkeletonRow from "../../components/SkeletonRow";
 import LoadingComponent from "../../components/LoadingComponent";
 import { Link } from "react-router-dom";
 
+import THUMB_SAN_BONG from "../../assets/san-bong.png";
+
 const MatchingRequest = () => {
   const { handleMessageError, messageSuccess } = useNotification();
 
@@ -52,7 +54,6 @@ const MatchingRequest = () => {
       const rs = await BookingService.matchingRequest(bookingId);
       messageSuccess("Bắt đối thành công, chờ đối thủ xác nhận");
       handleGetAllBooking();
-      console.log("🚀 -> handleMatchingRequest -> rs:", rs);
     } catch (error) {
       handleMessageError(error);
     } finally {
@@ -88,7 +89,7 @@ const MatchingRequest = () => {
                     <div className="info-owner pb-2">
                       <div className="avt-owner d-flex flex-column align-items-center">
                         <img
-                          src={request?.userImage ? request?.userImage : "./san-bong.png"}
+                          src={request?.userImage ? request?.userImage : THUMB_SAN_BONG}
                           alt="avt"
                           className="pb-1"
                         />
