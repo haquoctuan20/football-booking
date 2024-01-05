@@ -196,7 +196,7 @@ const Booking = () => {
   useEffect(() => {
     const payerReceiver = queryString.parse(location.search);
 
-    const paypalOrderId = payerReceiver.PayerID ? (payerReceiver.PayerID as string) : null;
+    const paypalOrderId = payerReceiver.token ? (payerReceiver.token as string) : null;
 
     if (paypalOrderId) {
       handleCaptureOrder(paypalOrderId);
