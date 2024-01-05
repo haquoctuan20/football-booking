@@ -26,9 +26,10 @@ import { IFacility } from "../../constants/facility";
 import { BookingService } from "../../datasource/Booking";
 import { FacilityService } from "../../datasource/Factility";
 import useNotification from "../../hooks/useNotification";
-import { useAccountStore } from "../../store/useAccountStore";
 import { roundToNearestHalfHour } from "../../utils/dateTime";
 import { formatCurrency } from "../../utils/number";
+import queryString from "query-string";
+import { useAccountStore } from "../../store/useAccountStore";
 
 const schema = yup
   .object({
@@ -51,9 +52,9 @@ const Booking = () => {
   const date = watch("date");
 
   const {
-    account: { accessToken, id: idUser },
+    account: { id: idUser },
   } = useAccountStore();
-  const { handleMessageError } = useNotification();
+  const { handleMessageError, messageSuccess } = useNotification();
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -157,10 +158,6 @@ const Booking = () => {
       const approveData = data.links.find((d: any) => d?.rel === "approve");
 
       window.open(approveData?.href, "_self");
-
-      // messageSuccess("Đặt sân thành công");
-
-      navigate(`/profile/${idUser}?tab=my-booking`);
     } catch (error) {
       handleMessageError(error);
     } finally {
@@ -179,6 +176,33 @@ const Booking = () => {
       setLoadingGetPrice(false);
     }
   };
+
+  const handleCaptureOrder = async (paypalOrderId: string) => {
+    try {
+      setLoadingCreate(true);
+      const rs = await BookingService.captureOrder(paypalOrderId);
+      console.log("🚀 - handleCaptureOrder - rs: ", rs);
+
+      messageSuccess("Đặt sân thành công");
+
+      navigate(`/profile/${idUser}?tab=my-booking`, { replace: true });
+    } catch (error) {
+      handleMessageError(error);
+    } finally {
+      setLoadingCreate(false);
+    }
+  };
+
+  useEffect(() => {
+    const payerReceiver = queryString.parse(location.search);
+
+    const paypalOrderId = payerReceiver.PayerID ? (payerReceiver.PayerID as string) : null;
+
+    if (paypalOrderId) {
+      handleCaptureOrder(paypalOrderId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search]);
 
   useEffect(() => {
     if (!fieldType || !id) {
@@ -202,12 +226,6 @@ const Booking = () => {
     handleGetFacilityById(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-
-  if (!accessToken) {
-    return (
-      <WrapperBooking className="mt-3">Vui lòng đăng nhập để sử dụng tính năng này</WrapperBooking>
-    );
-  }
 
   if (loadingFetching) {
     return (

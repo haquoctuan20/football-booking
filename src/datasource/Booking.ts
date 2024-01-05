@@ -40,4 +40,8 @@ export const BookingService = {
   sendComment: (params: any) => {
     return axiosBooking.post("/comment", params);
   },
+
+  captureOrder: (paypalOrderId: string) => {
+    return axiosBooking.post("/payment/captureOrder", { paypalOrderId });
+  },
 };
