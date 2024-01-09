@@ -30,6 +30,7 @@ import { roundToNearestHalfHour } from "../../utils/dateTime";
 import { formatCurrency } from "../../utils/number";
 import queryString from "query-string";
 import { useAccountStore } from "../../store/useAccountStore";
+import useStatusAccount from "../../hooks/useStatusAccount";
 
 const schema = yup
   .object({
@@ -55,6 +56,7 @@ const Booking = () => {
     account: { id: idUser },
   } = useAccountStore();
   const { handleMessageError, messageSuccess } = useNotification();
+  const { isOwner } = useStatusAccount();
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -356,51 +358,53 @@ const Booking = () => {
         </>
       )}
 
-      <div className="container-select">
-        <Form.Label>Thông tin sân đã chọn</Form.Label>
+      {!isOwner && (
+        <div className="container-select">
+          <Form.Label>Thông tin sân đã chọn</Form.Label>
 
-        {fieldSelect ? (
-          <div>
+          {fieldSelect ? (
             <div>
               <div>
-                <strong>Cơ sở: </strong>
-                {facility?.name}
-              </div>
-              <div>
-                <strong>Địa chỉ: </strong>
-                {facility?.address.number}, {facility?.address.street}, {facility?.address.ward},{" "}
-                {facility?.address.city}
-              </div>
-              <div>
-                <strong>Thời gian: </strong> {priceSelect?.startAt?.hour}:
-                {priceSelect?.startAt?.minute} -{priceSelect?.endAt?.hour}:
-                {priceSelect?.endAt?.minute}, Ngày {moment(date).format("DD/MM/yyyy")}
-              </div>
-              <div>
-                <strong>Số: </strong>
-                {fieldSelect?.field?.index}
-              </div>
-              <div>
-                <strong>Loại sân: </strong>
-                {fieldSelect?.field?.type}
+                <div>
+                  <strong>Cơ sở: </strong>
+                  {facility?.name}
+                </div>
+                <div>
+                  <strong>Địa chỉ: </strong>
+                  {facility?.address.number}, {facility?.address.street}, {facility?.address.ward},{" "}
+                  {facility?.address.city}
+                </div>
+                <div>
+                  <strong>Thời gian: </strong> {priceSelect?.startAt?.hour}:
+                  {priceSelect?.startAt?.minute} -{priceSelect?.endAt?.hour}:
+                  {priceSelect?.endAt?.minute}, Ngày {moment(date).format("DD/MM/yyyy")}
+                </div>
+                <div>
+                  <strong>Số: </strong>
+                  {fieldSelect?.field?.index}
+                </div>
+                <div>
+                  <strong>Loại sân: </strong>
+                  {fieldSelect?.field?.type}
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="text-center">Chọn sân muốn đặt</div>
-        )}
+          ) : (
+            <div className="text-center">Chọn sân muốn đặt</div>
+          )}
 
-        <div className="text-center">
-          <Button
-            variant="success"
-            className="mt-2"
-            disabled={!fieldSelect}
-            onClick={handleCreateBooking}
-          >
-            Xác nhận đặt sân
-          </Button>
+          <div className="text-center">
+            <Button
+              variant="success"
+              className="mt-2"
+              disabled={!fieldSelect}
+              onClick={handleCreateBooking}
+            >
+              Xác nhận đặt sân
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="my-5">
         <div>

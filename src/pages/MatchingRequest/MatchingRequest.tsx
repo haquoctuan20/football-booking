@@ -11,9 +11,11 @@ import LoadingComponent from "../../components/LoadingComponent";
 import { Link } from "react-router-dom";
 
 import THUMB_SAN_BONG from "../../assets/san-bong.png";
+import useStatusAccount from "../../hooks/useStatusAccount";
 
 const MatchingRequest = () => {
   const { handleMessageError, messageSuccess } = useNotification();
+  const { isOwner } = useStatusAccount();
 
   const [requests, setRequests] = useState([]);
   const [loadingFetchRequest, setLoadingFetchRequest] = useState(false);
@@ -137,14 +139,16 @@ const MatchingRequest = () => {
                   </div>
 
                   <div className="mt-2 text-end">
-                    <Button
-                      className="px-3"
-                      variant={request?.opponentId === null ? "success" : "secondary"}
-                      disabled={request?.opponentId !== null}
-                      onClick={() => handleMatchingRequest(request?.id)}
-                    >
-                      {request?.opponentId === null ? "Bắt đối" : "Đã có đối"}
-                    </Button>
+                    {!isOwner && (
+                      <Button
+                        className="px-3"
+                        variant={request?.opponentId === null ? "success" : "secondary"}
+                        disabled={request?.opponentId !== null}
+                        onClick={() => handleMatchingRequest(request?.id)}
+                      >
+                        {request?.opponentId === null ? "Bắt đối" : "Đã có đối"}
+                      </Button>
+                    )}
                   </div>
                 </div>
               </Col>

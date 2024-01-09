@@ -61,7 +61,6 @@ const FacilityList = () => {
   };
 
   const handleSearch = (params: any) => {
-    console.log("🚀 -> handleSearch -> params:", params);
     const searchObj: any = {
       page: 1,
     };
@@ -127,14 +126,6 @@ const FacilityList = () => {
     handleGetAllFacility(params);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken, searchParams]);
-
-  if (!accessToken) {
-    return (
-      <WrapperFacilityList className="mt-3">
-        Vui lòng đăng nhập để sử dụng tính năng này
-      </WrapperFacilityList>
-    );
-  }
 
   return (
     <WrapperFacilityList className="mt-3">

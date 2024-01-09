@@ -12,10 +12,12 @@ import { useNotificationStore } from "../../store/useNotificationStore";
 import Footer from "../Footer";
 import NotificationDropdown from "../NotificationDropdown";
 import LOGO from "../../assets/Logo.jpg";
+import useStatusAccount from "../../hooks/useStatusAccount";
 
 const MainLayout = () => {
   const { account, resetAccount, fetchingUser } = useAccountStore();
   const { count } = useNotificationStore();
+  const { isOwner } = useStatusAccount();
 
   const handleLogout = () => {
     resetAccount();
@@ -68,11 +70,13 @@ const MainLayout = () => {
                         </Link>
                       </Dropdown.Item>
 
-                      <Dropdown.Item className="px-0">
-                        <Link className="px-3 py-1 dropdown-item" to={`/administrator`}>
-                          <MdManageAccounts className=" fs-5 me-2" /> Trang quản lý
-                        </Link>
-                      </Dropdown.Item>
+                      {isOwner && (
+                        <Dropdown.Item className="px-0">
+                          <Link className="px-3 py-1 dropdown-item" to={`/administrator`}>
+                            <MdManageAccounts className=" fs-5 me-2" /> Trang quản lý
+                          </Link>
+                        </Dropdown.Item>
+                      )}
 
                       <Dropdown.Item className="px-0">
                         <Link className="px-3 py-1 dropdown-item" to={`/notifications`}>

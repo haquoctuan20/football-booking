@@ -1,13 +1,16 @@
-import { Link, Outlet, matchPath, useLocation } from "react-router-dom";
+import { Link, Outlet, matchPath, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useNavigationStore } from "../../store/useNavigationStore";
 import { useEffect, useState } from "react";
 import { RouteTitle, RouteTitleAttribute } from "../../constants/routeTitle";
 import { useAccountStore } from "../../store/useAccountStore";
+import useStatusAccount from "../../hooks/useStatusAccount";
 
 const AdministratorLayout = () => {
   const { title, setTitle } = useNavigationStore();
   const { fetchingUser } = useAccountStore();
+  const { isOwner } = useStatusAccount();
+  const navigate = useNavigate();
 
   const [routeActive, setRouteActive] = useState<RouteTitleAttribute | null>(null);
 
@@ -33,6 +36,15 @@ const AdministratorLayout = () => {
     fetchingUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (!isOwner) {
+      navigate(-1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOwner]);
+
+  if (!isOwner) return <></>;
 
   return (
     <WrapperAdministratorLayout>

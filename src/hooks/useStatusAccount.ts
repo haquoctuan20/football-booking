@@ -12,7 +12,15 @@ const useStatusAccount = () => {
     return true;
   }, [account]);
 
-  return { isConnectPayment };
+  const isOwner = useMemo(() => {
+    const ownerRole = account.roles.find((r: string) => r === "ROLE_OWNER");
+
+    if (ownerRole) return true;
+
+    return false;
+  }, [account]);
+
+  return { isConnectPayment, isOwner };
 };
 
 export default useStatusAccount;
