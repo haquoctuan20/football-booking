@@ -81,8 +81,18 @@ const FacilityManagement = () => {
                 </td>
                 <td className="min-width-80">{data.numOfFields}</td>
                 <td className="">
-                  <Link to={`/administrator/facility-price/${data.id}`}>
-                    <Button size="sm">Bảng giá</Button>
+                  <Link
+                    to={`/administrator/facility-price/${data.id}`}
+                    className="btn btn-primary btn-sm"
+                  >
+                    Bảng giá
+                  </Link>
+
+                  <Link
+                    to={`/administrator/facility-booking/${data.id}`}
+                    className="btn btn-secondary btn-sm ms-2"
+                  >
+                    Lịch đặt sân
                   </Link>
                 </td>
               </tr>

@@ -153,7 +153,7 @@ const WrapperPaginationComponent = styled.div`
       /* border-color: #198754; */
       z-index: auto;
 
-      border-radius: 20px;
+      border-radius: 20px !important;
       width: 40px;
       height: 40px;
       text-align: center;

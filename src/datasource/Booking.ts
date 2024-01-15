@@ -44,4 +44,8 @@ export const BookingService = {
   captureOrder: (paypalOrderId: string) => {
     return axiosBooking.post("/payment/captureOrder", { paypalOrderId });
   },
+
+  getBookingOfFacility: (params: any) => {
+    return axiosBooking.post("/booking/getBooking", params ? params : {});
+  },
 };

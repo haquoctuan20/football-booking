@@ -31,6 +31,12 @@ export const RouteTitle: RouteTitleAttribute[] = [
     parent: "/administrator/facility",
     isMenu: false,
   },
+  {
+    title: "Quản lý đặt sân",
+    path: "/administrator/facility-booking/:id",
+    parent: "/administrator/facility",
+    isMenu: false,
+  },
   //
   {
     title: "Cài đặt",

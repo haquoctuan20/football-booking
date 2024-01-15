@@ -23,6 +23,7 @@ import HomePage from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
 import "./styles/index.scss";
 import WsNotification from "./websocket/WsNotification";
+import BookingManagement from "./pages/Administrator/BookingManagement";
 
 function App() {
   return (
@@ -142,6 +143,7 @@ function App() {
           <Route path="facility/edit/:id" element={<>detail - edit</>} />
           <Route path="facility/create" element={<FacilityPage />} />
           <Route path="facility-price/:id" element={<FacilityPrice />} />
+          <Route path="facility-booking/:id" element={<BookingManagement />} />
           <Route path="setting" element={<Setting />} />
           <Route path="home" element={<>home</>} />
           <Route path="about" element={<>about</>} />
