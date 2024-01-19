@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 
-const axiosPublic = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL,
-  timeout: 100000,
-});
-
 const requestHandler = (request: any) => {
   request.headers = {
     "Access-Control-Allow-Origin": "*",
@@ -22,14 +17,30 @@ const responseHandler = (response: any) => {
   return response;
 };
 
-axiosPublic.interceptors.request.use(
-  (request) => requestHandler(request),
-  (error) => errorHandler(error)
-);
+const createAxios = (config: any) => {
+  const newInstance = axios.create(config);
 
-axiosPublic.interceptors.response.use(
-  (response) => responseHandler(response),
-  (error) => errorHandler(error)
-);
+  newInstance.interceptors.request.use(
+    (request) => requestHandler(request),
+    (error) => errorHandler(error)
+  );
 
-export { axiosPublic };
+  newInstance.interceptors.response.use(
+    (response) => responseHandler(response),
+    (error) => errorHandler(error)
+  );
+
+  return newInstance;
+};
+
+const axiosFacilityPublic = createAxios({
+  baseURL: import.meta.env.VITE_BASE_URL_FACILITY,
+  timeout: 100000,
+});
+
+const axiosBookingPublic = createAxios({
+  baseURL: import.meta.env.VITE_BASE_URL_BOOKING,
+  timeout: 100000,
+});
+
+export { axiosFacilityPublic, axiosBookingPublic };

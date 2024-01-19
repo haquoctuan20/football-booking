@@ -55,28 +55,36 @@ export const useAccountStore = create<AccountState>()(
       resetAccount: () => set(() => ({ account: initAccount })),
 
       fetchingUser: async () => {
-        const { data: user } = await AccountServices.getInfoUser();
+        try {
+          const { data: user } = await AccountServices.getInfoUser();
 
-        set((state) => {
-          const userData: Account = {
-            age: user.age,
-            email: user.email,
-            gender: user.gender,
-            id: user.id,
-            image: user.image,
-            roles: user.roles,
-            username: user.username,
-            status: user.status,
-            accessToken: state.account.accessToken,
-            name: user.name,
-            phone: user.phone,
-            birthDate: user.birthDate,
-            merchantId: user.merchantId ? user.merchantId : null,
-            trackingId: user.trackingId ? user.trackingId : null,
-          };
+          set((state) => {
+            const userData: Account = {
+              age: user.age,
+              email: user.email,
+              gender: user.gender,
+              id: user.id,
+              image: user.image,
+              roles: user.roles,
+              username: user.username,
+              status: user.status,
+              accessToken: state.account.accessToken,
+              name: user.name,
+              phone: user.phone,
+              birthDate: user.birthDate,
+              merchantId: user.merchantId ? user.merchantId : null,
+              trackingId: user.trackingId ? user.trackingId : null,
+            };
 
-          return { account: userData };
-        });
+            return { account: userData };
+          });
+        } catch (error) {
+          console.log("🚀 - fetchingUser: - error: ", error);
+
+          set(() => {
+            return { account: initAccount };
+          });
+        }
       },
     }),
     { name: NAME_ACCOUNT_STORE }

@@ -1,19 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import queryString from "query-string";
 import { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import * as yup from "yup";
 import PaginationComponent from "../../components/PaginationComponent";
 import SkeletonRow from "../../components/SkeletonRow";
+import { DEFAULT_LIMIT } from "../../constants/constants";
 import { IFacility } from "../../constants/facility";
 import { FacilityService } from "../../datasource/Factility";
 import useNotification from "../../hooks/useNotification";
-import { useAccountStore } from "../../store/useAccountStore";
 import Facility from "./Facility";
-import { DEFAULT_LIMIT } from "../../constants/constants";
-import { useSearchParams } from "react-router-dom";
-import queryString from "query-string";
 
 const schema = yup.object({
   name: yup.string(),
@@ -31,9 +30,6 @@ const FacilityList = () => {
     },
   });
 
-  const {
-    account: { accessToken },
-  } = useAccountStore();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { handleMessageError } = useNotification();
@@ -95,10 +91,6 @@ const FacilityList = () => {
   };
 
   useEffect(() => {
-    if (!accessToken) {
-      return;
-    }
-
     const pageSearch = searchParams.get("page");
 
     if (!pageSearch || !Number.isInteger(Number(pageSearch))) {
@@ -125,7 +117,7 @@ const FacilityList = () => {
 
     handleGetAllFacility(params);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken, searchParams]);
+  }, [searchParams]);
 
   return (
     <WrapperFacilityList className="mt-3">

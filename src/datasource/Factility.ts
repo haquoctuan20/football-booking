@@ -1,5 +1,6 @@
 import { CreateFacility } from "../constants/facility";
 import { axiosFacility } from "./IntercepterAPI";
+import { axiosFacilityPublic } from "./IntercepterPublic";
 
 export const FacilityService = {
   createFacility: (facility: CreateFacility) => {
@@ -11,7 +12,7 @@ export const FacilityService = {
   },
 
   getAllFacilityFilter: (params: any) => {
-    return axiosFacility.post("/facility/getByFilter", params);
+    return axiosFacilityPublic.post("/facility/getByFilter", params);
   },
 
   getFacilityByUsername: (username: string) => {
@@ -19,7 +20,7 @@ export const FacilityService = {
   },
 
   getFacilityById: (facilityId: string) => {
-    return axiosFacility.post("/facility/getByFacilityId", { facilityId });
+    return axiosFacilityPublic.post("/facility/getByFacilityId", { facilityId });
   },
 
   createPrice: (price: any) => {
@@ -31,6 +32,6 @@ export const FacilityService = {
   },
 
   getPrice: (data: any) => {
-    return axiosFacility.post("/price/getPrice", data);
+    return axiosFacilityPublic.post("/price/getPrice", data);
   },
 };

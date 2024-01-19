@@ -1,8 +1,9 @@
 import { axiosBooking } from "./IntercepterAPI";
+import { axiosBookingPublic } from "./IntercepterPublic";
 
 export const BookingService = {
   getAvailableFields: (data: any) => {
-    return axiosBooking.post("/booking/getAvailableFields", data);
+    return axiosBookingPublic.post("/booking/getAvailableFields", data);
   },
 
   createBooking: (createBookingRequest: any) => {
@@ -18,7 +19,7 @@ export const BookingService = {
   },
 
   getAllBooking: (params?: any) => {
-    return axiosBooking.post("/booking/getBooking", params ? params : {});
+    return axiosBookingPublic.post("/booking/getBooking", params ? params : {});
   },
 
   matchingRequest: (bookingId: string) => {
