@@ -12,7 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import moment from "moment";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -252,9 +252,9 @@ const Booking = () => {
         {facility?.address.city}
       </p>
 
-      {/* <Link to={`/matching-request?facilityId=${facility?.id}`}>
-        <p>Xem danh sách đối trong cơ sở</p>
-      </Link> */}
+      <Link to={`/booking-calendar/${facility?.id}`}>
+        <p>Xem lịch đặt sân</p>
+      </Link>
 
       <hr />
 
@@ -505,7 +505,7 @@ const WrapperBooking = styled.div`
   .container-time {
     width: 100%;
     height: 200px;
-    background: #f8f8f8;
+    background: #efefef;
     border-radius: 8px;
     padding: 8px;
 
@@ -516,8 +516,8 @@ const WrapperBooking = styled.div`
 
     .time-block {
       background-color: #fff;
-      width: 120px;
-      height: 60px;
+      width: 130px;
+      height: 90px;
       padding: 4px 8px;
       border-radius: 8px;
       text-align: center;

@@ -46,6 +46,7 @@ const BookingManagement = () => {
     if (!id) return;
 
     handleGetBookingOfFacility(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, page]);
 
   return (

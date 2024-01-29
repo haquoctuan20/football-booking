@@ -24,6 +24,7 @@ import Profile from "./pages/profile/Profile";
 import "./styles/index.scss";
 import WsNotification from "./websocket/WsNotification";
 import BookingManagement from "./pages/Administrator/BookingManagement";
+import BookingCalendar from "./pages/BookingCalendar/BookingCalendar";
 
 function App() {
   return (
@@ -87,6 +88,15 @@ function App() {
             element={
               <PageLayout title="Đặt sân">
                 <Booking />
+              </PageLayout>
+            }
+          />
+
+          <Route
+            path="booking-calendar/:id"
+            element={
+              <PageLayout title="Lịch đặt sân">
+                <BookingCalendar />
               </PageLayout>
             }
           />
