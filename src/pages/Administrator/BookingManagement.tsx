@@ -7,6 +7,7 @@ import PaginationComponent from "../../components/PaginationComponent";
 import { WrapperTable } from "../../styles/table";
 import { Table } from "react-bootstrap";
 import moment from "moment";
+import BookingCalendarComponent from "../../components/BookingCalendarComponent/BookingCalendarComponent";
 
 const BookingManagement = () => {
   const { id } = useParams();
@@ -42,18 +43,18 @@ const BookingManagement = () => {
     }
   };
 
-  useEffect(() => {
-    if (!id) return;
+  // useEffect(() => {
+  //   if (!id) return;
 
-    handleGetBookingOfFacility(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, page]);
+  //   handleGetBookingOfFacility(id);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [id, page]);
 
   return (
     <div>
       {loadingFetch && <LoadingComponent />}
 
-      <WrapperTable>
+      {/* <WrapperTable>
         <Table bordered responsive="xl" hover>
           <thead>
             <tr>
@@ -100,7 +101,9 @@ const BookingManagement = () => {
             setPage(page - 1);
           }}
         />
-      </div>
+      </div> */}
+
+      <BookingCalendarComponent />
     </div>
   );
 };
