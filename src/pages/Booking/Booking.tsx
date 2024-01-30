@@ -77,6 +77,8 @@ const Booking = () => {
 
   const [loadingCreate, setLoadingCreate] = useState(false);
 
+  const [typeBooking, setTypeBooking] = useState<"single" | "multi">("single");
+
   const handleSelectFieldType = (value: any) => {
     setFieldType(value.target.value);
     setFieldSelect(null);
@@ -387,6 +389,36 @@ const Booking = () => {
                   <strong>Loại sân: </strong>
                   {fieldSelect?.field?.type}
                 </div>
+              </div>
+
+              <div className="mt-2">Cách thức đặt sân</div>
+              <Form.Check
+                label="Đặt sân một lần"
+                name="group1"
+                type={"radio"}
+                checked={typeBooking === "single"}
+                onChange={() => {
+                  setTypeBooking("single");
+                }}
+              />
+
+              <div className="">
+                <Form.Check
+                  label="Đặt sân theo chu kỳ"
+                  name="group1"
+                  type={"radio"}
+                  checked={typeBooking === "multi"}
+                  onChange={() => {
+                    setTypeBooking("multi");
+                  }}
+                />
+
+                {typeBooking === "multi" && (
+                  <div className="d-flex align-content-center">
+                    <div className="text-nowrap lh-lg me-2"> Số ngày: </div>
+                    <Form.Control style={{ width: "100px" }} type="number" />
+                  </div>
+                )}
               </div>
             </div>
           ) : (
