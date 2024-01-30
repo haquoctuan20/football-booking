@@ -10,6 +10,7 @@ import useNotification from "../../hooks/useNotification";
 import LoadingComponent from "../LoadingComponent";
 import { FacilityService } from "../../datasource/Factility";
 import { Button } from "react-bootstrap";
+import useStatusAccount from "../../hooks/useStatusAccount";
 
 moment.locale("fr", definitionDate);
 const localizer = momentLocalizer(moment);
@@ -27,8 +28,7 @@ const lang = {
   showMore: (total: any) => `+${total} xem thêm`,
 };
 
-const getAllDayInWeek = () => {
-  const today = new Date();
+const getAllDayInWeek = (today = new Date()) => {
   today.setHours(0, 0, 0, 0);
 
   const currentDay = today.getDay();
@@ -46,8 +46,7 @@ const getAllDayInWeek = () => {
   return daysOfWeek;
 };
 
-const getAllDayInMonth = () => {
-  const today = new Date();
+const getAllDayInMonth = (today = new Date()) => {
   today.setHours(0, 0, 0, 0);
   const currentMonth = today.getMonth();
   const currentYear = today.getFullYear();
@@ -69,6 +68,7 @@ const getAllDayInMonth = () => {
 const BookingCalendarComponent = () => {
   const { id } = useParams();
   const { handleMessageError } = useNotification();
+  const { isOwner } = useStatusAccount();
 
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState<View>(Views.WEEK);
@@ -110,15 +110,15 @@ const BookingCalendarComponent = () => {
       let allDay: any = [];
 
       if (view === Views.WEEK) {
-        allDay = getAllDayInWeek();
+        allDay = getAllDayInWeek(date);
       }
 
       if (view === Views.MONTH) {
-        allDay = getAllDayInMonth();
+        allDay = getAllDayInMonth(date);
       }
 
       if (view === Views.DAY) {
-        const today = new Date();
+        const today = new Date(date);
         today.setHours(0, 0, 0, 0);
         allDay = [today];
       }
@@ -134,9 +134,11 @@ const BookingCalendarComponent = () => {
                   <div>Loại: {booking?.fieldType}</div>
                 </div>
 
-                <Button variant="outline-success" size="sm">
-                  Đặt ngoài
-                </Button>
+                {isOwner && (
+                  <Button variant="outline-success" size="sm">
+                    Đặt ngoài
+                  </Button>
+                )}
               </div>
             ),
             start: moment(day)
@@ -211,62 +213,6 @@ const BookingCalendarComponent = () => {
       });
 
       setEvents(events_booking);
-
-      // const events = data.map((booking: any) => {
-      //   const hasBooking = dataBooking.find((b: any) => b.priceId === booking.id);
-
-      //   return {
-      //     id: booking.id,
-      //     // allDay: booking.date ? false : true,
-      //     title: (
-      //       <>
-      //         {hasBooking && hasBooking.date ? (
-      //           <div className="detail-booking">
-      //             <div>Số: {hasBooking.fieldIndex}</div>
-
-      //             {hasBooking && hasBooking.userId && (
-      //               <div>
-      //                 <Link style={{ color: "#000" }} to={`/profile/${hasBooking.userId}?tab=team`}>
-      //                   <strong>{hasBooking?.userName}</strong>
-      //                 </Link>
-      //               </div>
-      //             )}
-
-      //             <div>
-      //               {hasBooking && hasBooking.id && (
-      //                 <Link target="_blank" to={`/match-detail/${hasBooking?.id}`}>
-      //                   Chi tiết
-      //                 </Link>
-      //               )}
-      //             </div>
-      //           </div>
-      //         ) : (
-      //           <div className="empty-booking">
-      //             <div>Sân trống</div>
-
-      //             <div>
-      //               <Button variant="outline-success" size="sm">
-      //                 Đặt ngoài
-      //               </Button>
-      //             </div>
-      //           </div>
-      //         )}
-      //       </>
-      //     ),
-
-      //     start: moment(hasBooking && hasBooking.date ? new Date(hasBooking.date) : new Date())
-      //       .add(hasBooking ? hasBooking.startAt.hour : booking.startAt.hour, "hours")
-      //       .add(hasBooking ? hasBooking.startAt.minute : booking.startAt.minute, "minutes")
-      //       .toDate(),
-
-      //     end: moment(hasBooking && hasBooking.date ? new Date(hasBooking.date) : new Date())
-      //       .add(hasBooking ? hasBooking.endAt.hour : booking.endAt.hour, "hours")
-      //       .add(hasBooking ? hasBooking.endAt.minute : booking.endAt.minute, "minutes")
-      //       .toDate(),
-      //   };
-      // });
-
-      // setEvents(events);
     } catch (error) {
       handleMessageError(error);
     } finally {
@@ -279,7 +225,7 @@ const BookingCalendarComponent = () => {
 
     handleGetSlotOfFacility();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, view]);
+  }, [id, view, date]);
 
   return (
     <BookingCalendarComponentWrapper className="my-3">
@@ -302,6 +248,7 @@ const BookingCalendarComponent = () => {
         showMultiDayTimes
         onShowMore={onShowMore}
         tooltipAccessor={null}
+        date={date}
       />
     </BookingCalendarComponentWrapper>
   );
