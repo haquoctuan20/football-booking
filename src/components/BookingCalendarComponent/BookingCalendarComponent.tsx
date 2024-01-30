@@ -89,65 +89,6 @@ const BookingCalendarComponent = () => {
     setDate(value[0].start);
   };
 
-  const handleGetBookingOfFacility = async () => {
-    try {
-      setLoadingFetch(true);
-
-      const params = {
-        facilityId: id,
-      };
-
-      const {
-        data: { data },
-      } = await BookingService.getBookingOfFacility(params);
-
-      const events = data.map((booking: any) => {
-        return {
-          id: booking.id,
-          title: (
-            <div>
-              <p>Số: {booking.fieldIndex}</p>
-
-              {booking.userId && (
-                <Link style={{ color: "#fff" }} to={`/profile/${booking.userId}?tab=team`}>
-                  <strong>{booking?.userName}</strong>
-                </Link>
-              )}
-
-              <div className="mt-1">
-                {booking.id && (
-                  <Link
-                    target="_blank"
-                    style={{ color: "#fff" }}
-                    to={`/match-detail/${booking?.id}`}
-                  >
-                    <strong>Chi tiết</strong>
-                  </Link>
-                )}
-              </div>
-            </div>
-          ),
-
-          start: moment(new Date(booking.date))
-            .add(booking.startAt.hour, "hours")
-            .add(booking.startAt.minute, "minutes")
-            .toDate(),
-
-          end: moment(new Date(booking.date))
-            .add(booking.endAt.hour, "hours")
-            .add(booking.endAt.minute, "minutes")
-            .toDate(),
-        };
-      });
-
-      setEvents(events);
-    } catch (error) {
-      handleMessageError(error);
-    } finally {
-      setLoadingFetch(false);
-    }
-  };
-
   const handleGetSlotOfFacility = async () => {
     if (!id) return;
 
@@ -165,7 +106,6 @@ const BookingCalendarComponent = () => {
       console.log("🚀 - handleGetSlotOfFacility - dataBooking: ", dataBooking);
 
       const { data } = await FacilityService.getPriceByFacilityId(id);
-      console.log("🚀 - handleGetSlotOfFacility - data: ", data);
 
       let allDay: any = [];
 
@@ -215,7 +155,62 @@ const BookingCalendarComponent = () => {
       });
 
       const events_all_flat = events_all.flat();
-      setEvents(events_all_flat);
+
+      const events_booking = events_all_flat.map((event: any) => {
+        const bookingDay = moment(event?.start).format("YYYY-MM-DD").toString();
+
+        const bookingOnDay = dataBooking.find(
+          (b: any) => b?.date === bookingDay && b?.priceId === event.id
+        );
+
+        if (bookingOnDay) {
+          const today = new Date(bookingOnDay.date);
+          today.setHours(0, 0, 0, 0);
+
+          return {
+            ...event,
+            title: (
+              <>
+                <div className="detail-booking">
+                  <div>Số: {bookingOnDay.fieldIndex}</div>
+
+                  {bookingOnDay.userId && (
+                    <div>
+                      <Link
+                        style={{ color: "#000" }}
+                        to={`/profile/${bookingOnDay.userId}?tab=team`}
+                      >
+                        <strong>{bookingOnDay?.userName}</strong>
+                      </Link>
+                    </div>
+                  )}
+
+                  <div>
+                    {bookingOnDay.id && (
+                      <Link target="_blank" to={`/match-detail/${bookingOnDay?.id}`}>
+                        Chi tiết
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </>
+            ),
+            start: moment(today)
+              .add(bookingOnDay.startAt.hour, "hours")
+              .add(bookingOnDay.startAt.minute, "minutes")
+              .toDate(),
+
+            end: moment(today)
+              .add(bookingOnDay.endAt.hour, "hours")
+              .add(bookingOnDay.endAt.minute, "minutes")
+              .toDate(),
+          };
+        }
+
+        return event;
+      });
+
+      setEvents(events_booking);
 
       // const events = data.map((booking: any) => {
       //   const hasBooking = dataBooking.find((b: any) => b.priceId === booking.id);
@@ -282,7 +277,6 @@ const BookingCalendarComponent = () => {
   useEffect(() => {
     if (!id) return;
 
-    // handleGetBookingOfFacility();
     handleGetSlotOfFacility();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, view]);
@@ -325,9 +319,13 @@ const BookingCalendarComponentWrapper = styled.div`
   }
 
   .rbc-event {
-    background-color: #cfffd0;
+    background-color: #f1f1f1;
     color: #000;
     border: 1px solid #8fadc7;
+
+    &:has(div.detail-booking) {
+      background-color: #37ef76;
+    }
   }
 
   .detail-booking {
